@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
+[SelectionBase]
 public class EditorSnap : MonoBehaviour
 {
     [SerializeField] [Range(10.0f, 20.0f)] private float gridSize;
