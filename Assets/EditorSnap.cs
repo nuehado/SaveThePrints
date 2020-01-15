@@ -17,6 +17,10 @@ public class EditorSnap : MonoBehaviour
         transform.position = new Vector3(snapPosition.x, 0.0f, snapPosition.z);
 
         coordinateLabel = GetComponentInChildren<TextMesh>();
-        coordinateLabel.text = snapPosition.x/gridSize+ "," + snapPosition.z/gridSize;
+        string textLabel = snapPosition.x / gridSize + "," + snapPosition.z / gridSize;
+        coordinateLabel.text = textLabel;
+        gameObject.name = "cube " + textLabel;
+        
+
     }
 }
