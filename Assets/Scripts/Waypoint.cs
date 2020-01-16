@@ -5,6 +5,26 @@ using UnityEngine;
 public class Waypoint : MonoBehaviour
 {
     const int gridUnitSize = 10;
+    // okay to be public as is a data class
+    public bool isExplored = false;
+    public Waypoint exploredFrom;
+
+    private void Update()
+    {
+        SetExplorationColor(); // todo remove this once Pathfinder is done or add as debug only option
+    }
+
+    private void SetExplorationColor()
+    {
+        if (isExplored == true)
+        {
+            SetTopColor(Color.blue);
+        }
+        else
+        {
+            SetTopColor(Color.white);
+        }
+    }
 
     public int GetGridSize()
     {
