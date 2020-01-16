@@ -38,7 +38,7 @@ public class EditorSnap : MonoBehaviour
         TextMesh coordinateLabel = GetComponentInChildren<TextMesh>();
         string textLabel = gridPosition.x + "," + gridPosition.y;
         coordinateLabel.text = textLabel;
-        //gameObject.name = "cube " + textLabel;
+        gameObject.name = "cube " + textLabel;
 
         
     }
