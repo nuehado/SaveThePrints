@@ -6,7 +6,7 @@ public class Waypoint : MonoBehaviour
 {
     const int gridUnitSize = 10;
     // okay to be public as is a data class
-    public bool isExplored = false;
+    public bool isExploreOff = false;
     public Waypoint exploredFrom;
 
     private void Update()
@@ -16,7 +16,7 @@ public class Waypoint : MonoBehaviour
 
     private void SetExplorationColor()
     {
-        if (isExplored == true)
+        if (isExploreOff == true)
         {
             SetTopColor(Color.blue);
         }

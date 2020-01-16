@@ -67,7 +67,7 @@ public class Pathfinder : MonoBehaviour
             Debug.Log("searching from: " + searchCenter); // todo remove log
             HaltIfEndFound(searchCenter);
             ExploreNeighbors(searchCenter);
-            searchCenter.isExplored = true;
+            searchCenter.isExploreOff = true;
         }
 
         Debug.Log("Finished Pathfind()");
@@ -103,11 +103,11 @@ public class Pathfinder : MonoBehaviour
 
     private void QueueNewNeighbor(Waypoint neighbor)
     {
-        if (neighbor.isExplored == false)
+        if (neighbor.isExploreOff == false)
         {
             
             waypointQueue.Enqueue(neighbor);
-            neighbor.isExplored = true; // todo I added this because It removes duplicates faster, I'm not sure if it breaks the breadth first search algorithm somehow though
+            neighbor.isExploreOff = true; // todo I added this because It removes duplicates faster, I'm not sure if it breaks the breadth first search algorithm somehow though
             neighbor.exploredFrom = searchCenter;
             Debug.Log("Queueing neighbor: " + neighbor);
         }
