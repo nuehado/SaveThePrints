@@ -64,20 +64,20 @@ public class Pathfinder : MonoBehaviour
         while (waypointQueue.Count > 0 && isRunning == true)
         {
             searchCenter = waypointQueue.Dequeue();
-            Debug.Log("searching from: " + searchCenter); // todo remove log
+            //Debug.Log("searching from: " + searchCenter); // todo remove log
             HaltIfEndFound(searchCenter);
             ExploreNeighbors(searchCenter);
             searchCenter.isExploreOff = true;
         }
 
-        Debug.Log("Finished Pathfind()");
+        //Debug.Log("Finished Pathfind()");
     }
 
     private void HaltIfEndFound(Waypoint start)
     {
         if (start == endWaypoint)
         {
-            Debug.Log("start and end are the same. stopping..."); // todo remove log
+            //Debug.Log("start and end are the same. stopping..."); // todo remove log
             isRunning = false;
         }
     }
@@ -109,7 +109,7 @@ public class Pathfinder : MonoBehaviour
             waypointQueue.Enqueue(neighbor);
             neighbor.isExploreOff = true; // todo I added this because It removes duplicates faster, I'm not sure if it breaks the breadth first search algorithm somehow though
             neighbor.exploredFrom = searchCenter;
-            Debug.Log("Queueing neighbor: " + neighbor);
+            //Debug.Log("Queueing neighbor: " + neighbor);
         }
     }
 

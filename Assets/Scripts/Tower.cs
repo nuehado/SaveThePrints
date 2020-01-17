@@ -19,7 +19,15 @@ public class Tower : MonoBehaviour
 
     private void AimAtEnemy()
     {
-        Vector3 targetXZ = new Vector3(targetEnemy.position.x, objectToPan.position.y, targetEnemy.position.z);
-        objectToPan.LookAt(targetXZ);
+        if (targetEnemy == null)
+        {
+            return;
+        }
+        else
+        {
+            Vector3 targetXZ = new Vector3(targetEnemy.position.x, objectToPan.position.y, targetEnemy.position.z);
+            objectToPan.LookAt(targetXZ);
+        }
+        
     }
 }
