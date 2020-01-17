@@ -18,15 +18,19 @@ public class Pathfinder : MonoBehaviour
     bool isRunning = true;
 
     private List<Waypoint> path = new List<Waypoint>();
-
+    private List<Waypoint> cachedPath = new List<Waypoint>();
 
 
     public List<Waypoint> GetPath()
     {
-        BuildBlockDictionary();
-        ColorStartAndEnd();
-        BreadthFirstSearchForPath();
-        FormPath();
+        if (path.Count == 0)
+        {
+            BuildBlockDictionary();
+            ColorStartAndEnd();
+            BreadthFirstSearchForPath();
+            FormPath();
+        }
+
         return path;
     }
 
