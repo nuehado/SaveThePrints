@@ -26,7 +26,7 @@ public class EnemyCollision : MonoBehaviour
     {
         ProcessHit();
         ;
-        Debug.Log("HIT. hits left = " + hitPoints);
+        //Debug.Log("HIT. hits left = " + hitPoints);
     }
 
     private void ProcessHit()
