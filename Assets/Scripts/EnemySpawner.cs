@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemy()
     {
-        Instantiate(enemy, transform.position, Quaternion.identity);
+        Instantiate(enemy, transform.position, Quaternion.identity, FindObjectOfType<EnemySpawner>().transform);
         enemyCount++;
         yield return new WaitForSeconds(secondsBetweenSpawns);
         if (enemyCount < maxEnemies)

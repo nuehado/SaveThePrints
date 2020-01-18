@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     [SerializeField] Transform objectToPan;
-    [SerializeField] Transform targetEnemy; // todo need to change to update to closes enemy
+    [SerializeField] Transform targetEnemy; 
     [SerializeField] float AttackRange = 20f;
     [SerializeField] ParticleSystem projectileParticles;
     private float fireDelay;
@@ -14,15 +14,6 @@ public class Tower : MonoBehaviour
 
     private bool isInRange = false;
 
-    private Vector3 enemyPosition;
-
-
-    void Start()
-    {
-        enemyPosition = targetEnemy.position;
-    }
-
-    // Update is called once per frame
     void Update()
     {
         SetTargetEnemy();
