@@ -15,6 +15,8 @@ public class Tower : MonoBehaviour
     private bool isInRange = false;
 
     private Vector3 enemyPosition;
+
+
     void Start()
     {
         enemyPosition = targetEnemy.position;
@@ -23,6 +25,8 @@ public class Tower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SetTargetEnemy();
+        
         if(targetEnemy)
         {
             AimAtEnemy();
@@ -32,6 +36,38 @@ public class Tower : MonoBehaviour
             Fire(false);
         }
         
+    }
+
+    private void SetTargetEnemy()
+    {
+        var sceneEnemies = FindObjectsOfType<EnemyCollision>();
+        if (sceneEnemies.Length == 0)
+        {
+            return;
+        }
+
+        Transform closestEnemy = sceneEnemies[0].transform;
+
+        foreach (EnemyCollision testEnemy in sceneEnemies)
+        {
+            closestEnemy = GetClosestEnemy(closestEnemy, testEnemy.transform);
+        }
+
+        targetEnemy = closestEnemy;
+
+    }
+
+    private Transform GetClosestEnemy(Transform currentEnemy, Transform testEnemy)
+    {
+        float testEnemyDistance = Mathf.Abs(Vector3.Distance(testEnemy.position, objectToPan.position));
+        float currentEnemyDistance = Mathf.Abs(Vector3.Distance(currentEnemy.position, objectToPan.position));
+
+        if (testEnemyDistance < currentEnemyDistance)
+        {
+            currentEnemy = testEnemy;
+        }
+
+        return currentEnemy;
     }
 
     private void AimAtEnemy()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private float secondsBetweenSpawns = 1f;
+    [Range(0.1f,120f)] [SerializeField] private float secondsBetweenSpawns = 1f;
     private int enemyCount = 0;
     [SerializeField] private int maxEnemies = 3;
     [SerializeField] private GameObject enemy;
@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemy()
     {
-        Instantiate(enemy);
+        Instantiate(enemy, transform.position, Quaternion.identity);
         enemyCount++;
         yield return new WaitForSeconds(secondsBetweenSpawns);
         if (enemyCount < maxEnemies)
