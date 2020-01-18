@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    //[SerializeField] List<Waypoint> path;
     [SerializeField] float movementSpeed = 1;
     void Start()
     {
@@ -20,7 +19,7 @@ public class EnemyMovement : MonoBehaviour
         foreach (Waypoint waypoint in path)
         {
             transform.position = waypoint.transform.position; //todo change to lerp? or some other smooth transform
-            //Debug.Log("visiting waypoint: " + waypoint.name);
+
             yield return new WaitForSeconds(movementSpeed);
         }
         //Debug.Log("ending patrol...");
