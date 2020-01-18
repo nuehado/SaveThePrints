@@ -10,24 +10,17 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject enemy;
     void Start()
     {
-        StartCoroutine(SpawnEnemy(0f));
+        StartCoroutine(SpawnEnemy());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator SpawnEnemy()
     {
-
-    }
-
-    private IEnumerator SpawnEnemy(float spawnDelay)
-    {
-        yield return new WaitForSeconds(spawnDelay);
         Instantiate(enemy);
-        Debug.Log("enemy spawned at: " + Time.time);
-        enemyCount ++;
+        enemyCount++;
+        yield return new WaitForSeconds(secondsBetweenSpawns);
         if (enemyCount < maxEnemies)
         {
-            StartCoroutine(SpawnEnemy(secondsBetweenSpawns));
+            StartCoroutine(SpawnEnemy());
         }
         
     }
