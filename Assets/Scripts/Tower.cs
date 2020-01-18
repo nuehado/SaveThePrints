@@ -50,24 +50,24 @@ public class Tower : MonoBehaviour
 
         foreach (EnemyCollision testEnemy in sceneEnemies)
         {
-            closestEnemy = GetClosestEnemy(closestEnemy, testEnemy.transform);
+            closestEnemy = GetClosest(closestEnemy, testEnemy.transform);
         }
 
         targetEnemy = closestEnemy;
 
     }
 
-    private Transform GetClosestEnemy(Transform currentEnemy, Transform testEnemy)
+    private Transform GetClosest(Transform transformA, Transform TransformB)
     {
-        float testEnemyDistance = Mathf.Abs(Vector3.Distance(testEnemy.position, objectToPan.position));
-        float currentEnemyDistance = Mathf.Abs(Vector3.Distance(currentEnemy.position, objectToPan.position));
+        float testEnemyDistance = Mathf.Abs(Vector3.Distance(TransformB.position, transform.position));
+        float currentEnemyDistance = Mathf.Abs(Vector3.Distance(transformA.position, transform.position));
 
         if (testEnemyDistance < currentEnemyDistance)
         {
-            currentEnemy = testEnemy;
+            transformA = TransformB;
         }
 
-        return currentEnemy;
+        return transformA;
     }
 
     private void AimAtEnemy()
