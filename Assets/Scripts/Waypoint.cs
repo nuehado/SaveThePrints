@@ -7,22 +7,15 @@ public class Waypoint : MonoBehaviour
     const int gridUnitSize = 10;
     // okay to be public as is a data class
     public bool isExploreOff = false;
+    public bool isPlacable = true; // todo set based on presence of blocker object or tower
     public Waypoint exploredFrom;
 
-    private void Update()
-    {
-        SetExplorationColor(); // todo remove this once Pathfinder is done or add as debug only option
-    }
 
-    private void SetExplorationColor()
+    private void Start()
     {
-        if (isExploreOff == true)
+        if (isPlacable == false) // todo add this to the pathfinder script instead of on start. 
         {
-            SetTopColor(Color.blue);
-        }
-        else
-        {
-            SetTopColor(Color.white);
+            isExploreOff = true;
         }
     }
 
@@ -39,14 +32,12 @@ public class Waypoint : MonoBehaviour
         );
     }
 
-    public void SetTopColor(Color color)
-    {
-        MeshRenderer topMeshRenderer = transform.Find("Top").GetComponent<MeshRenderer>();
-        topMeshRenderer.material.color = color;
-    }
 
     private void OnMouseOver()
     {
-        Debug.Log("mouse over: " + gameObject.name);
+        if (Input.GetMouseButtonDown(0) && gameObject.GetComponent<Waypoint>().isPlacable == true)
+        {
+            Debug.Log("mouse clicked: " + gameObject.name);
+        }
     }
 }

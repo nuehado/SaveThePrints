@@ -26,7 +26,7 @@ public class Pathfinder : MonoBehaviour
         if (path.Count == 0)
         {
             BuildBlockDictionary();
-            ColorStartAndEnd();
+
             BreadthFirstSearchForPath();
             FormPath();
         }
@@ -53,11 +53,7 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    private void ColorStartAndEnd()
-    {
-        startWaypoint.SetTopColor(Color.white);
-        endWaypoint.SetTopColor(Color.red);
-    }
+    
 
     private void BreadthFirstSearchForPath()
     {
@@ -119,16 +115,22 @@ public class Pathfinder : MonoBehaviour
 
     private void FormPath()
     {
-        path.Add(endWaypoint);
+        SetAsPath(endWaypoint);
         Waypoint previousWaypoint = endWaypoint.exploredFrom;
         while (previousWaypoint != startWaypoint)
         {
             //add intermediate waypoints
-            path.Add(previousWaypoint);
+            SetAsPath(previousWaypoint);
             previousWaypoint = previousWaypoint.exploredFrom;
 
         }
-        path.Add(startWaypoint);
+        SetAsPath(startWaypoint);
         path.Reverse();
+    }
+
+    private void SetAsPath(Waypoint waypointOnPath)
+    {
+        path.Add(waypointOnPath);
+        waypointOnPath.isPlacable = false;
     }
 }
