@@ -25,7 +25,7 @@ public class EnemyCollision : MonoBehaviour
     private void OnParticleCollision(GameObject other)
     {
         ProcessHit();
-        ;
+        
         //Debug.Log("HIT. hits left = " + hitPoints);
     }
 

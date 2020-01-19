@@ -8,9 +8,8 @@ public class Tower : MonoBehaviour
     [SerializeField] Transform targetEnemy; 
     [SerializeField] float AttackRange = 20f;
     [SerializeField] ParticleSystem projectileParticles;
-    private float fireDelay;
-    [SerializeField] private float startupDelay = 0.1f;
-    [SerializeField] private float stopDelay = 0f;
+
+    [SerializeField] private float rotateSpeed = 0.1f;
 
     private bool isInRange = false;
 
@@ -71,7 +70,11 @@ public class Tower : MonoBehaviour
         {
             CheckEnemyRange();
             Vector3 targetXZ = new Vector3(targetEnemy.transform.position.x, objectToPan.position.y, targetEnemy.transform.position.z);
-            objectToPan.LookAt(targetXZ);
+            //objectToPan.LookAt(targetXZ);
+
+            Vector3 directionToTarget = targetXZ - objectToPan.transform.position;
+            Vector3 stepTowardsTarget = Vector3.RotateTowards(objectToPan.transform.forward, directionToTarget, rotateSpeed, 0f);
+            objectToPan.transform.rotation = Quaternion.LookRotation(stepTowardsTarget);
         }
 
     }
@@ -84,12 +87,10 @@ public class Tower : MonoBehaviour
         if (enemyDistance <= AttackRange)
         {
             isInRange = true;
-            fireDelay = startupDelay;
         }
         else
         {
             isInRange = false;
-            fireDelay = stopDelay;
         }
 
         Fire(isInRange);
@@ -99,6 +100,7 @@ public class Tower : MonoBehaviour
     {
         var emissionModule = projectileParticles.emission;
         emissionModule.enabled = isInRage;
+        
     }
 
 
