@@ -8,12 +8,12 @@ public class Tower : MonoBehaviour
     [SerializeField] Transform targetEnemy; 
     [SerializeField] float AttackRange = 20f;
     [SerializeField] ParticleSystem projectileParticles;
-
     [SerializeField] private float rotateSpeed = 0.1f;
 
     private bool isInRange = false;
 
     public Waypoint waypointTowerIsOn;
+
 
     void Update()
     {
@@ -104,7 +104,6 @@ public class Tower : MonoBehaviour
         emissionModule.enabled = isInRage;
         
     }
-
 
 }
 

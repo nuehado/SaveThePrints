@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class EnemyCollision : MonoBehaviour
 {
-   [SerializeField] int hitPoints = 1;
-   
-
-    void Start()
-    {
-        
-    }
+    [SerializeField] int hitPoints = 1;
+    [SerializeField] ParticleSystem hitEffect;
+    
 
     // Update is called once per frame
     void Update()
@@ -24,6 +20,7 @@ public class EnemyCollision : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
+
         ProcessHit();
         
         //Debug.Log("HIT. hits left = " + hitPoints);
@@ -31,7 +28,10 @@ public class EnemyCollision : MonoBehaviour
 
     private void ProcessHit()
     {
+        
+        
         hitPoints = hitPoints - 1;
+
         
     }
 

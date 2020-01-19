@@ -131,6 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoints: 1000
+  hitEffect: {fileID: 5633104085921611493, guid: 665ec02e39169a44fa9a5b0278e38fc4,
+    type: 3}
 --- !u!64 &219414669699697914
 MeshCollider:
   m_ObjectHideFlags: 0
