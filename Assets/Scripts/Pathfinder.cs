@@ -18,7 +18,6 @@ public class Pathfinder : MonoBehaviour
     bool isRunning = true;
 
     private List<Waypoint> path = new List<Waypoint>();
-    private List<Waypoint> cachedPath = new List<Waypoint>();
 
 
     public List<Waypoint> GetPath()
@@ -37,6 +36,7 @@ public class Pathfinder : MonoBehaviour
     private void BuildBlockDictionary()
     {
         var waypoints = FindObjectsOfType<Waypoint>();
+
         foreach (Waypoint waypoint in waypoints)
         {
             bool isOverlapping = grid.ContainsKey(waypoint.GetGridPosition());
@@ -44,10 +44,14 @@ public class Pathfinder : MonoBehaviour
             {
                 Debug.Log("skipping duplicate block: " + waypoint.name);
             }
+            else if (waypoint.isBlocked == true)
+            {
+                waypoint.isPlacable = false;
+                waypoint.isExploreOff = true;
+            }
             else
             {
                 grid.Add(waypoint.GetGridPosition(), waypoint);
-                
             }
             
         }

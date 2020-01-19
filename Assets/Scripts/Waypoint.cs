@@ -8,16 +8,19 @@ public class Waypoint : MonoBehaviour
     // okay to be public as is a data class
     public bool isExploreOff = false;
     public bool isPlacable = true; // todo set based on presence of blocker object or tower
+    public bool isBlocked = false;
     public Waypoint exploredFrom;
 
 
 
     private void Start()
     {
-        if (isPlacable == false) // todo add this to the pathfinder script instead of on start. 
+        //CheckForBlocker();
+        /*if (isPlacable == false) // todo add this to the pathfinder script instead of on start. 
         {
             isExploreOff = true;
-        }
+        }*/
+
     }
 
     public int GetGridSize()
@@ -41,4 +44,6 @@ public class Waypoint : MonoBehaviour
             FindObjectOfType<TowerSpawnController>().AddTower(this);
         }
     }
+
+    
 }

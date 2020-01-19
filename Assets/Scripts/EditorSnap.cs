@@ -14,6 +14,7 @@ public class EditorSnap : MonoBehaviour
     private void Awake()
     {
         waypoint = GetComponent<Waypoint>();
+        
 
     }
 
@@ -21,6 +22,7 @@ public class EditorSnap : MonoBehaviour
     {
         SnapToGrid();
         UpdateLabel();
+        UpdateBlocker();
 
     }
 
@@ -41,6 +43,19 @@ public class EditorSnap : MonoBehaviour
         gameObject.name = "cube " + textLabel;
 
         
+    }
+
+    private void UpdateBlocker()
+    {
+        var blockerObject = transform.Find("blob");
+        if (waypoint.isBlocked == true)
+        {
+            blockerObject.gameObject.SetActive(true);
+        }
+        else
+        {
+            blockerObject.gameObject.SetActive(false);
+        }
     }
 
 }
