@@ -9,7 +9,7 @@ public class Waypoint : MonoBehaviour
     public bool isExploreOff = false;
     public bool isPlacable = true; // todo set based on presence of blocker object or tower
     public Waypoint exploredFrom;
-    [SerializeField] private GameObject towerPrefab;
+
 
 
     private void Start()
@@ -36,10 +36,9 @@ public class Waypoint : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0) && gameObject.GetComponent<Waypoint>().isPlacable == true)
+        if (Input.GetMouseButtonDown(0) && isPlacable == true)
         {
-            Instantiate(towerPrefab, transform.position, Quaternion.identity, FindObjectOfType<Towers>().transform);
-            isPlacable = false;
+            FindObjectOfType<TowerSpawnController>().AddTower(this);
         }
     }
 }

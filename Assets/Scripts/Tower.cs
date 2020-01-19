@@ -13,6 +13,8 @@ public class Tower : MonoBehaviour
 
     private bool isInRange = false;
 
+    public Waypoint waypointTowerIsOn;
+
     void Update()
     {
         SetTargetEnemy();
