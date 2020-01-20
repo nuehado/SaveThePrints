@@ -10,10 +10,23 @@ public class Tower : MonoBehaviour
     [SerializeField] ParticleSystem projectileParticles;
     [SerializeField] private float rotateSpeed = 0.1f;
 
+    [SerializeField] [Range(0.0f, 1.2f)] private float towerRotateSFXPitch;
+
     private bool isInRange = false;
+    private bool isSFXPlaying = false;
+    private float angletoTarget;
+    private float pitchChangePerDegree = 0.5f / 360f;
+    AudioSource rotatingSFX;
+    AudioSource shootingSFX;
 
     public Waypoint waypointTowerIsOn;
 
+    private void Start()
+    {
+        var audioSources = GetComponents<AudioSource>();
+        rotatingSFX = audioSources[0];
+        shootingSFX = audioSources[1];
+    }
 
     void Update()
     {
@@ -27,7 +40,18 @@ public class Tower : MonoBehaviour
         {
             Fire(false);
         }
-        
+
+        towerRotateSFXPitch = angletoTarget * pitchChangePerDegree;
+        if(isInRange == false)
+        {
+            rotatingSFX.volume = 0.2f;
+        }
+        if (isInRange == true)
+        {
+            rotatingSFX.volume = 0.5f;
+        }
+        rotatingSFX.pitch = 0.4f + towerRotateSFXPitch;
+
     }
 
     private void SetTargetEnemy()
@@ -72,9 +96,9 @@ public class Tower : MonoBehaviour
         {
             CheckEnemyRange();
             Vector3 targetXZ = new Vector3(targetEnemy.transform.position.x, objectToPan.position.y, targetEnemy.transform.position.z);
-            //objectToPan.LookAt(targetXZ);
 
             Vector3 directionToTarget = targetXZ - objectToPan.transform.position;
+            angletoTarget = Vector3.Angle(directionToTarget, objectToPan.transform.forward);
             Vector3 stepTowardsTarget = Vector3.RotateTowards(objectToPan.transform.forward, directionToTarget, rotateSpeed, 0f);
             objectToPan.transform.rotation = Quaternion.LookRotation(stepTowardsTarget);
         }
@@ -101,8 +125,22 @@ public class Tower : MonoBehaviour
     private void Fire(bool isInRage)
     {
         var emissionModule = projectileParticles.emission;
+
+
         emissionModule.enabled = isInRage;
-        
+
+        if (isInRage && isSFXPlaying == false)
+        {
+            shootingSFX.Play();
+            
+            isSFXPlaying = true;
+        }
+        else if (isInRage == false)
+        {
+            shootingSFX.Stop();
+            isSFXPlaying = false;
+        }
+
     }
 
 }
