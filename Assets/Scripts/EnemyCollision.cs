@@ -41,7 +41,8 @@ public class EnemyCollision : MonoBehaviour
 
     private void KillEnemy()
     {
-        Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        var explodeVFX = Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        Destroy(explodeVFX.gameObject, 1f);
         Destroy(gameObject);
     }
 

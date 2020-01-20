@@ -6,6 +6,7 @@ public class EnemyMovement1 : MonoBehaviour
 {
     [SerializeField] float movementSpeed = 10;
     [SerializeField] float rotateSpeed = 0.03f;
+    [SerializeField] ParticleSystem goalParticles;
 
     List<Waypoint> path;
 
@@ -51,11 +52,14 @@ public class EnemyMovement1 : MonoBehaviour
     private void UpdateMovementTarget()
     {
         if (path.Count == 0)
-        { 
+        {
+            
             return; 
+
         }
         if (destinationPoint >= path.Count - 1)
         {
+            SelfDestruct();
             isMoving = false;
             return;
         }
@@ -63,5 +67,12 @@ public class EnemyMovement1 : MonoBehaviour
         transform.position = path[destinationPoint].transform.position;
         destinationPoint += 1;
         
+    }
+
+    private void SelfDestruct()
+    {
+        var goalVFX = Instantiate(goalParticles, transform.position, Quaternion.identity);
+        Destroy(goalVFX.gameObject, 0.5f);
+        Destroy(gameObject);
     }
 }
