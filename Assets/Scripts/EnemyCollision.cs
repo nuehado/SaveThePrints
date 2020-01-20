@@ -7,14 +7,15 @@ public class EnemyCollision : MonoBehaviour
     [SerializeField] int hitPoints = 1;
     private bool isBeingHit = false;
 
-    ParticleSystem[] childedParticles;
+    [SerializeField] ParticleSystem[] hitParticles;
+    [SerializeField] ParticleSystem deathExplosion;
 
     private float hitStoppedTimer = 0f;
     [SerializeField] private float hittingStoppedTime = 0.1f;
 
     private void Start()
     {
-        childedParticles = GetComponentsInChildren<ParticleSystem>();
+
     }
 
     void Update()
@@ -40,6 +41,7 @@ public class EnemyCollision : MonoBehaviour
 
     private void KillEnemy()
     {
+        Instantiate(deathExplosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
@@ -51,17 +53,9 @@ public class EnemyCollision : MonoBehaviour
             isBeingHit = false;
         }
     }
-    private void StopHitParticles()
-    {
-        foreach (ParticleSystem hitParticle in childedParticles)
-        {
-            hitParticle.Stop();
-        }
-    }
-
     private void PlayHitParticles()
     {
-        foreach (ParticleSystem hitParticle in childedParticles)
+        foreach (ParticleSystem hitParticle in hitParticles)
         {
             if (hitParticle.isStopped)
             {
@@ -69,8 +63,14 @@ public class EnemyCollision : MonoBehaviour
             }
 
         }
-        
-        
+    }
+
+    private void StopHitParticles()
+    {
+        foreach (ParticleSystem hitParticle in hitParticles)
+        {
+            hitParticle.Stop();
+        }
     }
 
     
