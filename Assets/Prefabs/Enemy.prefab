@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoints: 1000
+  hittingStoppedTime: 0.1
 --- !u!64 &219414669699697914
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -317,6 +318,16 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6175952959961851849, guid: 665ec02e39169a44fa9a5b0278e38fc4,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175952959961851849, guid: 665ec02e39169a44fa9a5b0278e38fc4,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 665ec02e39169a44fa9a5b0278e38fc4, type: 3}
 --- !u!4 &3695784982651852934 stripped
@@ -460,6 +471,16 @@ PrefabInstance:
     - target: {fileID: 5633104085921611493, guid: 665ec02e39169a44fa9a5b0278e38fc4,
         type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175952959961851849, guid: 665ec02e39169a44fa9a5b0278e38fc4,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175952959961851849, guid: 665ec02e39169a44fa9a5b0278e38fc4,
+        type: 3}
+      propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -687,6 +708,16 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6175952959961851849, guid: 665ec02e39169a44fa9a5b0278e38fc4,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175952959961851849, guid: 665ec02e39169a44fa9a5b0278e38fc4,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 665ec02e39169a44fa9a5b0278e38fc4, type: 3}
 --- !u!4 &6500547584159364089 stripped
@@ -836,6 +867,21 @@ PrefabInstance:
         type: 3}
       propertyPath: looping
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175952959961851849, guid: 665ec02e39169a44fa9a5b0278e38fc4,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175952959961851849, guid: 665ec02e39169a44fa9a5b0278e38fc4,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175952959961851849, guid: 665ec02e39169a44fa9a5b0278e38fc4,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 665ec02e39169a44fa9a5b0278e38fc4, type: 3}

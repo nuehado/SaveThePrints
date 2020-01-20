@@ -19,6 +19,14 @@ public class Pathfinder : MonoBehaviour
 
     private List<Waypoint> path = new List<Waypoint>();
 
+    LineRenderer pathRenderer;
+
+
+    private void Start()
+    {
+        pathRenderer = GetComponent<LineRenderer>();
+        
+    }
 
     public List<Waypoint> GetPath()
     {
@@ -28,6 +36,8 @@ public class Pathfinder : MonoBehaviour
 
             BreadthFirstSearchForPath();
             FormPath();
+
+            DrawRenderedPath();
         }
 
         return path;
@@ -136,5 +146,14 @@ public class Pathfinder : MonoBehaviour
     {
         path.Add(waypointOnPath);
         waypointOnPath.isPlacable = false;
+    }
+
+    private void DrawRenderedPath()
+    {
+        pathRenderer.positionCount = path.Count;
+        for (int i = 0; i < path.Count; i++)
+        {
+            pathRenderer.SetPosition(i, path[i].transform.position + new Vector3(0f,0.1f,0f));
+        }
     }
 }
