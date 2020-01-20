@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65637afaa8480043b625e9ec039fcf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 20
+  movementSpeed: 10
   rotateSpeed: 0.03
   goalParticles: {fileID: 4579958292083826815, guid: 520c9eedfbe87aa429fddffcebebb170,
     type: 3}
@@ -120,7 +120,7 @@ MonoBehaviour:
   - {fileID: 102034011665015161}
   deathExplosion: {fileID: 4579958292083826815, guid: d2f204490605c594db5a272f84d15669,
     type: 3}
-  hittingStoppedTime: 0.2
+  hittingStoppedTime: 0.05
 --- !u!54 &6330954987398749555
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -262,7 +262,7 @@ PrefabInstance:
     - target: {fileID: 5633104085921611493, guid: 665ec02e39169a44fa9a5b0278e38fc4,
         type: 3}
       propertyPath: lengthInSec
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5633104085921611493, guid: 665ec02e39169a44fa9a5b0278e38fc4,
         type: 3}
@@ -428,7 +428,7 @@ PrefabInstance:
     - target: {fileID: 5633104085921611493, guid: 665ec02e39169a44fa9a5b0278e38fc4,
         type: 3}
       propertyPath: lengthInSec
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5633104085921611493, guid: 665ec02e39169a44fa9a5b0278e38fc4,
         type: 3}
@@ -674,7 +674,7 @@ PrefabInstance:
     - target: {fileID: 5633104085921611493, guid: 665ec02e39169a44fa9a5b0278e38fc4,
         type: 3}
       propertyPath: lengthInSec
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5633104085921611493, guid: 665ec02e39169a44fa9a5b0278e38fc4,
         type: 3}
@@ -840,7 +840,7 @@ PrefabInstance:
     - target: {fileID: 5633104085921611493, guid: 665ec02e39169a44fa9a5b0278e38fc4,
         type: 3}
       propertyPath: lengthInSec
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 5633104085921611493, guid: 665ec02e39169a44fa9a5b0278e38fc4,
         type: 3}

@@ -8,6 +8,7 @@ public class EnemySpawner : MonoBehaviour
     private int enemyCount = 0;
     [SerializeField] private int maxEnemies = 3;
     [SerializeField] private GameObject enemy;
+
     void Start()
     {
         StartCoroutine(SpawnEnemy());
