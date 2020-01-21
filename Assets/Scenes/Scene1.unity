@@ -2602,7 +2602,7 @@ PrefabInstance:
     - target: {fileID: 3142053458985845734, guid: 3e7d4bea2d31a0042b814cb07d8cdde4,
         type: 3}
       propertyPath: isBlocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4201670834982852422, guid: 3e7d4bea2d31a0042b814cb07d8cdde4,
         type: 3}
@@ -2617,7 +2617,7 @@ PrefabInstance:
     - target: {fileID: 6356472047917093257, guid: 3e7d4bea2d31a0042b814cb07d8cdde4,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6372202240886494102, guid: 3e7d4bea2d31a0042b814cb07d8cdde4,
         type: 3}
@@ -6587,7 +6587,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f258710a20979c8488c44a3da42cffb6, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
