@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class EnemySpawner : MonoBehaviour
     private int enemyCount = 0;
     [SerializeField] private int maxEnemies = 3;
     [SerializeField] private GameObject enemy;
+    [SerializeField] private PlayableDirector printTimeline;
+    [SerializeField] private AudioSource printSound;
 
     void Start()
     {
@@ -22,6 +25,8 @@ public class EnemySpawner : MonoBehaviour
         if (enemyCount < maxEnemies)
         {
             StartCoroutine(SpawnEnemy());
+            printTimeline.Play();
+            printSound.Play();
         }
         
     }
