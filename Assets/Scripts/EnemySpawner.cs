@@ -9,12 +9,14 @@ public class EnemySpawner : MonoBehaviour
     private int enemyCount = 0;
     [SerializeField] private int maxEnemies = 3;
     [SerializeField] private GameObject enemy;
-    [SerializeField] private PlayableDirector printTimeline;
+    [SerializeField] private PlayableDirector extruderTimeline;
+    [SerializeField] private Animator zAssemblyAnimator;
     [SerializeField] private AudioSource printSound;
 
     void Start()
     {
         StartCoroutine(SpawnEnemy());
+        
 
     }
 
@@ -22,12 +24,17 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemyCount >= maxEnemies)
         {
-            printTimeline.Pause();
+            extruderTimeline.Pause();
+
+            
             StopCoroutine(SpawnEnemy());
+            zAssemblyAnimator.speed = 0f; // todo this isn't stopped the right way
         }
         else
         {
-            printTimeline.Play(); // todo time of animation and sound should be dependant on spawntime
+            extruderTimeline.Play();
+            zAssemblyAnimator.speed = 1f / secondsBetweenSpawns;
+            zAssemblyAnimator.Play(0);
         }
 
         //printSound.Play();
@@ -41,4 +48,5 @@ public class EnemySpawner : MonoBehaviour
         }
         
     }
+
 }
