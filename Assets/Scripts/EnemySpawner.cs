@@ -15,18 +15,29 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnEnemy());
+
     }
 
     private IEnumerator SpawnEnemy()
     {
-        Instantiate(enemy, transform.position, Quaternion.identity, FindObjectOfType<EnemySpawner>().transform);
-        enemyCount++;
+        if (enemyCount >= maxEnemies)
+        {
+            printTimeline.Pause();
+            StopCoroutine(SpawnEnemy());
+        }
+        else
+        {
+            printTimeline.Play(); // todo time of animation and sound should be dependant on spawntime
+        }
+
+        //printSound.Play();
         yield return new WaitForSeconds(secondsBetweenSpawns);
         if (enemyCount < maxEnemies)
         {
+            enemyCount++;
+            Instantiate(enemy, transform.position, Quaternion.identity, FindObjectOfType<EnemySpawner>().transform);
             StartCoroutine(SpawnEnemy());
-            printTimeline.Play();
-            printSound.Play();
+            
         }
         
     }
