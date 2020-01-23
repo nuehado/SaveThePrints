@@ -15,9 +15,14 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(SpawnEnemy());
+        //StartCoroutine(SpawnEnemy());
         
 
+    }
+
+    public void startSpawningExternal()
+    {
+        StartCoroutine(SpawnEnemy());
     }
 
     private IEnumerator SpawnEnemy()

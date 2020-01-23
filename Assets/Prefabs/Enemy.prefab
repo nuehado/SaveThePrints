@@ -98,8 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   rotateSpeed: 0.03
-  goalParticles: {fileID: 4579958292083826815, guid: 520c9eedfbe87aa429fddffcebebb170,
-    type: 3}
 --- !u!114 &2013242502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b5588079f4d9543ab1e4abf1f2a0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 1000
+  hitPoints: 900
   hitParticles:
   - {fileID: 3708484603877186713}
   - {fileID: 6141343195756936031}
