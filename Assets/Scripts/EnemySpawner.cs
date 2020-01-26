@@ -10,8 +10,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxEnemies = 3;
     [SerializeField] private GameObject enemy;
     [SerializeField] private PlayableDirector extruderTimeline;
-    [SerializeField] private Animator zAssemblyAnimator;
-    [SerializeField] private AudioSource printSound;
+    [SerializeField] private Animator zAssemblyAnimation;
+
 
     void Start()
     {
@@ -30,19 +30,21 @@ public class EnemySpawner : MonoBehaviour
         if (enemyCount >= maxEnemies)
         {
             extruderTimeline.Pause();
-
+            zAssemblyAnimation.SetTrigger("Stop");
             
             StopCoroutine(SpawnEnemy());
-            zAssemblyAnimator.speed = 0f; // todo this isn't stopped the right way
+
         }
         else
         {
             extruderTimeline.Play();
-            zAssemblyAnimator.speed = 1f / secondsBetweenSpawns;
-            zAssemblyAnimator.Play(0);
+            
+            zAssemblyAnimation.SetTrigger("Animate");
+            zAssemblyAnimation.speed = 1f / secondsBetweenSpawns;
+            zAssemblyAnimation.SetTrigger("Stop");
+
         }
 
-        //printSound.Play();
         yield return new WaitForSeconds(secondsBetweenSpawns);
         if (enemyCount < maxEnemies)
         {

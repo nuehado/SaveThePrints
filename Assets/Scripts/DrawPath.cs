@@ -14,6 +14,14 @@ public class DrawPath : MonoBehaviour
 
     private int iWaypoint;
     private int iNextWaypoint;
+    private int iPathPoint;
+    private int iNextRenderPoint;
+
+    [SerializeField] Transform extruder;
+    [SerializeField] Transform printerStaticParts;
+
+    [SerializeField] private AudioSource bedMoving;
+    private bool isPrintBedMoving = false;
 
     private void Start()
     {
@@ -23,23 +31,24 @@ public class DrawPath : MonoBehaviour
         path = pathfinder.GetPath();
         distanceBetweenPoints = 10f; //Vector3.Distance(path[i].transform.position, path[i + 1].transform.position);
         pathRenderer.positionCount = 2;
-        iWaypoint = 0;
-        iNextWaypoint = 1;
-        pathRenderer.SetPosition(iWaypoint, path[iWaypoint].transform.position);
+        iWaypoint = path.Count-1;
+        iNextWaypoint = path.Count-2;
+        iNextRenderPoint = 1;
+        pathRenderer.SetPosition(0, path[iWaypoint].transform.position);
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
+
+        
+
 
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (pathRenderer.positionCount < path.Count)
+        if (pathRenderer.positionCount < path.Count + 1)
         {
             DrawRenderedPath();
-        }
-        else
-        {
             
         }
         
@@ -47,45 +56,37 @@ public class DrawPath : MonoBehaviour
 
     private void DrawRenderedPath()
     {
-        /*for (int i = 0; i < path.Count - 1; i++)
-        {
-            
-            if (lineDrawCounter < distanceBetweenPoints)
-            {
-                lineDrawCounter += 0.1f / lineDrawSpeed;
-                float lerpedDistance1 = Mathf.Lerp(0f, distanceBetweenPoints, lineDrawCounter);
-                Vector3 pointAlongLine = lerpedDistance1 * Vector3.Normalize(path[i + 1].transform.position - path[i].transform.position) + path[i].transform.position;
-                pathRenderer.SetPosition(i, pointAlongLine + new Vector3(0f, 0.1f, 0f));
-                if (Vector3.Distance(pathRenderer.GetPosition(i), path[destinationPoint].transform.position) < movementCompleteDistance)
-                {
-                    UpdateMovementTarget();
-                }
-            }
 
-
-        }*/
 
         lineDrawCounter += 0.1f / lineDrawSpeed;
         float lerpedDistance = Mathf.Lerp(0f, distanceBetweenPoints, lineDrawCounter);
         Vector3 lengthTowardsNextWaypoint = lerpedDistance * Vector3.Normalize(path[iNextWaypoint].transform.position - path[iWaypoint].transform.position) + path[iWaypoint].transform.position;
-        pathRenderer.SetPosition(iNextWaypoint, lengthTowardsNextWaypoint + new Vector3(0f,0.1f,0f));
-        Debug.Log(lineDrawCounter);
-        Debug.Log(distanceBetweenPoints);
+        pathRenderer.SetPosition(iNextRenderPoint, lengthTowardsNextWaypoint + new Vector3(0f,0.1f,0f));
+        extruder.transform.position = new Vector3(lengthTowardsNextWaypoint.x , extruder.position.y, extruder.position.z);
+        printerStaticParts.transform.position = new Vector3(printerStaticParts.transform.position.x, printerStaticParts.transform.position.y, lengthTowardsNextWaypoint.z);
+        if (isPrintBedMoving == false)
+        {
+            bedMoving.Play();
+            isPrintBedMoving = true;
+        }
+        
         if (lineDrawCounter >= 1f)
         {
-            Debug.Log("waypoint found");
-            iWaypoint ++;
-            iNextWaypoint ++;
+            iWaypoint --;
+            iNextWaypoint --;
             lerpedDistance = 0f;
             lineDrawCounter = 0f;
             pathRenderer.positionCount ++;
-            pathRenderer.SetPosition(iNextWaypoint, path[iWaypoint].transform.position);
+            iNextRenderPoint++;
+            pathRenderer.SetPosition(iNextRenderPoint, path[iWaypoint].transform.position + new Vector3(0f,0.1f,0f));
 
         }
 
-        if (pathRenderer.positionCount >= path.Count)
+        if (pathRenderer.positionCount >= path.Count + 1)
         {
             enemySpawner.startSpawningExternal();
+            bedMoving.Stop();
+            isPrintBedMoving = false;
         }
         
     }

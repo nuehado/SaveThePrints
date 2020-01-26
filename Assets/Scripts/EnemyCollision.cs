@@ -13,10 +13,6 @@ public class EnemyCollision : MonoBehaviour
     private float hitStoppedTimer = 0f;
     [SerializeField] private float hittingStoppedTime = 0.1f;
 
-    private void Start()
-    {
-
-    }
 
     void Update()
     {
