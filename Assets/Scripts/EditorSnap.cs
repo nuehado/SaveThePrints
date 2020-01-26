@@ -7,15 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(Waypoint))]
 public class EditorSnap : MonoBehaviour
 {
-
     Waypoint waypoint;
-
 
     private void Awake()
     {
         waypoint = GetComponent<Waypoint>();
-        
-
     }
 
     void Update()
@@ -23,7 +19,6 @@ public class EditorSnap : MonoBehaviour
         SnapToGrid();
         UpdateLabel();
         UpdateBlocker();
-
     }
 
     private void SnapToGrid()
@@ -41,8 +36,6 @@ public class EditorSnap : MonoBehaviour
         string textLabel = gridPosition.x + "," + gridPosition.y;
         coordinateLabel.text = textLabel;
         gameObject.name = "cube " + textLabel;
-
-        
     }
 
     private void UpdateBlocker()

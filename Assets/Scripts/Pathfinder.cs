@@ -26,11 +26,8 @@ public class Pathfinder : MonoBehaviour
         if (path.Count == 0)
         {
             BuildBlockDictionary();
-
             BreadthFirstSearchForPath();
             FormPath();
-
-            
         }
 
         return path;
@@ -56,7 +53,6 @@ public class Pathfinder : MonoBehaviour
             {
                 grid.Add(waypoint.GetGridPosition(), waypoint);
             }
-            
         }
     }
 
@@ -64,9 +60,7 @@ public class Pathfinder : MonoBehaviour
 
     private void BreadthFirstSearchForPath()
     {
-
         waypointQueue.Enqueue(startWaypoint);
-
 
         while (waypointQueue.Count > 0 && isRunning == true)
         {
@@ -76,8 +70,6 @@ public class Pathfinder : MonoBehaviour
             ExploreNeighbors(searchCenter);
             searchCenter.isExploreOff = true;
         }
-
-        //Debug.Log("Finished Pathfind()");
     }
 
     private void HaltIfEndFound(Waypoint start)
@@ -112,7 +104,6 @@ public class Pathfinder : MonoBehaviour
     {
         if (neighbor.isExploreOff == false)
         {
-            
             waypointQueue.Enqueue(neighbor);
             neighbor.isExploreOff = true; // todo I added this because It removes duplicates faster, I'm not sure if it breaks the breadth first search algorithm somehow though
             neighbor.exploredFrom = searchCenter;
@@ -129,7 +120,6 @@ public class Pathfinder : MonoBehaviour
             //add intermediate waypoints
             SetAsPath(previousWaypoint);
             previousWaypoint = previousWaypoint.exploredFrom;
-
         }
         SetAsPath(startWaypoint);
         path.Reverse();
@@ -140,6 +130,4 @@ public class Pathfinder : MonoBehaviour
         path.Add(waypointOnPath);
         waypointOnPath.isPlacable = false;
     }
-
-
 }

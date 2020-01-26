@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        healthtext.text = "The Child Health: " + playerHealth.ToString();
+        healthtext.text = "Health: " + playerHealth.ToString();
         if (playerHealth <= 0)
         {
             Destroy(gameObject);
@@ -30,5 +30,4 @@ public class PlayerHealth : MonoBehaviour
         Destroy(goalVFX.gameObject, 0.5f);
         Destroy(enemy);
     }
-
 }

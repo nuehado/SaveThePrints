@@ -11,18 +11,6 @@ public class Waypoint : MonoBehaviour
     public bool isBlocked = false;
     public Waypoint exploredFrom;
 
-
-
-    private void Start()
-    {
-        //CheckForBlocker();
-        /*if (isPlacable == false) // todo add this to the pathfinder script instead of on start. 
-        {
-            isExploreOff = true;
-        }*/
-
-    }
-
     public int GetGridSize()
     {
         return gridUnitSize;
@@ -30,7 +18,8 @@ public class Waypoint : MonoBehaviour
 
     public Vector2Int GetGridPosition()
     {
-        return new Vector2Int(
+        return new Vector2Int
+        (
             Mathf.RoundToInt(transform.position.x / gridUnitSize),
             Mathf.RoundToInt(transform.position.z / gridUnitSize)
         );
@@ -44,6 +33,4 @@ public class Waypoint : MonoBehaviour
             FindObjectOfType<TowerSpawnController>().AddTower(this);
         }
     }
-
-    
 }

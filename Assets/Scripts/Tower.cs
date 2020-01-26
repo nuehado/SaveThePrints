@@ -51,7 +51,6 @@ public class Tower : MonoBehaviour
             rotatingSFX.volume = 0.5f;
         }
         rotatingSFX.pitch = 0.4f + towerRotateSFXPitch;
-
     }
 
     private void SetTargetEnemy()
@@ -70,7 +69,6 @@ public class Tower : MonoBehaviour
         }
 
         targetEnemy = closestEnemy;
-
     }
 
     private Transform GetClosest(Transform transformA, Transform TransformB)
@@ -102,13 +100,11 @@ public class Tower : MonoBehaviour
             Vector3 stepTowardsTarget = Vector3.RotateTowards(objectToPan.transform.forward, directionToTarget, rotateSpeed, 0f);
             objectToPan.transform.rotation = Quaternion.LookRotation(stepTowardsTarget);
         }
-
     }
 
     private void CheckEnemyRange()
     {
         float enemyDistance = Mathf.Abs(Vector3.Distance(targetEnemy.position, objectToPan.position));
-        
 
         if (enemyDistance <= AttackRange)
         {
@@ -126,7 +122,6 @@ public class Tower : MonoBehaviour
     {
         var emissionModule = projectileParticles.emission;
 
-
         emissionModule.enabled = isInRage;
 
         if (isInRage && isSFXPlaying == false)
@@ -140,8 +135,6 @@ public class Tower : MonoBehaviour
             shootingSFX.Stop();
             isSFXPlaying = false;
         }
-
     }
-
 }
 

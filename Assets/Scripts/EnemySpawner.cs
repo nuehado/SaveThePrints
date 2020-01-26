@@ -13,13 +13,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Animator zAssemblyAnimation;
 
 
-    void Start()
-    {
-        //StartCoroutine(SpawnEnemy());
-        
-
-    }
-
     public void startSpawningExternal()
     {
         StartCoroutine(SpawnEnemy());
@@ -29,20 +22,14 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemyCount >= maxEnemies)
         {
-            extruderTimeline.Pause();
-            zAssemblyAnimation.SetTrigger("Stop");
-            
-            StopCoroutine(SpawnEnemy());
+            StopPrintingAnimations();
 
+            StopCoroutine(SpawnEnemy());
         }
+
         else
         {
-            extruderTimeline.Play();
-            
-            zAssemblyAnimation.SetTrigger("Animate");
-            zAssemblyAnimation.speed = 1f / secondsBetweenSpawns;
-            zAssemblyAnimation.SetTrigger("Stop");
-
+            PlayPrintingAnimations();
         }
 
         yield return new WaitForSeconds(secondsBetweenSpawns);
@@ -51,9 +38,20 @@ public class EnemySpawner : MonoBehaviour
             enemyCount++;
             Instantiate(enemy, transform.position, Quaternion.identity, FindObjectOfType<EnemySpawner>().transform);
             StartCoroutine(SpawnEnemy());
-            
         }
-        
     }
 
+    private void StopPrintingAnimations()
+    {
+        extruderTimeline.Pause();
+        zAssemblyAnimation.SetTrigger("Stop");
+    }
+
+    private void PlayPrintingAnimations()
+    {
+        extruderTimeline.Play();
+        zAssemblyAnimation.SetTrigger("Animate");
+        zAssemblyAnimation.speed = 1f / secondsBetweenSpawns;
+        zAssemblyAnimation.SetTrigger("Stop");
+    }
 }

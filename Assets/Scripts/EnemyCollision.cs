@@ -9,10 +9,10 @@ public class EnemyCollision : MonoBehaviour
 
     [SerializeField] ParticleSystem[] hitParticles;
     [SerializeField] ParticleSystem deathExplosion;
+    [SerializeField] AudioClip deathSound;
 
     private float hitStoppedTimer = 0f;
     [SerializeField] private float hittingStoppedTime = 0.1f;
-
 
     void Update()
     {
@@ -31,14 +31,14 @@ public class EnemyCollision : MonoBehaviour
         else if (isBeingHit == false)
         {
             StopHitParticles();
-        }
-            
+        }  
     }
 
     private void KillEnemy()
     {
         var explodeVFX = Instantiate(deathExplosion, transform.position, Quaternion.identity);
         Destroy(explodeVFX.gameObject, 1f);
+        AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position);
         Destroy(gameObject);
     }
 
@@ -58,7 +58,6 @@ public class EnemyCollision : MonoBehaviour
             {
                 hitParticle.Play();
             }
-
         }
     }
 
@@ -70,25 +69,15 @@ public class EnemyCollision : MonoBehaviour
         }
     }
 
-    
-
     private void OnParticleCollision(GameObject other)
     {
         isBeingHit = true;
         hitStoppedTimer = 0f;
         ProcessHit();
-        
-        //Debug.Log("HIT. hits left = " + hitPoints);
     }
 
     private void ProcessHit()
     {
-        
-        
         hitPoints = hitPoints - 1;
-
-        
     }
-
-    
 }

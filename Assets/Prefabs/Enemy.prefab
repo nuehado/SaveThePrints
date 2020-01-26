@@ -118,6 +118,9 @@ MonoBehaviour:
   - {fileID: 102034011665015161}
   deathExplosion: {fileID: 4579958292083826815, guid: d2f204490605c594db5a272f84d15669,
     type: 3}
+  deathSound: {fileID: 8300000, guid: b3709b015acb0914b8fe7d95fbaf464c, type: 3}
+  cameraAudioTransform: {fileID: 4476115238602056349, guid: 49dd36b21804dc94baa94517f5e21c1a,
+    type: 3}
   hittingStoppedTime: 0.05
 --- !u!54 &6330954987398749555
 Rigidbody:
