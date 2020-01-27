@@ -13,12 +13,13 @@ public class EnemyMovement : MonoBehaviour
     public bool isMoving = false;
 
     private EnemySpawner enemySpawner;
+    private bool isPaused;
 
 
 
     void Start()
     {
-        
+        isPaused = FindObjectOfType<PauseGame>().isPaused;
         enemySpawner = FindObjectOfType<EnemySpawner>();
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
         path = pathfinder.GetPath();
@@ -30,7 +31,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        if (isMoving == true)
+        if (isMoving == true && isPaused == false)
         {
             MoveEnemy();
         }
