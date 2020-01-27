@@ -5,7 +5,7 @@ using UnityEngine.Playables;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Range(0.1f,120f)] [SerializeField] private float secondsBetweenSpawns = 1f;
+    [Range(0.1f,120f)] public float secondsBetweenSpawns = 1f;
     private int enemyCount = 0;
     [SerializeField] private int maxEnemies = 3;
     [SerializeField] private GameObject enemy;
@@ -20,24 +20,30 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemy()
     {
-        if (enemyCount >= maxEnemies)
+        /*if (enemyCount >= maxEnemies)
         {
             StopPrintingAnimations();
 
             StopCoroutine(SpawnEnemy());
-        }
+        }*/
 
-        else
-        {
+        //else
+        //{
             PlayPrintingAnimations();
-        }
+        //}
+
+        enemyCount++;
+        Instantiate(enemy, transform.position, Quaternion.identity, FindObjectOfType<EnemySpawner>().transform);
 
         yield return new WaitForSeconds(secondsBetweenSpawns);
+        
         if (enemyCount < maxEnemies)
         {
-            enemyCount++;
-            Instantiate(enemy, transform.position, Quaternion.identity, FindObjectOfType<EnemySpawner>().transform);
             StartCoroutine(SpawnEnemy());
+        }
+        else
+        {
+            StopPrintingAnimations();
         }
     }
 

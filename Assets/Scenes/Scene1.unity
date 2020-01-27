@@ -3422,33 +3422,41 @@ PrefabInstance:
       propertyPath: m_FontData.m_HorizontalOverflow
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 963194227, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
+      propertyPath: field of view
+      value: 50.53402
+      objectReference: {fileID: 0}
+    - target: {fileID: 963194227, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 963194228, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.043046884
+      value: -0.00020710073
       objectReference: {fileID: 0}
     - target: {fileID: 963194228, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.94375944
+      value: -0.9277346
       objectReference: {fileID: 0}
     - target: {fileID: 963194228, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.29815513
+      value: 0.37324017
       objectReference: {fileID: 0}
     - target: {fileID: 963194228, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.13626672
+      value: -0.0005690659
       objectReference: {fileID: 0}
     - target: {fileID: 963194228, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 84.638145
+      value: -21.850468
       objectReference: {fileID: 0}
     - target: {fileID: 963194228, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -61.042225
+      value: -25.73059
       objectReference: {fileID: 0}
     - target: {fileID: 963194228, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 312.10855
+      value: 317.99313
       objectReference: {fileID: 0}
     - target: {fileID: 1051116123779298038, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f,
         type: 3}
@@ -5789,7 +5797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b436696430d3c5b458e60e9108d5c4c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsBetweenSpawns: 2.5
+  secondsBetweenSpawns: 3
   maxEnemies: 10
   enemy: {fileID: 5763013800238548160, guid: cd43dfb382ff9464f82b991c68cbfa73, type: 3}
   extruderTimeline: {fileID: 1399650351}

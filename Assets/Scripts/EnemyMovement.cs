@@ -10,13 +10,22 @@ public class EnemyMovement : MonoBehaviour
     List<Waypoint> path;
     private int destinationWaypoint = 0;
     private float movementCompleteDistance = 0.1f;
-    private bool isMoving = true;
+    public bool isMoving = false;
+
+    private EnemySpawner enemySpawner;
+
+
 
     void Start()
     {
+        
+        enemySpawner = FindObjectOfType<EnemySpawner>();
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
         path = pathfinder.GetPath();
         UpdateMovementTarget();
+        transform.rotation = Quaternion.LookRotation(path[1].transform.position - transform.position);
+        StartCoroutine(WaitForStartMovement(enemySpawner.secondsBetweenSpawns));
+
     }
 
     private void Update()
@@ -25,6 +34,12 @@ public class EnemyMovement : MonoBehaviour
         {
             MoveEnemy();
         }
+    }
+
+    private IEnumerator WaitForStartMovement(float secondsBetweenSpawns)
+    {
+        yield return new WaitForSeconds(secondsBetweenSpawns);
+        isMoving = true;
     }
 
     private void MoveEnemy()
