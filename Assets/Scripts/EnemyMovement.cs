@@ -14,8 +14,6 @@ public class EnemyMovement : MonoBehaviour
 
     private EnemySpawner enemySpawner;
     private bool isPaused;
-    //isPaused = FindObjectOfType<PauseGame>().isPaused;
-
 
     void Start()
     {
