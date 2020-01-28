@@ -7,9 +7,9 @@ public class PressRadialButton : MonoBehaviour
 {
     [SerializeField] private Button selectedButton;
 
-    public void ClickSelectedButton()
+   /* public void ClickSelectedButton()
     {
         selectedButton.onClick.Invoke();
     }
-    
+    */
 }

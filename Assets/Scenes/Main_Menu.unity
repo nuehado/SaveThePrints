@@ -2574,7 +2574,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 0.43867922, g: 0.9942657, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4728,9 +4728,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialCenter: {fileID: 1102517381}
-  button1: {fileID: 1294528946}
-  button2: {fileID: 2025788192}
-  button3: {fileID: 1702988211}
+  menuButtons:
+  - {fileID: 581100534}
+  - {fileID: 1294528946}
+  - {fileID: 2025788192}
+  - {fileID: 1702988211}
 --- !u!65 &1225128820
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5828,7 +5830,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1702988212}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1187129378}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1702988212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6271,7 +6284,6 @@ GameObject:
   - component: {fileID: 1937510181}
   - component: {fileID: 1937510180}
   - component: {fileID: 1937510179}
-  - component: {fileID: 1937510182}
   m_Layer: 5
   m_Name: pressRadialButton
   m_TagString: Untagged
@@ -6341,7 +6353,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1937510182}
+      - m_Target: {fileID: 1225128819}
         m_MethodName: ClickSelectedButton
         m_Mode: 1
         m_Arguments:
@@ -6388,19 +6400,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937510177}
   m_CullTransparentMesh: 0
---- !u!114 &1937510182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937510177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfec00ffc61e85644a4864ece9722c26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedButton: {fileID: 1294528946}
 --- !u!1001 &1944768837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6702,7 +6701,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2025788193}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 547893181}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2025788193
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,10 +9,9 @@ public class RadialButton : MonoBehaviour
     private float mouseZCoordinate;
     [SerializeField] private Transform dialCenter;
 
-    [SerializeField] private Button button1;
-    [SerializeField] private Button button2;
-    [SerializeField] private Button button3;
+    [SerializeField] private List<Button> menuButtons = new List<Button>();
     private Button highlightedButton = null;
+    private int highlightedButtonIndex = 0;
 
     private void OnMouseDrag()
     {
@@ -25,16 +24,32 @@ public class RadialButton : MonoBehaviour
         if (dialAngle >= 15f && dialAngle < 120f)
         {
             dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, -30f);
-            button1.Select();
+            if ( highlightedButtonIndex >= menuButtons.Count -1)
+            {
+                highlightedButtonIndex = 0;
+            }
+            else
+            {
+                highlightedButtonIndex++;
+            }
             
         }
         if (dialAngle <= -15f && dialAngle > -120f)
         {
+            dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, 30f);
+
+            if (highlightedButtonIndex <= 0)
             {
-                dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, 30f);
+                highlightedButtonIndex = menuButtons.Count - 1;
+            }
+            else
+            {
+                highlightedButtonIndex--;
             }
         }
-        
+        highlightedButton = menuButtons[highlightedButtonIndex];
+        highlightedButton.Select();
+        Debug.Log("selected button " + highlightedButtonIndex);
     }
 
     private Vector3 GetMouseAsWorldPoint()
@@ -44,5 +59,10 @@ public class RadialButton : MonoBehaviour
         mousePoint.z = mouseZCoordinate;
 
         return Camera.main.ScreenToWorldPoint(mousePoint);
+    }
+
+    public void ClickSelectedButton()
+    {
+        highlightedButton.onClick.Invoke();
     }
 }
