@@ -11,6 +11,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject enemy;
     [SerializeField] private PlayableDirector extruderTimeline;
     [SerializeField] private Animator zAssemblyAnimation;
+    private bool isPaused;
+    private bool animationsPaused = false;
+    private bool animationsActive = false;
 
 
     public void startSpawningExternal()
@@ -18,19 +21,25 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnEnemy());
     }
 
-    private IEnumerator SpawnEnemy()
+    private void Update()
     {
-        /*if (enemyCount >= maxEnemies)
+        isPaused = FindObjectOfType<PauseGame>().isPaused;
+        if (animationsPaused == true && isPaused == false && animationsActive == true)
+        {
+            PlayPrintingAnimations();
+            animationsPaused = false;
+        }
+        if (isPaused == true)
         {
             StopPrintingAnimations();
-
-            StopCoroutine(SpawnEnemy());
-        }*/
-
-        //else
-        //{
-            PlayPrintingAnimations();
-        //}
+            animationsPaused = true;
+        }
+        
+    }
+    private IEnumerator SpawnEnemy()
+    {
+        animationsActive = true;
+        PlayPrintingAnimations();
 
         enemyCount++;
         Instantiate(enemy, transform.position, Quaternion.identity, FindObjectOfType<EnemySpawner>().transform);
@@ -44,6 +53,7 @@ public class EnemySpawner : MonoBehaviour
         else
         {
             StopPrintingAnimations();
+            animationsActive = false;
         }
     }
 

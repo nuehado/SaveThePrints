@@ -12,6 +12,7 @@ public class TowerSpawnController : MonoBehaviour
 
     public void AddTower(Waypoint newWaypoint)
     {
+        
         if (towerQueue.Count < towerLimit)
         {
             Tower newTower = Instantiate(towerPrefab, newWaypoint.transform.position, Quaternion.identity, FindObjectOfType<Towers>().transform);

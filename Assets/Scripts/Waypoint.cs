@@ -11,6 +11,8 @@ public class Waypoint : MonoBehaviour
     public bool isBlocked = false;
     public Waypoint exploredFrom;
 
+    private bool isPaused;
+
     public int GetGridSize()
     {
         return gridUnitSize;
@@ -28,7 +30,8 @@ public class Waypoint : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0) && isPlacable == true)
+        isPaused = FindObjectOfType<PauseGame>().isPaused;
+        if (Input.GetMouseButtonDown(0) && isPlacable == true && isPaused == false)
         {
             FindObjectOfType<TowerSpawnController>().AddTower(this);
         }

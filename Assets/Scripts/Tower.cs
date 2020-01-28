@@ -21,6 +21,8 @@ public class Tower : MonoBehaviour
 
     public Waypoint waypointTowerIsOn;
 
+    private bool isPaused;
+
     private void Start()
     {
         var audioSources = GetComponents<AudioSource>();
@@ -30,9 +32,11 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
-        SetTargetEnemy();
+        isPaused = FindObjectOfType<PauseGame>().isPaused;
         
-        if(targetEnemy)
+        SetTargetEnemy();
+
+        if (targetEnemy && isPaused == false)
         {
             AimAtEnemy();
         }
@@ -41,16 +45,15 @@ public class Tower : MonoBehaviour
             Fire(false);
         }
 
-        towerRotateSFXPitch = angletoTarget * pitchChangePerDegree;
-        if(isInRange == false)
+        if (isPaused == true)
         {
-            rotatingSFX.volume = 0.2f;
+            rotatingSFX.volume = 0f;
         }
-        if (isInRange == true)
+        else
         {
-            rotatingSFX.volume = 0.5f;
+            PlayRotationSFX();
         }
-        rotatingSFX.pitch = 0.4f + towerRotateSFXPitch;
+        
     }
 
     private void SetTargetEnemy()
@@ -124,10 +127,37 @@ public class Tower : MonoBehaviour
 
         emissionModule.enabled = isInRage;
 
+        if (isPaused == true)
+        {
+            shootingSFX.Stop();
+            isSFXPlaying = false;
+        }
+        else
+        {
+            PlayFireSFX(isInRage);
+        }
+        
+    }
+
+    private void PlayRotationSFX()
+    {
+        towerRotateSFXPitch = angletoTarget * pitchChangePerDegree;
+        if (isInRange == false)
+        {
+            rotatingSFX.volume = 0.2f;
+        }
+        if (isInRange == true)
+        {
+            rotatingSFX.volume = 0.5f;
+        }
+        rotatingSFX.pitch = 0.4f + towerRotateSFXPitch;
+    }
+    private void PlayFireSFX(bool isInRage)
+    {
         if (isInRage && isSFXPlaying == false)
         {
             shootingSFX.Play();
-            
+
             isSFXPlaying = true;
         }
         else if (isInRage == false)
