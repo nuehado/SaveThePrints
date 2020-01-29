@@ -9,12 +9,19 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] Text healthtext;
     [SerializeField] ParticleSystem goalParticles;
 
+    private PauseGame gamePauser;
+
+    private void Start()
+    {
+        gamePauser = FindObjectOfType<PauseGame>();
+    }
     private void Update()
     {
         healthtext.text = "Health: " + playerHealth.ToString();
         if (playerHealth <= 0)
         {
             Destroy(gameObject);
+            gamePauser.PausePlayButton();
         }
     }
 

@@ -40,7 +40,7 @@ public class EditorSnap : MonoBehaviour
 
     private void UpdateBlocker()
     {
-        var blockerObject = transform.Find("blob");
+        var blockerObject = transform.Find("Supports");
         if (waypoint.isBlocked == true)
         {
             blockerObject.gameObject.SetActive(true);

@@ -23,7 +23,7 @@ public class RadialButton : MonoBehaviour
         
         if (dialAngle >= 15f && dialAngle < 120f)
         {
-            dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, -30f);
+            dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, -18f);
             if ( highlightedButtonIndex >= menuButtons.Count -1)
             {
                 highlightedButtonIndex = 0;
@@ -36,7 +36,7 @@ public class RadialButton : MonoBehaviour
         }
         if (dialAngle <= -15f && dialAngle > -120f)
         {
-            dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, 30f);
+            dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, 18f);
 
             if (highlightedButtonIndex <= 0)
             {
