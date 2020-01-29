@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
 
         yield return new WaitForSeconds(secondsBetweenSpawns);
         
-        if (enemyCount < maxEnemies)
+        if (enemyCount < maxEnemies )
         {
             StartCoroutine(SpawnEnemy());
         }
