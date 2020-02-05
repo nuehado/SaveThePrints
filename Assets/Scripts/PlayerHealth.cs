@@ -17,7 +17,6 @@ public class PlayerHealth : MonoBehaviour
     }
     private void Update()
     {
-        healthtext.text = "Health: " + playerHealth.ToString();
         if (playerHealth <= 0)
         {
             Destroy(gameObject);
