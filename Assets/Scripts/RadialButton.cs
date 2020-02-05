@@ -9,14 +9,14 @@ public class RadialButton : MonoBehaviour
     private float mouseZCoordinate;
     [SerializeField] private Transform dialCenter;
 
-    [SerializeField] private List<Button> menuButtons = new List<Button>();
+    public List<Button> menuButtons = new List<Button>();
     private Button highlightedButton = null;
-    private int highlightedButtonIndex = 0;
+    public int highlightedButtonIndex = 0;
 
     [SerializeField] private ScrollRect menuScroller;
     private int scrollIncrements = 0;
     private float scrollIncrementDistance;
-    private int menuPositionIndex = 0;
+    public int menuPositionIndex = 0;
     private float previousMenuScrollerYPosition;
 
     private void Start()
@@ -63,24 +63,24 @@ public class RadialButton : MonoBehaviour
         if (highlightedButtonIndex >= menuButtons.Count - 1)
         {
             menuScroller.verticalNormalizedPosition = 0f;
+            menuPositionIndex = 3;
             RotateDialTransformCounterClockwise();
             return;
         }
         else
         {
-            if (menuPositionIndex < 4)
-            {
-                menuPositionIndex++;
-            }
-
             highlightedButtonIndex++;
-            if (highlightedButtonIndex >= 4 && menuPositionIndex == 4)
+            if (highlightedButtonIndex >= 4 && menuPositionIndex == 3)
             {
                 menuScroller.verticalNormalizedPosition -= scrollIncrementDistance;
             }
             else
             {
                 RotateDialTransformCounterClockwise();
+            }
+            if (menuPositionIndex < 3)
+            {
+                menuPositionIndex++;
             }
         }
     }
@@ -90,16 +90,12 @@ public class RadialButton : MonoBehaviour
         if (highlightedButtonIndex <= 0)
         {
             menuScroller.verticalNormalizedPosition = 1f;
+            menuPositionIndex = 0;
             RotateDialTransformClockwise();
             return;
         }
         else
         {
-            if (menuPositionIndex > 0)
-            {
-                menuPositionIndex--;
-            }
-
             highlightedButtonIndex--;
             if (highlightedButtonIndex <= menuButtons.Count - 4 && menuPositionIndex == 0)
             {
@@ -108,6 +104,10 @@ public class RadialButton : MonoBehaviour
             else
             {
                 RotateDialTransformClockwise();
+            }
+            if (menuPositionIndex > 0)
+            {
+                menuPositionIndex--;
             }
         }
     }
@@ -129,6 +129,11 @@ public class RadialButton : MonoBehaviour
     public void RotateDialFromMouseScroll(Vector2 value)
     {
         float currentMenuScrollerYPosition = value.y;
+        if (Mathf.Abs(currentMenuScrollerYPosition - previousMenuScrollerYPosition) < 0.001)
+        {
+            return;
+        }
+        
         if (currentMenuScrollerYPosition < previousMenuScrollerYPosition)
         {
             RotateDialTransformCounterClockwise();
