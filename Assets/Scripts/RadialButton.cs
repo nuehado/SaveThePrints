@@ -17,13 +17,14 @@ public class RadialButton : MonoBehaviour
     private int scrollIncrements = 0;
     private float scrollIncrementDistance;
     private int menuPositionIndex = 0;
+    private float previousMenuScrollerYPosition;
 
     private void Start()
     {
         menuScroller.verticalNormalizedPosition = 1f;
         scrollIncrements = menuButtons.Count - 4;
         scrollIncrementDistance = 1f / scrollIncrements;
-
+        menuScroller.onValueChanged.AddListener(RotateDialFromMouseScroll);
     }
 
     private void OnMouseDrag()
@@ -36,27 +37,24 @@ public class RadialButton : MonoBehaviour
         
         if (dialAngle >= 15f && dialAngle < 120f)
         {
-            RotateDialTransformCounterClockwise();
             ScrollMenuButtonSelectDown();
         }
 
         if (dialAngle <= -15f && dialAngle > -120f)
         {
-            RotateDialTransformClockwise();
             ScrollMenuButtonSelectUp();
         }
 
         highlightedButton = menuButtons[highlightedButtonIndex];
         highlightedButton.Select();
-        Debug.Log("selected button " + highlightedButtonIndex);
     }
 
-    private void RotateDialTransformClockwise()
+    public void RotateDialTransformClockwise()
     {
         dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, 18f);
     }
 
-    private void RotateDialTransformCounterClockwise()
+    public void RotateDialTransformCounterClockwise()
     {
         dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, -18f);
     }
@@ -65,6 +63,7 @@ public class RadialButton : MonoBehaviour
         if (highlightedButtonIndex >= menuButtons.Count - 1)
         {
             menuScroller.verticalNormalizedPosition = 0f;
+            RotateDialTransformCounterClockwise();
             return;
         }
         else
@@ -79,6 +78,10 @@ public class RadialButton : MonoBehaviour
             {
                 menuScroller.verticalNormalizedPosition -= scrollIncrementDistance;
             }
+            else
+            {
+                RotateDialTransformCounterClockwise();
+            }
         }
     }
 
@@ -87,6 +90,7 @@ public class RadialButton : MonoBehaviour
         if (highlightedButtonIndex <= 0)
         {
             menuScroller.verticalNormalizedPosition = 1f;
+            RotateDialTransformClockwise();
             return;
         }
         else
@@ -100,6 +104,10 @@ public class RadialButton : MonoBehaviour
             if (highlightedButtonIndex <= menuButtons.Count - 4 && menuPositionIndex == 0)
             {
                 menuScroller.verticalNormalizedPosition += scrollIncrementDistance;
+            }
+            else
+            {
+                RotateDialTransformClockwise();
             }
         }
     }
@@ -118,5 +126,17 @@ public class RadialButton : MonoBehaviour
         highlightedButton.onClick.Invoke();
     }
 
-
+    public void RotateDialFromMouseScroll(Vector2 value)
+    {
+        float currentMenuScrollerYPosition = value.y;
+        if (currentMenuScrollerYPosition < previousMenuScrollerYPosition)
+        {
+            RotateDialTransformCounterClockwise();
+        }
+        else
+        {
+            RotateDialTransformClockwise();
+        }
+        previousMenuScrollerYPosition = currentMenuScrollerYPosition;
+    }
 }
