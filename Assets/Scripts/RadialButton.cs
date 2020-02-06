@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class RadialButton : MonoBehaviour
 {
-    private Vector3 mouseOffset;
-    private float mouseZCoordinate;
+    
     [SerializeField] private Transform dialCenter;
 
     public List<Button> menuButtons = new List<Button>();
@@ -21,40 +20,44 @@ public class RadialButton : MonoBehaviour
 
     private void Start()
     {
-        menuScroller.verticalNormalizedPosition = 1f;
-        scrollIncrements = menuButtons.Count - 4;
-        scrollIncrementDistance = 1f / scrollIncrements;
-        menuScroller.onValueChanged.AddListener(RotateDialFromMouseScroll);
+        if (menuScroller != null)
+        {
+            menuScroller.verticalNormalizedPosition = 1f;
+            scrollIncrements = menuButtons.Count - 4;
+            scrollIncrementDistance = 1f / scrollIncrements;
+            menuScroller.onValueChanged.AddListener(RotateDialFromMouseScroll);
+        }
+        highlightedButton = menuButtons[0];
+        highlightedButton.Select();
     }
 
-    private void OnMouseDrag()
+    public void HandleDialTurn(bool isRotatedCounter)
     {
-        mouseZCoordinate = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        mouseOffset =  GetMouseAsWorldPoint();
-        Vector3 mouseToCenterLine = mouseOffset - dialCenter.position;
-        Vector3 dialKnobToCenterLine = gameObject.transform.position - dialCenter.position;
-        float dialAngle = Vector3.SignedAngle(mouseToCenterLine, dialKnobToCenterLine, dialCenter.up);
-        
-        if (dialAngle >= 15f && dialAngle < 120f)
+        if (isRotatedCounter)
         {
             ScrollMenuButtonSelectDown();
         }
 
-        if (dialAngle <= -15f && dialAngle > -120f)
+        else if (!isRotatedCounter)
         {
             ScrollMenuButtonSelectUp();
         }
+        SelectMenuButton();
+    }
 
+    private void SelectMenuButton()
+    {
+        Debug.Log("highlight index: " + highlightedButtonIndex);
         highlightedButton = menuButtons[highlightedButtonIndex];
         highlightedButton.Select();
     }
 
-    public void RotateDialTransformClockwise()
+    private void RotateDialTransformClockwise()
     {
         dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, 18f);
     }
 
-    public void RotateDialTransformCounterClockwise()
+    private void RotateDialTransformCounterClockwise()
     {
         dialCenter.transform.RotateAround(dialCenter.position, dialCenter.up, -18f);
     }
@@ -69,8 +72,11 @@ public class RadialButton : MonoBehaviour
         }
         else
         {
-            highlightedButtonIndex++;
-            if (highlightedButtonIndex >= 4 && menuPositionIndex == 3)
+            if (menuPositionIndex < 3)
+            {
+                menuPositionIndex++;
+            }
+            if (highlightedButtonIndex >= 3 && menuPositionIndex == 3)
             {
                 menuScroller.verticalNormalizedPosition -= scrollIncrementDistance;
             }
@@ -78,10 +84,8 @@ public class RadialButton : MonoBehaviour
             {
                 RotateDialTransformCounterClockwise();
             }
-            if (menuPositionIndex < 3)
-            {
-                menuPositionIndex++;
-            }
+            
+            highlightedButtonIndex++;
         }
     }
 
@@ -112,14 +116,7 @@ public class RadialButton : MonoBehaviour
         }
     }
 
-    private Vector3 GetMouseAsWorldPoint()
-    {
-        Vector3 mousePoint = Input.mousePosition;
-
-        mousePoint.z = mouseZCoordinate;
-
-        return Camera.main.ScreenToWorldPoint(mousePoint);
-    }
+    
 
     public void ClickSelectedButton()
     {
@@ -131,6 +128,7 @@ public class RadialButton : MonoBehaviour
         float currentMenuScrollerYPosition = value.y;
         if (Mathf.Abs(currentMenuScrollerYPosition - previousMenuScrollerYPosition) < 0.001)
         {
+            previousMenuScrollerYPosition = currentMenuScrollerYPosition;
             return;
         }
         

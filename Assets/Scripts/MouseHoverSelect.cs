@@ -9,7 +9,7 @@ public class MouseHoverSelect : MonoBehaviour, IPointerEnterHandler
 
     private void Start()
     {
-        radialButton = FindObjectOfType<RadialButton>();
+        radialButton = GetComponentInParent<RadialButton>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
