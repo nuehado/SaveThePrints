@@ -1456,6 +1456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5375f9066305bf419bb714eb0ede631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minDragDistance: 5
 --- !u!1001 &387446697
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5479,7 +5480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
-  m_DragThreshold: 10
+  m_DragThreshold: 100
 --- !u!4 &1315642047
 Transform:
   m_ObjectHideFlags: 0
