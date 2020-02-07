@@ -15,7 +15,10 @@ public class SelectedButtonScrollController : MonoBehaviour
     private int currentlySelectedButtonIndex = 0;
     private int up = 1;
     private int down = -1;
+    private int upIndex = 0;
+    private int downIndex = 3;
     [Range(0f, 1f)] private float previousScrollYPosition = 1;
+    public bool isScrolling = true;
 
     private void Start()
     {
@@ -43,15 +46,22 @@ public class SelectedButtonScrollController : MonoBehaviour
         if (currentlySelectedButtonIndex > currentlyDisplayedButtonIndexes[currentDisplayedIndexes.maxMenuPositionIndex])
         {
             scrollStepHandler.UpdateScrollPosition(down);
+            isScrolling = false;
         }
         else if (currentlySelectedButtonIndex < currentlyDisplayedButtonIndexes[0])
         {
             scrollStepHandler.UpdateScrollPosition(up);
+            isScrolling = false;
         }
     }
 
     public void SelectNewButtonIfOutsideView(Vector2 scrollPosition)
     {
+        if (isScrolling == false)
+        {
+            isScrolling = true;
+            return;
+        }
         currentlyDisplayedButtonIndexes = GetComponent<CurrentDisplayedIndexes>().currentlyDisplayedButtonIndexes;
         float scrollYPosition = scrollPosition.y;
         if (scrollYPosition < 0.001f)
@@ -59,18 +69,19 @@ public class SelectedButtonScrollController : MonoBehaviour
             scrollYPosition = 0.001f;
         }
 
-        if (scrollYPosition > previousScrollYPosition)
+        if (scrollYPosition > previousScrollYPosition && currentlyDisplayedButtonIndexes[0] > 0)
         {
-            CheckForSelectionNeeded(up);
+            CheckForSelectionNeeded(upIndex);
         }
 
-        if (scrollYPosition < previousScrollYPosition)
+        if (scrollYPosition < previousScrollYPosition && currentlyDisplayedButtonIndexes[3] < menuButtons.Length)
         {
-            CheckForSelectionNeeded(down);
+            CheckForSelectionNeeded(downIndex);
         }
+        previousScrollYPosition = scrollYPosition;
     }
 
-    private void CheckForSelectionNeeded(int upOrDown)
+    private void CheckForSelectionNeeded(int upOrDownIndex)
     {
         bool isVisibleButtonSelected = false;
         for (int i = currentlyDisplayedButtonIndexes[0]; i < currentlyDisplayedButtonIndexes[3]; i++)
@@ -84,7 +95,7 @@ public class SelectedButtonScrollController : MonoBehaviour
 
         if (isVisibleButtonSelected == false)
         {
-            menuButtons[currentlyDisplayedButtonIndexes[3]].SelectButton();
+            menuButtons[currentlyDisplayedButtonIndexes[upOrDownIndex]].SelectButton();
         }
     }
 }
