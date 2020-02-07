@@ -52,5 +52,4 @@ public class DragStepController : MonoBehaviour, IBeginDragHandler, IDragHandler
         scrollRect.vertical = true;
         yDraggedDistance = 0f;
     }
-
 }

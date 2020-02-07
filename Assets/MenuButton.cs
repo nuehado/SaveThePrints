@@ -49,10 +49,4 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
         SetSelectedText();
         selectedButtonScrollController.SetMenuPosition(this);
     }
-
-    /*public void OnMove(AxisEventData eventData)
-    {
-        float moveDirection = eventData.moveVector.y;
-        selectedButtonScrollController.SetMenuPosition(moveDirection);
-    }*/ //todo delete onMove event
 }

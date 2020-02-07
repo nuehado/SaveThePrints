@@ -13,18 +13,13 @@ public class SelectedButtonScrollController : MonoBehaviour
     private MenuButton[] menuButtons;
     private int[] currentlyDisplayedButtonIndexes = new int[] { 0, 1, 2, 3 };
     private int currentlySelectedButtonIndex = 0;
-
-    //array of 4 button indexes currently on display
-    //when a new button is selected
-    //if it's index is greater than the largest button index in array, shift array up one (unless at max)
-    //if it's index is less than the smallest button index in the array, shift array down onw (unless at min)
-    //todo change OnMove event on each button to OnSelect. this should make it independent of selection method
+    private int up = 1;
+    private int down = -1;
 
     private void Start()
     {
         scrollStepHandler = GetComponent<ScrollStepHandler>();
         menuButtons = GetComponentsInChildren<MenuButton>();
-
     }
 
     public void SetMenuPosition(MenuButton selectedButton)
@@ -38,39 +33,27 @@ public class SelectedButtonScrollController : MonoBehaviour
         }
 
         CheckIfSelectedButtonOutsideView();
-        
-        
-        /*if (upOrDown > 0 && menuPositionIndex > 0)
-        {
-            menuPositionIndex--;
-        }
-        else if ( upOrDown < 0 && menuPositionIndex < maxMenuPositionIndex)
-        {
-            menuPositionIndex++;
-        }
-        else
-        {
-            scrollStepHandler.UpdateScrollPosition(upOrDown);
-        }*/
     }
 
     private void CheckIfSelectedButtonOutsideView()
     {
         if (currentlySelectedButtonIndex > currentlyDisplayedButtonIndexes[maxMenuPositionIndex])
         {
-            scrollStepHandler.UpdateScrollPosition(-1f);
-            for (int j = 0; j <= maxMenuPositionIndex; j++)
-            {
-                currentlyDisplayedButtonIndexes[j]++;
-            }
+            scrollStepHandler.UpdateScrollPosition(down);
+            UpdateDisplayIndexes(down);
         }
         else if (currentlySelectedButtonIndex < currentlyDisplayedButtonIndexes[0])
         {
-            scrollStepHandler.UpdateScrollPosition(1f);
-            for (int j = 0; j <= maxMenuPositionIndex; j++)
-            {
-                currentlyDisplayedButtonIndexes[j]--;
-            }
+            scrollStepHandler.UpdateScrollPosition(up);
+            UpdateDisplayIndexes(up);
+        }
+    }
+
+    private void UpdateDisplayIndexes(int scrollDirection)
+    {
+        for (int j = 0; j <= maxMenuPositionIndex; j++)
+        {
+            currentlyDisplayedButtonIndexes[j] -= scrollDirection;
         }
     }
 }
