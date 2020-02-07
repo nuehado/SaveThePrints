@@ -34,7 +34,7 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
         }
     }
 
-    private void SelectButton()
+    public void SelectButton()
     {
         GetComponent<Button>().Select();
     }
