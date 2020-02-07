@@ -6,13 +6,15 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System;
 
-public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler, ISelectHandler
+public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler, ISelectHandler, IMoveHandler
 {
     [SerializeField] private string text = "Button Text";
+    private SelectedButtonScrollController selectedButtonScrollController;
 
     private void Start()
     {
         SetText();
+        selectedButtonScrollController = GetComponentInParent<SelectedButtonScrollController>();
     }
 
     public void SetText()
@@ -45,4 +47,9 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
         SetSelectedText();
     }
 
+    public void OnMove(AxisEventData eventData)
+    {
+        float moveDirection = eventData.moveVector.y;
+        selectedButtonScrollController.SetMenuPosition(moveDirection);
+    }
 }

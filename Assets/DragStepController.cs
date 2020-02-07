@@ -4,26 +4,27 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DragStepHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragStepController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private float minDragDistance = 1f;
     private Vector3 previousMousePosition;
     private float yDraggedDistance = 0f;
     private ScrollRect scrollRect;
-    private float scrollStepDistance = 0f;
-    private float scrollVerticalNormalizedPosition = 1f;
+    private ScrollStepHandler scrollStepHandler;
+
+    private int up = 1;
+    private int down = -1;
 
     private void Start()
     {
         scrollRect = GetComponent<ScrollRect>();
-        scrollStepDistance = 1f / (GetComponentsInChildren<Button>().Length - 4);
+        scrollStepHandler = GetComponent<ScrollStepHandler>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         scrollRect.vertical = false;
         previousMousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        scrollVerticalNormalizedPosition = scrollRect.verticalNormalizedPosition;
     }
 
     public void OnDrag(PointerEventData data)
@@ -33,32 +34,17 @@ public class DragStepHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         if (yDraggedDistance >= minDragDistance)
         {
-            scrollVerticalNormalizedPosition += scrollStepDistance;
-            if (scrollVerticalNormalizedPosition >= 1f)
-            {
-                scrollVerticalNormalizedPosition = 1f;
-
-            }
-            UpdateScrollPosition();
+            scrollStepHandler.UpdateScrollPosition(up);
+            yDraggedDistance = 0f;
             previousMousePosition = newMousePosition;
         }
 
         else if (yDraggedDistance <= -minDragDistance)
         {
-            scrollVerticalNormalizedPosition -= scrollStepDistance;
-            if (scrollVerticalNormalizedPosition <= 0f)
-            {
-                scrollVerticalNormalizedPosition = 0f;
-            }
-            UpdateScrollPosition();
+            scrollStepHandler.UpdateScrollPosition(down);
+            yDraggedDistance = 0f;
             previousMousePosition = newMousePosition;
         }
-    }
-
-    private void UpdateScrollPosition()
-    {
-        scrollRect.verticalNormalizedPosition = scrollVerticalNormalizedPosition;
-        yDraggedDistance = 0f;
     }
 
     public void OnEndDrag(PointerEventData eventData)
