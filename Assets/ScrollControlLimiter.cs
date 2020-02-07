@@ -18,16 +18,17 @@ public class ScrollControlLimiter : MonoBehaviour, IBeginDragHandler, IDragHandl
         scrollRect = GetComponent<ScrollRect>();
         scrollStepDistance = 1f / (GetComponentsInChildren<Button>().Length - 4);
     }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         scrollRect.vertical = false;
-        previousMousePosition = Input.mousePosition;
+        previousMousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         scrollVerticalNormalizedPosition = scrollRect.verticalNormalizedPosition;
     }
 
     public void OnDrag(PointerEventData data)
     {
-        Vector3 newMousePosition = Input.mousePosition;
+        Vector3 newMousePosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         yDraggedDistance = newMousePosition.y - previousMousePosition.y;
 
         if (yDraggedDistance >= minDragDistance)
@@ -39,6 +40,7 @@ public class ScrollControlLimiter : MonoBehaviour, IBeginDragHandler, IDragHandl
 
             }
             UpdateScrollPosition();
+            previousMousePosition = newMousePosition;
         }
 
         else if (yDraggedDistance <= -minDragDistance)
@@ -49,8 +51,8 @@ public class ScrollControlLimiter : MonoBehaviour, IBeginDragHandler, IDragHandl
                 scrollVerticalNormalizedPosition = 0f;
             }
             UpdateScrollPosition();
+            previousMousePosition = newMousePosition;
         }
-        previousMousePosition = newMousePosition;
     }
 
     private void UpdateScrollPosition()
