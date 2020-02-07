@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System;
 
-public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler
+public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler, ISelectHandler
 {
     [SerializeField] private string text = "Button Text";
 
@@ -32,12 +32,17 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler
     private void SelectButton()
     {
         GetComponent<Button>().Select();
-        SetSelectedText();
     }
 
     public void OnDeselect(BaseEventData baseEventData)
     {
         SetText();
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        Debug.Log("selected a button");
+        SetSelectedText();
     }
 
 }

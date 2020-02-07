@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5002671411143954830}
   - component: {fileID: 1234638718461962232}
   - component: {fileID: 5384347771304224196}
-  - component: {fileID: 6799526009655024804}
   m_Layer: 5
   m_Name: Select Print Canvas
   m_TagString: Untagged
@@ -102,30 +101,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6799526009655024804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 135419550948420610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71285cdfd9b9b3a4bab176e3cc355e38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialCenter: {fileID: 0}
-  menuButtons:
-  - {fileID: 9062709020298667067}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  highlightedButtonIndex: 0
-  menuScroller: {fileID: 618982271474406985}
-  menuPositionIndex: 0
 --- !u!1 &2543458702120819581
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +111,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3563217103307229090}
   - component: {fileID: 8044142160066424757}
-  - component: {fileID: 9076706178780448598}
   - component: {fileID: 3148331504873717529}
   m_Layer: 5
   m_Name: SelectOptions
@@ -196,19 +170,6 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
---- !u!114 &9076706178780448598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2543458702120819581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
 --- !u!114 &3148331504873717529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,7 +666,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6799526009655024804}
+      - m_Target: {fileID: 0}
         m_MethodName: ClickSelectedButton
         m_Mode: 1
         m_Arguments:
@@ -1711,15 +1672,3 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 9039431658157631853}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9062709020298667067 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 51711016647953750, guid: 31e8d29ece85dc140ab98334b19c215f,
-    type: 3}
-  m_PrefabInstance: {fileID: 9039431658157631853}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
