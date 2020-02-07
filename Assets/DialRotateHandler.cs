@@ -9,7 +9,6 @@ public class DialRotateHandler : MonoBehaviour
     private Vector3 mouseOffset;
     private float mouseZCoordinate;
     private RadialButton radialButton;
-    private float rotateTimer = 0f; // todo remove all of this timer once bug is fixed
 
     private void OnMouseDrag()
     {
@@ -19,21 +18,18 @@ public class DialRotateHandler : MonoBehaviour
         Vector3 mouseToCenterLine = mouseOffset - dialCenter.transform.position;
         Vector3 dialKnobToCenterLine = dialNub.transform.position - dialCenter.transform.position;
         float dialAngle = Vector3.SignedAngle(mouseToCenterLine, dialKnobToCenterLine, dialCenter.up);
-        rotateTimer += Time.deltaTime;
 
-        if (dialAngle >= 18f && dialAngle < 120f && rotateTimer > 1f)
-        {
-            radialButton = FindObjectOfType<RadialButton>();
-            Debug.Log("rotation down from handler" + dialAngle);
-            radialButton.HandleDialTurn(true);
-            rotateTimer = 0f;
-        }
-
-        else if (dialAngle <= -15f && dialAngle > -120f)
+        if (dialAngle <= -15f && dialAngle > -120f)
         {
             Debug.Log("rotation up from handler" + dialAngle);
             radialButton = FindObjectOfType<RadialButton>();
             radialButton.HandleDialTurn(false);
+        }
+        else if (dialAngle >= 18f && dialAngle < 120f)
+        {
+            radialButton = FindObjectOfType<RadialButton>();
+            Debug.Log("rotation down from handler" + dialAngle);
+            radialButton.HandleDialTurn(true);
         }
     }
     private Vector3 GetMouseAsWorldPoint()
