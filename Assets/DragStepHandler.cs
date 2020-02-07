@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ScrollControlLimiter : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragStepHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private float minDragDistance = 1f;
     private Vector3 previousMousePosition;
