@@ -5,26 +5,29 @@ using UnityEngine.UI;
 
 public class MouseHoverSelect : MonoBehaviour, IPointerEnterHandler
 {
-    private RadialButton radialButton;
+    //private RadialButton radialButton;
 
     private void Start()
     {
-        radialButton = GetComponentInParent<RadialButton>();
+        //radialButton = GetComponentInParent<RadialButton>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        SetsButtonStatus();
+        if (eventData.delta.x > 100f)
+        {
+            SetsButtonStatus();
+        }
     }
 
     private void SetsButtonStatus()
     {
-        GetComponent<Button>().Select();
+        //GetComponent<Button>().Select();
 
-        SyncRadialButtonToMouseSelection();
+        //SyncRadialButtonToMouseSelection();
     }
 
-    private void SyncRadialButtonToMouseSelection()
+    /*private void SyncRadialButtonToMouseSelection()
     {
         int currentMenuPositionIndex = radialButton.menuPositionIndex;
         int currentHighlightedButtonIndex = radialButton.highlightedButtonIndex;
@@ -43,5 +46,5 @@ public class MouseHoverSelect : MonoBehaviour, IPointerEnterHandler
             }
             i++;
         }
-    }
+    }*/
 }

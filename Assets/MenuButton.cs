@@ -28,7 +28,10 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        SelectButton();
+        if (eventData.IsPointerMoving())
+        {
+            SelectButton();
+        }
     }
 
     private void SelectButton()
