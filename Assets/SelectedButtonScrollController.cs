@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class SelectedButtonScrollController : MonoBehaviour
 {
     private ScrollMenuIndexesTracker scrollMenuIndexesTracker;
-    private MenuButton[] buttons;
-    private int currentlySelectedButtonIndex;
+    public MenuButton[] buttons;
+    public int currentlySelectedButtonIndex;
     private ScrollRectOverride scrollRectOverride;
     private float scrollStepDistance;
     private float scrollVerticalNormalizedPosition = 1f;
@@ -61,16 +61,11 @@ public class SelectedButtonScrollController : MonoBehaviour
             scrollRectOverride.verticalNormalizedPosition += scrollStepDistance;
             scrollMenuIndexesTracker.UpdateIndexesOnScroll(-1);
 
-            //scrollStepHandler.UpdateScrollPosition(up);
-            //isScrolling = false;
         }
         else if (currentlySelectedButtonIndex > scrollMenuIndexesTracker.currentLargestVisibleButtonIndex)
         {
             scrollRectOverride.verticalNormalizedPosition -= scrollStepDistance;
             scrollMenuIndexesTracker.UpdateIndexesOnScroll(1);
-
-            //scrollStepHandler.UpdateScrollPosition(down);
-            //isScrolling = false;
         }
     }
 

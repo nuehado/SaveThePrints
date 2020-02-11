@@ -7,11 +7,30 @@ using UnityEngine.UI;
 
 public class ScrollRectOverride : ScrollRect, IScrollHandler
 {
-    // Start is called before the first frame update
+    private SelectedButtonScrollController selectedButtonScrollController;
+    private int currentlySelectedButtonIndex;
+    private MenuButton[] buttons;
+
+    private new void Start()
+    {
+        base.Start();
+        selectedButtonScrollController = GetComponent<SelectedButtonScrollController>();
+    }
     public override void OnScroll(PointerEventData data)
     {
         base.OnScroll(data);
 
-        Debug.Log(data.scrollDelta.y);
+        currentlySelectedButtonIndex = selectedButtonScrollController.currentlySelectedButtonIndex;
+        buttons = selectedButtonScrollController.buttons;
+        if (data.scrollDelta.y < 0 && currentlySelectedButtonIndex < buttons.Length - 1)
+        {
+            int newButtonSelectionIndex = currentlySelectedButtonIndex + 1;
+            buttons[newButtonSelectionIndex].SelectButton();
+        }
+        else if (data.scrollDelta.y > 0 && currentlySelectedButtonIndex > 0)
+        {
+            int newButtonSelectionIndex = currentlySelectedButtonIndex - 1;
+            buttons[newButtonSelectionIndex].SelectButton();
+        }
     }
 }
