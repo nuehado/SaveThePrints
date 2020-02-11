@@ -47,6 +47,6 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
     public void OnSelect(BaseEventData eventData)
     {
         SetSelectedText();
-        selectedButtonScrollController.SetMenuPosition(this);
+        selectedButtonScrollController.SetMenuPosition(GetComponent<Button>());
     }
 }

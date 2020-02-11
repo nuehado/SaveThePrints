@@ -10,7 +10,6 @@ public class ScrollStepHandler : MonoBehaviour
     public Button[] menuButtons;
     private float scrollStepDistance;
     private float scrollVerticalNormalizedPosition = 1f;
-    private int[] currentlDisplayedButtonIndexes;
 
     private void Start()
     {

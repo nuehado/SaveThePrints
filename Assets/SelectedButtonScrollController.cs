@@ -6,56 +6,75 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SelectedButtonScrollController : MonoBehaviour
-{    
+{
+    private ScrollMenuIndexesTracker scrollMenuIndexesTracker;
+    private MenuButton[] buttons;
+    private int currentlySelectedButtonIndex;
+    private ScrollRectOverride scrollRectOverride;
+    private float scrollStepDistance;
+    private float scrollVerticalNormalizedPosition = 1f;
+
     private ScrollStepHandler scrollStepHandler;
     [Range(0,3)] public int menuPositionIndex = 0;
-    private MenuButton[] menuButtons;
-    private CurrentDisplayedIndexes currentDisplayedIndexes;
-    private int[] currentlyDisplayedButtonIndexes;
-    private int currentlySelectedButtonIndex = 0;
-    private int up = 1;
-    private int down = -1;
-    private int upIndex = 0;
-    private int downIndex = 3;
-    [Range(0f, 1f)] private float previousScrollYPosition = 1;
-    public bool isScrolling = true;
+    //private CurrentDisplayedIndexes currentDisplayedIndexes;
+    //private int[] currentlyDisplayedButtonIndexes;
+    
+    //private int up = 1;
+    //private int down = -1;
+    //private int upIndex = 0;
+    //private int downIndex = 3;
+    //[Range(0f, 1f)] private float previousScrollYPosition = 1;
+    //public bool isScrolling = true;
+
+    private List<int> currentVisibleButtonIndexes;
 
     private void Start()
     {
+        scrollMenuIndexesTracker = GetComponent<ScrollMenuIndexesTracker>();
+        scrollRectOverride = GetComponent<ScrollRectOverride>();
+        buttons = GetComponentsInChildren<MenuButton>();
+        scrollStepDistance = 1f / (buttons.Length - scrollMenuIndexesTracker.numberOfVisibleButtons);
         scrollStepHandler = GetComponent<ScrollStepHandler>();
-        menuButtons = GetComponentsInChildren<MenuButton>();
-        currentDisplayedIndexes = GetComponent<CurrentDisplayedIndexes>();
-        currentlyDisplayedButtonIndexes = currentDisplayedIndexes.currentlyDisplayedButtonIndexes;
+        //currentDisplayedIndexes = GetComponent<CurrentDisplayedIndexes>();
+        //currentlyDisplayedButtonIndexes = currentDisplayedIndexes.currentlyDisplayedButtonIndexes;
     }
 
-    public void SetMenuPosition(MenuButton selectedButton)
+    public void SetMenuPosition(Button selectedButton)
     {
-        for (int i = 0; i < menuButtons.Length; i++)
+        for (int i = 0; i < buttons.Length; i++)
         {
-            if (menuButtons[i] == selectedButton)
+            if (buttons[i].GetComponent<Button>() == selectedButton)
             {
                 currentlySelectedButtonIndex = i;
+                Debug.Log("we found a button match");
             }
         }
-
-        ScrollIfSelectedButtonOutsideView();
+        Debug.Log("currently selected button index: " + currentlySelectedButtonIndex);
+        CheckIfSelectedButtonOutsideView();
     }
 
-    private void ScrollIfSelectedButtonOutsideView()
+    private void CheckIfSelectedButtonOutsideView()
     {
-        if (currentlySelectedButtonIndex > currentlyDisplayedButtonIndexes[currentDisplayedIndexes.maxMenuPositionIndex])
+        currentVisibleButtonIndexes = scrollMenuIndexesTracker.currentVisibleButtonIndexes;
+        if (currentlySelectedButtonIndex < scrollMenuIndexesTracker.currentSmallestVisibleButtonIndex)
         {
-            scrollStepHandler.UpdateScrollPosition(down);
-            isScrolling = false;
+            scrollRectOverride.verticalNormalizedPosition += scrollStepDistance;
+            scrollMenuIndexesTracker.UpdateIndexesOnScroll(-1);
+
+            //scrollStepHandler.UpdateScrollPosition(up);
+            //isScrolling = false;
         }
-        else if (currentlySelectedButtonIndex < currentlyDisplayedButtonIndexes[0])
+        else if (currentlySelectedButtonIndex > scrollMenuIndexesTracker.currentLargestVisibleButtonIndex)
         {
-            scrollStepHandler.UpdateScrollPosition(up);
-            isScrolling = false;
+            scrollRectOverride.verticalNormalizedPosition -= scrollStepDistance;
+            scrollMenuIndexesTracker.UpdateIndexesOnScroll(1);
+
+            //scrollStepHandler.UpdateScrollPosition(down);
+            //isScrolling = false;
         }
     }
 
-    public void SelectNewButtonIfOutsideView(Vector2 scrollPosition)
+    /*public void SelectNewButtonIfOutsideView(Vector2 scrollPosition)
     {
         if (isScrolling == false)
         {
@@ -74,7 +93,7 @@ public class SelectedButtonScrollController : MonoBehaviour
             CheckForSelectionNeeded(upIndex);
         }
 
-        if (scrollYPosition < previousScrollYPosition && currentlyDisplayedButtonIndexes[3] < menuButtons.Length)
+        if (scrollYPosition < previousScrollYPosition && currentlyDisplayedButtonIndexes[3] < buttons.Length)
         {
             CheckForSelectionNeeded(downIndex);
         }
@@ -86,16 +105,16 @@ public class SelectedButtonScrollController : MonoBehaviour
         bool isVisibleButtonSelected = false;
         for (int i = currentlyDisplayedButtonIndexes[0]; i < currentlyDisplayedButtonIndexes[3]; i++)
         {
-            if (menuButtons[i].gameObject == EventSystem.current.currentSelectedGameObject)
+            if (buttons[i].gameObject == EventSystem.current.currentSelectedGameObject)
             {
-                Debug.Log("selected button: " + menuButtons[i]);
+                Debug.Log("selected button: " + buttons[i]);
                 isVisibleButtonSelected = true;
             }
         }
 
         if (isVisibleButtonSelected == false)
         {
-            menuButtons[currentlyDisplayedButtonIndexes[upOrDownIndex]].SelectButton();
+            buttons[currentlyDisplayedButtonIndexes[upOrDownIndex]].SelectButton();
         }
-    }
+    }*/
 }
