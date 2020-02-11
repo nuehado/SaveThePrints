@@ -9,7 +9,7 @@ public class DialRotateHandler : MonoBehaviour
     
     [SerializeField] private Transform rotateOrigin;
     [SerializeField] private float timeBetweenRotations = 0.5f;
-    [SerializeField] private SelectedButtonScrollController selectedButtonScrollController;
+    public SelectedButtonScrollController selectedButtonScrollController;
     private float timer = 0f;
     private Vector3 mouseOffset;
     private float mouseZCoordinate;

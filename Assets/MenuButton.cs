@@ -14,11 +14,30 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
     private SelectedButtonScrollController selectedButtonScrollController;
     private DialRotateHandler dialRotateHandler;
 
-    private void Start()
+    private void Awake()
     {
-        SetText();
+        if (isTopButtonInMenu == true)
+        {
+            SetSelectedText();
+        }
+        else
+        {
+            SetText();
+        }
         selectedButtonScrollController = GetComponentInParent<SelectedButtonScrollController>();
         dialRotateHandler = FindObjectOfType<DialRotateHandler>();
+    }
+
+    private void OnEnable()
+    {
+        if (isTopButtonInMenu == true)
+        {
+            SetSelectedText();
+        }
+        else
+        {
+            SetText();
+        }
     }
 
     public void OnMove(AxisEventData eventData)

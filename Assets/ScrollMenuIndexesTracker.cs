@@ -16,7 +16,7 @@ public class ScrollMenuIndexesTracker : MonoBehaviour
 
     private List<int> initialVisibleButtonIndexes = new List<int>();
     
-    void Start()
+    void Awake()
     {
         for (int i = 0 + initialLowestMenuButtonIndex; i < numberOfVisibleButtons + initialLowestMenuButtonIndex; i++)
         {

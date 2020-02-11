@@ -18,15 +18,21 @@ public class SelectedButtonScrollController : MonoBehaviour
 
     private List<int> currentVisibleButtonIndexes;
 
-    private void Start()
+    private void Awake()
     {
         scrollMenuIndexesTracker = GetComponent<ScrollMenuIndexesTracker>();
         scrollRectOverride = GetComponent<ScrollRectOverride>();
         buttons = GetComponentsInChildren<MenuButton>();
         scrollStepDistance = 1f / (buttons.Length - scrollMenuIndexesTracker.numberOfVisibleButtons);
         dialRotateHandler = FindObjectOfType<DialRotateHandler>();
-        buttons[scrollMenuIndexesTracker.initialLowestMenuButtonIndex].SelectButton();
         
+        buttons[scrollMenuIndexesTracker.initialLowestMenuButtonIndex].SelectButton();
+    }
+
+    private void OnEnable()
+    {
+        dialRotateHandler.selectedButtonScrollController = this;
+        buttons[scrollMenuIndexesTracker.initialLowestMenuButtonIndex].SelectButton();
     }
 
     public void SetMenuPosition(Button selectedButton)
@@ -56,5 +62,10 @@ public class SelectedButtonScrollController : MonoBehaviour
             scrollRectOverride.verticalNormalizedPosition -= scrollStepDistance;
             scrollMenuIndexesTracker.UpdateIndexesOnScroll(1);
         }
+    }
+
+    private void OnDisable()
+    {
+        buttons[currentlySelectedButtonIndex].GetComponent<MenuButton>().SetText();
     }
 }
