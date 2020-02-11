@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DialRotateHandler : MonoBehaviour
 {
+    //NOTE: need to set manual vetical up/down rotate dial calls for top and bottom button of list
+    
     [SerializeField] private Transform rotateOrigin;
     [SerializeField] private float timeBetweenRotations = 0.5f;
     [SerializeField] private SelectedButtonScrollController selectedButtonScrollController;

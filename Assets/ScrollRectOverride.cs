@@ -10,11 +10,14 @@ public class ScrollRectOverride : ScrollRect, IScrollHandler
     private SelectedButtonScrollController selectedButtonScrollController;
     private int currentlySelectedButtonIndex;
     private MenuButton[] buttons;
+    private DialRotateHandler dialRotateHandler;
+    
 
     private new void Start()
     {
         base.Start();
         selectedButtonScrollController = GetComponent<SelectedButtonScrollController>();
+        dialRotateHandler = FindObjectOfType<DialRotateHandler>();
     }
     public override void OnScroll(PointerEventData data)
     {
@@ -22,16 +25,32 @@ public class ScrollRectOverride : ScrollRect, IScrollHandler
 
         currentlySelectedButtonIndex = selectedButtonScrollController.currentlySelectedButtonIndex;
         buttons = selectedButtonScrollController.buttons;
-        if (data.scrollDelta.y < 0 && currentlySelectedButtonIndex < buttons.Length - 1)
+        if (data.scrollDelta.y < 0)
         {
-            int newButtonSelectionIndex = currentlySelectedButtonIndex + 1;
-            buttons[newButtonSelectionIndex].SelectButton();
+            if (currentlySelectedButtonIndex < buttons.Length - 1)
+            {
+                int newButtonSelectionIndex = currentlySelectedButtonIndex + 1;
+                buttons[newButtonSelectionIndex].SelectButton();
+            }
+            else
+            {
+                dialRotateHandler.CheckIfDialTransformRotateNeeded(-1);
+            }
             
         }
-        else if (data.scrollDelta.y > 0 && currentlySelectedButtonIndex > 0)
+        else if (data.scrollDelta.y > 0)
         {
-            int newButtonSelectionIndex = currentlySelectedButtonIndex - 1;
-            buttons[newButtonSelectionIndex].SelectButton();
+            if (currentlySelectedButtonIndex > 0)
+            {
+                int newButtonSelectionIndex = currentlySelectedButtonIndex - 1;
+                buttons[newButtonSelectionIndex].SelectButton();
+            }
+
+            else
+            {
+                dialRotateHandler.CheckIfDialTransformRotateNeeded(+1);
+            }
+            
         }
     }
 }

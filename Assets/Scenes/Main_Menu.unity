@@ -1908,6 +1908,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Print7
+  isTopButtonInMenu: 0
+  isBottomButtonInMenu: 0
 --- !u!4 &398260089 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6372202240886494102, guid: 3e7d4bea2d31a0042b814cb07d8cdde4,
@@ -2725,6 +2727,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Main
+  isTopButtonInMenu: 1
+  isBottomButtonInMenu: 0
 --- !u!4 &695052718 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6372202240886494102, guid: 3e7d4bea2d31a0042b814cb07d8cdde4,
@@ -3455,6 +3459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttons: []
   currentlySelectedButtonIndex: 0
+  previouslySelectedButtonIndex: 0
 --- !u!114 &866939864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5156,6 +5161,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Print3
+  isTopButtonInMenu: 0
+  isBottomButtonInMenu: 0
 --- !u!4 &947907733 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6372202240886494102, guid: 3e7d4bea2d31a0042b814cb07d8cdde4,
@@ -6111,6 +6118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Print5
+  isTopButtonInMenu: 0
+  isBottomButtonInMenu: 0
 --- !u!1001 &1103701533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6500,6 +6509,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Print1
+  isTopButtonInMenu: 0
+  isBottomButtonInMenu: 0
 --- !u!1001 &1157420762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6691,6 +6702,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Print4
+  isTopButtonInMenu: 0
+  isBottomButtonInMenu: 0
 --- !u!1001 &1282322435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7458,6 +7471,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Print8
+  isTopButtonInMenu: 0
+  isBottomButtonInMenu: 1
 --- !u!4 &1488344807 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6372202240886494102, guid: 3e7d4bea2d31a0042b814cb07d8cdde4,
@@ -7672,6 +7687,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Print6
+  isTopButtonInMenu: 0
+  isBottomButtonInMenu: 0
 --- !u!1 &1627017604
 GameObject:
   m_ObjectHideFlags: 0
@@ -7819,6 +7836,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: Print2
+  isTopButtonInMenu: 0
+  isBottomButtonInMenu: 0
 --- !u!1001 &1676775168
 PrefabInstance:
   m_ObjectHideFlags: 0
