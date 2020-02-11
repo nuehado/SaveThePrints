@@ -4,33 +4,24 @@ using UnityEngine;
 
 public class DialRotateHandler : MonoBehaviour
 {
-    [SerializeField] private Transform dialCenter;
-    [SerializeField] private Transform dialNub;
+    [SerializeField] private Transform rotateOrigin;
+    [SerializeField] private float timeBetweenRotations = 0.5f;
+    private float timer = 0f;
     private Vector3 mouseOffset;
     private float mouseZCoordinate;
-    private RadialButton radialButton;
+
+    [SerializeField] private SelectedButtonScrollController selectedButtonScrollController;
+    private int currentlySelectedButtonIndex;
+    private MenuButton[] buttons;
 
     private void OnMouseDrag()
     {
-        
-        mouseZCoordinate = Camera.main.WorldToScreenPoint(dialNub.transform.position).z;
+        mouseZCoordinate = Camera.main.WorldToScreenPoint(transform.position).z;
         mouseOffset = GetMouseAsWorldPoint();
-        Vector3 mouseToCenterLine = mouseOffset - dialCenter.transform.position;
-        Vector3 dialKnobToCenterLine = dialNub.transform.position - dialCenter.transform.position;
-        float dialAngle = Vector3.SignedAngle(mouseToCenterLine, dialKnobToCenterLine, dialCenter.up);
-
-        if (dialAngle <= -15f && dialAngle > -120f)
-        {
-            Debug.Log("rotation up from handler" + dialAngle);
-            radialButton = FindObjectOfType<RadialButton>();
-            radialButton.HandleDialTurn(false);
-        }
-        else if (dialAngle >= 18f && dialAngle < 120f)
-        {
-            radialButton = FindObjectOfType<RadialButton>();
-            Debug.Log("rotation down from handler" + dialAngle);
-            radialButton.HandleDialTurn(true);
-        }
+        Vector3 mouseToCenterLine = mouseOffset - rotateOrigin.transform.position;
+        Vector3 thisToCenterLine = transform.position - rotateOrigin.transform.position;
+        float rotateAngle = Vector3.SignedAngle(mouseToCenterLine, thisToCenterLine, rotateOrigin.up);
+        HandleDialTurn(rotateAngle);
     }
     private Vector3 GetMouseAsWorldPoint()
     {
@@ -39,5 +30,49 @@ public class DialRotateHandler : MonoBehaviour
         mousePoint.z = mouseZCoordinate;
 
         return Camera.main.ScreenToWorldPoint(mousePoint);
+    }
+
+    public void HandleDialTurn(float rotateAngle)
+    {
+
+        if (rotateAngle <= -18f && rotateAngle > -120f)
+        {
+            RotateDialTransform(1);
+            SelectMenuButton(1);
+            rotateAngle = 0f;
+        }
+        else if (rotateAngle >= 18f && rotateAngle < 120f)
+        {
+            RotateDialTransform(-1);
+            SelectMenuButton(-1);
+            rotateAngle = 0f;
+        }
+        else
+        {
+            currentlySelectedButtonIndex = selectedButtonScrollController.currentlySelectedButtonIndex;
+            buttons = selectedButtonScrollController.buttons;
+            buttons[currentlySelectedButtonIndex].SelectButton();
+        }
+    }
+
+    public void RotateDialTransform(int upOrDown)
+    {
+        rotateOrigin.transform.RotateAround(rotateOrigin.position, rotateOrigin.up, 18f * upOrDown);
+    }
+
+    private void SelectMenuButton(int upOrDown)
+    {
+        currentlySelectedButtonIndex = selectedButtonScrollController.currentlySelectedButtonIndex;
+        buttons = selectedButtonScrollController.buttons;
+        if (upOrDown < 0 && currentlySelectedButtonIndex < buttons.Length - 1)
+        {
+            int newButtonSelectionIndex = currentlySelectedButtonIndex + 1;
+            buttons[newButtonSelectionIndex].SelectButton();
+        }
+        else if (upOrDown > 0 && currentlySelectedButtonIndex > 0)
+        {
+            int newButtonSelectionIndex = currentlySelectedButtonIndex - 1;
+            buttons[newButtonSelectionIndex].SelectButton();
+        }
     }
 }

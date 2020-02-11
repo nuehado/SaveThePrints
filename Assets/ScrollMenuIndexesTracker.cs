@@ -13,14 +13,12 @@ public class ScrollMenuIndexesTracker : MonoBehaviour
     public int numberOfVisibleButtons = 4;
     public int largestVisibleButtonIndexIndex;
     public List<int> currentVisibleButtonIndexes;
-
-    private int initialLowestMenuButtonIndex = 0;
-    private List<int> initialVisibleButtonIndexes = new List<int>();
-    
+    public int initialLowestMenuButtonIndex = 0;
     public int currentLargestVisibleButtonIndex;
     public int currentSmallestVisibleButtonIndex;
-    
 
+    private List<int> initialVisibleButtonIndexes = new List<int>();
+    
     void Start()
     {
         for (int i = 0 + initialLowestMenuButtonIndex; i < numberOfVisibleButtons + initialLowestMenuButtonIndex; i++)

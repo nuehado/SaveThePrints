@@ -3453,7 +3453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52848de7435e42248b839c0aad1032d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuPositionIndex: 0
+  buttons: []
+  currentlySelectedButtonIndex: 0
 --- !u!114 &866939864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3535,6 +3536,7 @@ MonoBehaviour:
   numberOfVisibleButtons: 4
   largestVisibleButtonIndexIndex: 0
   currentVisibleButtonIndexes: 
+  initialLowestMenuButtonIndex: 0
   currentLargestVisibleButtonIndex: 0
   currentSmallestVisibleButtonIndex: 0
 --- !u!4 &871476847 stripped
@@ -3584,6 +3586,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1225128817, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1225128817, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
+      propertyPath: m_Name
+      value: Knob
+      objectReference: {fileID: 0}
+    - target: {fileID: 1225128820, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 18095438665890570, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f,
@@ -5106,13 +5116,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 901464096}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &926361595 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1225128818, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f,
-    type: 3}
-  m_PrefabInstance: {fileID: 901464096}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &926361596
+--- !u!114 &926361594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5124,8 +5128,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cbfe41828ecfc74cafcb1da4c8e138f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialCenter: {fileID: 1223600690}
-  dialNub: {fileID: 926361595}
+  rotateOrigin: {fileID: 1223600690}
+  timeBetweenRotations: 0.5
+  selectedButtonScrollController: {fileID: 866939863}
+--- !u!4 &926361595 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1225128818, guid: 1bdc55cfdfbf90b4da3d67e34b71ee0f,
+    type: 3}
+  m_PrefabInstance: {fileID: 901464096}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &932026474 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 282085701851421065, guid: 31e8d29ece85dc140ab98334b19c215f,
