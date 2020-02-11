@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,13 +7,15 @@ public class DialRotateHandler : MonoBehaviour
 {
     [SerializeField] private Transform rotateOrigin;
     [SerializeField] private float timeBetweenRotations = 0.5f;
+    [SerializeField] private SelectedButtonScrollController selectedButtonScrollController;
     private float timer = 0f;
     private Vector3 mouseOffset;
     private float mouseZCoordinate;
 
-    [SerializeField] private SelectedButtonScrollController selectedButtonScrollController;
+    
     private int currentlySelectedButtonIndex;
     private MenuButton[] buttons;
+    private bool isRotatingDialManually = false;
 
     private void OnMouseDrag()
     {
@@ -23,6 +26,7 @@ public class DialRotateHandler : MonoBehaviour
         float rotateAngle = Vector3.SignedAngle(mouseToCenterLine, thisToCenterLine, rotateOrigin.up);
         HandleDialTurn(rotateAngle);
     }
+
     private Vector3 GetMouseAsWorldPoint()
     {
         Vector3 mousePoint = Input.mousePosition;
@@ -37,15 +41,19 @@ public class DialRotateHandler : MonoBehaviour
 
         if (rotateAngle <= -18f && rotateAngle > -120f)
         {
-            RotateDialTransform(1);
             SelectMenuButton(1);
+            isRotatingDialManually = true;
+            CheckIfDialTransformRotateNeeded(1);
             rotateAngle = 0f;
+            isRotatingDialManually = false;
         }
         else if (rotateAngle >= 18f && rotateAngle < 120f)
         {
-            RotateDialTransform(-1);
             SelectMenuButton(-1);
+            isRotatingDialManually = true;
+            CheckIfDialTransformRotateNeeded(-1);
             rotateAngle = 0f;
+            isRotatingDialManually = false;
         }
         else
         {
@@ -55,7 +63,23 @@ public class DialRotateHandler : MonoBehaviour
         }
     }
 
-    public void RotateDialTransform(int upOrDown)
+    public void CheckIfDialTransformRotateNeeded(int rotateSteps)
+    {
+        Debug.Log("rotate steps " + rotateSteps);
+        if (isRotatingDialManually)
+        {
+            RotateDialTransform(rotateSteps);
+            return;
+        }
+
+        else if (rotateSteps != 0)
+        {
+            RotateDialTransform(rotateSteps);
+        }
+        
+    }
+
+    private void RotateDialTransform(int upOrDown)
     {
         rotateOrigin.transform.RotateAround(rotateOrigin.position, rotateOrigin.up, 18f * upOrDown);
     }

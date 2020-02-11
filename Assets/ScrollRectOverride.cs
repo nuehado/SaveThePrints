@@ -26,6 +26,7 @@ public class ScrollRectOverride : ScrollRect, IScrollHandler
         {
             int newButtonSelectionIndex = currentlySelectedButtonIndex + 1;
             buttons[newButtonSelectionIndex].SelectButton();
+            
         }
         else if (data.scrollDelta.y > 0 && currentlySelectedButtonIndex > 0)
         {

@@ -10,6 +10,7 @@ public class SelectedButtonScrollController : MonoBehaviour
     private ScrollMenuIndexesTracker scrollMenuIndexesTracker;
     public MenuButton[] buttons;
     public int currentlySelectedButtonIndex;
+    public int previouslySelectedButtonIndex;
     private ScrollRectOverride scrollRectOverride;
     private float scrollStepDistance;
     private float scrollVerticalNormalizedPosition = 1f;
@@ -23,22 +24,23 @@ public class SelectedButtonScrollController : MonoBehaviour
         scrollRectOverride = GetComponent<ScrollRectOverride>();
         buttons = GetComponentsInChildren<MenuButton>();
         scrollStepDistance = 1f / (buttons.Length - scrollMenuIndexesTracker.numberOfVisibleButtons);
+        dialRotateHandler = FindObjectOfType<DialRotateHandler>();
         buttons[scrollMenuIndexesTracker.initialLowestMenuButtonIndex].SelectButton();
-        dialRotateHandler = GetComponent<DialRotateHandler>();
+        
     }
 
     public void SetMenuPosition(Button selectedButton)
     {
+        previouslySelectedButtonIndex = currentlySelectedButtonIndex;
         for (int i = 0; i < buttons.Length; i++)
         {
             if (buttons[i].GetComponent<Button>() == selectedButton)
             {
                 currentlySelectedButtonIndex = i;
-                Debug.Log("we found a button match");
             }
         }
-        Debug.Log("currently selected button index: " + currentlySelectedButtonIndex);
         CheckIfSelectedButtonOutsideView();
+        dialRotateHandler.CheckIfDialTransformRotateNeeded(previouslySelectedButtonIndex - currentlySelectedButtonIndex);
     }
 
     private void CheckIfSelectedButtonOutsideView()

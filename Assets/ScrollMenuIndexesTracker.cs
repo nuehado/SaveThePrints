@@ -7,9 +7,6 @@ using UnityEngine.UI;
 
 public class ScrollMenuIndexesTracker : MonoBehaviour
 {
-    // Index is an int representation of the order buttons appear in the list of buttons within the scrollRect from 0 to x
-    // currentDisplayIndex is a list that keeps track of which index
-
     public int numberOfVisibleButtons = 4;
     public int largestVisibleButtonIndexIndex;
     public List<int> currentVisibleButtonIndexes;
