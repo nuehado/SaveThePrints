@@ -13,7 +13,6 @@ public class EnemyMovement : MonoBehaviour
     public bool isMoving = false;
 
     private EnemySpawner enemySpawner;
-    private bool isPaused;
 
     void Start()
     {
@@ -29,8 +28,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        isPaused = FindObjectOfType<PauseGame>().isPaused;
-        if (isMoving == true && isPaused == false)
+        if (isMoving == true)
         {
             MoveEnemy();
         }

@@ -21,7 +21,6 @@ public class Tower : MonoBehaviour
 
     public Waypoint waypointTowerIsOn;
 
-    private bool isPaused;
 
     private void Start()
     {
@@ -32,11 +31,10 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
-        isPaused = FindObjectOfType<PauseGame>().isPaused;
         
         SetTargetEnemy();
 
-        if (targetEnemy && isPaused == false)
+        if (targetEnemy == true)
         {
             AimAtEnemy();
         }
@@ -45,14 +43,7 @@ public class Tower : MonoBehaviour
             Fire(false);
         }
 
-        if (isPaused == true)
-        {
-            rotatingSFX.volume = 0f;
-        }
-        else
-        {
-            PlayRotationSFX();
-        }
+        //PlayRotationSFX();
         
     }
 
@@ -127,16 +118,8 @@ public class Tower : MonoBehaviour
 
         emissionModule.enabled = isInRage;
 
-        if (isPaused == true)
-        {
-            shootingSFX.Stop();
-            isSFXPlaying = false;
-        }
-        else
-        {
-            PlayFireSFX(isInRage);
-        }
-        
+        PlayFireSFX(isInRage);
+
     }
 
     private void PlayRotationSFX()

@@ -3016,7 +3016,7 @@ ParticleSystem:
     separateAxes: 0
     frequency: 0.05
     damping: 1
-    octaves: 1
+    octaves: 2
     octaveMultiplier: 0.5
     octaveScale: 2
     quality: 2
@@ -3958,8 +3958,8 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minKillSpeed: 0
-    maxKillSpeed: 0
+    minKillSpeed: 1
+    maxKillSpeed: 2
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
@@ -5329,7 +5329,7 @@ MonoBehaviour:
   AttackRange: 30
   projectileParticles: {fileID: 5476839747890420301}
   rotateSpeed: 0.02
-  towerSFXPitch: 0
+  towerRotateSFXPitch: 0
   waypointTowerIsOn: {fileID: 0}
 --- !u!82 &7500117647669534499
 AudioSource:
