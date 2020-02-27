@@ -53,6 +53,7 @@ public class PrintLoader : MonoBehaviour
 
             case 2: //level 2
                 Debug.Log("level 2 selected");
+                isCameraToMove = true;
                 break;
 
             case 3: //level 3

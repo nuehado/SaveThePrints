@@ -22,6 +22,7 @@ public class DrawPath : MonoBehaviour
     [SerializeField] private AudioSource bedMoving;
     private bool isPrintBedMoving = false;
     private bool isLevelLoaded = false;
+    private bool isFirstLevelLoad = true;
 
     private void Start()
     {
@@ -30,17 +31,22 @@ public class DrawPath : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("level enabled");
-        Pathfinder pathfinder = GetComponent<Pathfinder>(); //was FindObjectOfType<Pathfinder>();
-        path = pathfinder.GetPath();
-        pathLineRenderer = GetComponent<LineRenderer>();
-        path = pathfinder.GetPath();
-        distanceBetweenPoints = 10f; //Vector3.Distance(path[i].transform.position, path[i + 1].transform.position);
-        pathLineRenderer.positionCount = 2;
-        iWaypoint = path.Count - 1;
-        iNextWaypoint = path.Count - 2;
-        iNextRenderPoint = 1;
-        pathLineRenderer.SetPosition(0, path[iWaypoint].transform.position);
-        isLevelLoaded = true;
+        if (isFirstLevelLoad)
+        {
+            Pathfinder pathfinder = GetComponent<Pathfinder>(); //was FindObjectOfType<Pathfinder>();
+            path = pathfinder.GetPath();
+            pathLineRenderer = GetComponent<LineRenderer>();
+            path = pathfinder.GetPath();
+            distanceBetweenPoints = 10f; //Vector3.Distance(path[i].transform.position, path[i + 1].transform.position);
+            pathLineRenderer.positionCount = 2;
+            iWaypoint = path.Count - 1;
+            iNextWaypoint = path.Count - 2;
+            iNextRenderPoint = 1;
+            pathLineRenderer.SetPosition(0, path[iWaypoint].transform.position);
+            isLevelLoaded = true;
+            isFirstLevelLoad = false;
+        }
+        
     }
 
     void FixedUpdate()
