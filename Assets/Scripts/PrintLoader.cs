@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PrintLoader : MonoBehaviour
 {
+    // todo get main menu camera position for returning to MM
     private Vector3 levelViewPos = new Vector3(-22f, 8.5f, 331f);
-    private bool isCameraToMove;
+    public bool isCameraToMove;
     [SerializeField] private float cameraMoveSpeed = 200f; // todo change back to 20 once printing Animations have been refactored
 
-    private int levelLoaded = 0;
+    private int levelSelected = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -36,9 +37,10 @@ public class PrintLoader : MonoBehaviour
         }
     }
 
-    private void ChangeLevel()
+    public void ChangeLevel(int levelInt)
     {
-        switch (levelLoaded)
+        levelSelected = levelInt;
+        switch (levelSelected)
         {
             case 0: //main menu
                 Debug.Log("Main Menu selected");
@@ -46,6 +48,7 @@ public class PrintLoader : MonoBehaviour
 
             case 1: //level 1
                 Debug.Log("Level 1 selected");
+                isCameraToMove = true;
                 break;
 
             case 2: //level 2

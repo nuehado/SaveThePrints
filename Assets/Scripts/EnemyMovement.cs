@@ -15,15 +15,13 @@ public class EnemyMovement : MonoBehaviour
     private EnemySpawner enemySpawner;
 
     void Start()
-    {
-        
+    {  
         enemySpawner = FindObjectOfType<EnemySpawner>();
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
         path = pathfinder.GetPath();
         UpdateMovementTarget();
         transform.rotation = Quaternion.LookRotation(path[1].transform.position - transform.position);
         StartCoroutine(WaitForStartMovement(enemySpawner.secondsBetweenSpawns));
-
     }
 
     private void Update()

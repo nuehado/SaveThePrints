@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pathfinder : MonoBehaviour
 {
-    Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
+    private Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
 
     Queue<Waypoint> waypointQueue = new Queue<Waypoint>();
 
@@ -65,7 +65,7 @@ public class Pathfinder : MonoBehaviour
         while (waypointQueue.Count > 0 && isRunning == true)
         {
             searchCenter = waypointQueue.Dequeue();
-            //Debug.Log("searching from: " + searchCenter); // todo remove log
+            Debug.Log("searching from: " + searchCenter); // todo remove log
             HaltIfEndFound(searchCenter);
             ExploreNeighbors(searchCenter);
             searchCenter.isExploreOff = true;

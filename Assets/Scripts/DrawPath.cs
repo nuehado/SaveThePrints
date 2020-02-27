@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DrawPath : MonoBehaviour
 {
-    LineRenderer pathRenderer;
+    LineRenderer pathLineRenderer;
     private float distanceBetweenPoints;
     private float lineDrawCounter;
     [SerializeField] private float lineDrawSpeed;
@@ -21,27 +21,36 @@ public class DrawPath : MonoBehaviour
 
     [SerializeField] private AudioSource bedMoving;
     private bool isPrintBedMoving = false;
+    private bool isLevelLoaded = false;
 
     private void Start()
     {
-        Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
+        enemySpawner = FindObjectOfType<EnemySpawner>();
+    }
+    private void OnEnable()
+    {
+        Debug.Log("level enabled");
+        Pathfinder pathfinder = GetComponent<Pathfinder>(); //was FindObjectOfType<Pathfinder>();
         path = pathfinder.GetPath();
-        pathRenderer = GetComponent<LineRenderer>();
+        pathLineRenderer = GetComponent<LineRenderer>();
         path = pathfinder.GetPath();
         distanceBetweenPoints = 10f; //Vector3.Distance(path[i].transform.position, path[i + 1].transform.position);
-        pathRenderer.positionCount = 2;
-        iWaypoint = path.Count-1;
-        iNextWaypoint = path.Count-2;
+        pathLineRenderer.positionCount = 2;
+        iWaypoint = path.Count - 1;
+        iNextWaypoint = path.Count - 2;
         iNextRenderPoint = 1;
-        pathRenderer.SetPosition(0, path[iWaypoint].transform.position);
-        enemySpawner = FindObjectOfType<EnemySpawner>();
+        pathLineRenderer.SetPosition(0, path[iWaypoint].transform.position);
+        isLevelLoaded = true;
     }
 
     void FixedUpdate()
     {
-        if (pathRenderer.positionCount < path.Count + 1)
+        if (isLevelLoaded)
         {
-            DrawRenderedPath();
+            if (pathLineRenderer.positionCount < path.Count + 1)
+            {
+                DrawRenderedPath();
+            }
         }
     }
 
@@ -50,7 +59,7 @@ public class DrawPath : MonoBehaviour
         lineDrawCounter += 0.1f / lineDrawSpeed;
         float lerpedDistance = Mathf.Lerp(0f, distanceBetweenPoints, lineDrawCounter);
         Vector3 lengthTowardsNextWaypoint = lerpedDistance * Vector3.Normalize(path[iNextWaypoint].transform.position - path[iWaypoint].transform.position) + path[iWaypoint].transform.position;
-        pathRenderer.SetPosition(iNextRenderPoint, lengthTowardsNextWaypoint + new Vector3(0f, 0.1f, 0f));
+        pathLineRenderer.SetPosition(iNextRenderPoint, lengthTowardsNextWaypoint + new Vector3(0f, 0.1f, 0f));
         StartPrinterPathTranslations(lengthTowardsNextWaypoint);
 
         if (lineDrawCounter >= 1f)
@@ -59,12 +68,12 @@ public class DrawPath : MonoBehaviour
             iNextWaypoint--;
             lerpedDistance = 0f;
             lineDrawCounter = 0f;
-            pathRenderer.positionCount++;
+            pathLineRenderer.positionCount++;
             iNextRenderPoint++;
-            pathRenderer.SetPosition(iNextRenderPoint, path[iWaypoint].transform.position + new Vector3(0f, 0.1f, 0f));
+            pathLineRenderer.SetPosition(iNextRenderPoint, path[iWaypoint].transform.position + new Vector3(0f, 0.1f, 0f));
         }
 
-        if (pathRenderer.positionCount >= path.Count + 1)
+        if (pathLineRenderer.positionCount >= path.Count + 1)
         {
             enemySpawner.startSpawningExternal();
             StopPrinterPathTranslations();
