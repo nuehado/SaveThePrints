@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public class TowerFiring : MonoBehaviour
 {
     [SerializeField] Transform objectToPan;
     [SerializeField] Transform targetEnemy; 
@@ -20,6 +20,7 @@ public class Tower : MonoBehaviour
     AudioSource shootingSFX;
 
     public Waypoint waypointTowerIsOn;
+    private bool isFiringOn = false;
 
 
     private void Start()
@@ -32,9 +33,12 @@ public class Tower : MonoBehaviour
     void Update()
     {
         
-        SetTargetEnemy();
+        if (isFiringOn == true)
+        {
+            SetTargetEnemy();
+        }
 
-        if (targetEnemy == true)
+        if (targetEnemy == true && isFiringOn == true)
         {
             AimAtEnemy();
         }
@@ -148,6 +152,11 @@ public class Tower : MonoBehaviour
             shootingSFX.Stop();
             isSFXPlaying = false;
         }
+    }
+
+    public void SetTargeting(bool shouldTarget)
+    {
+        isFiringOn = shouldTarget;
     }
 }
 

@@ -11,18 +11,34 @@ public class TowerMover : MonoBehaviour
     private Ray ray;
     private GameObject gameObjectBelow = null;
     private Vector3 newTowerPosition;
+    private Vector3 initialTowerPosition;
 
     private LineRenderer checkLineRenderer;
-
+    private Waypoint waypointTowerIsOver;
+    private TowerFiring towerFiring;
 
     private void Start()
     {
         plane = new Plane(Vector3.up, Vector3.up * planeY); // ground plane
-        newTowerPosition = (gameObject.transform.position);
+        initialTowerPosition = (gameObject.transform.position);
+        newTowerPosition = initialTowerPosition;
         checkLineRenderer = GetComponent<LineRenderer>();
+        towerFiring = GetComponent<TowerFiring>();
     }
 
     private void Update()
+    {
+        DragTower();
+        CheckForPlacementAllowed();
+        PlaceTowerInNewPosition();
+
+        if (drag == null)
+        {
+            checkLineRenderer.enabled = false;
+        }
+    }
+
+    private void DragTower()
     {
         if (Input.GetMouseButton(0))
         {
@@ -34,11 +50,13 @@ public class TowerMover : MonoBehaviour
                 if (gameObject == hit.transform.gameObject)
                 {
                     drag = hit.transform.gameObject;
+                    towerFiring.SetTargeting(false);
+                    Debug.Log("targeting off");
                 }
-                
+
             }
             float distance; // the distance from the ray origin to the ray intersection of the plane
-            
+
             if (drag != null)
             {
                 if (plane.Raycast(ray, out distance))
@@ -47,10 +65,13 @@ public class TowerMover : MonoBehaviour
                     drag.transform.position = new Vector3(updatePosition.x, planeY + 20f, updatePosition.z); // distance along the ray
                 }
             }
-                    
-            
+
+
         }
-        
+    }
+
+    private void CheckForPlacementAllowed()
+    {
         if (drag != null)
         {
             RaycastHit hit;
@@ -59,28 +80,35 @@ public class TowerMover : MonoBehaviour
             {
                 if (hit.transform.gameObject.GetComponent("Waypoint") != null)
                 {
+
                     gameObjectBelow = hit.transform.gameObject;
-                    newTowerPosition = new Vector3(gameObjectBelow.transform.position.x, planeY + 4f, gameObjectBelow.transform.position.z);
-                    checkLineRenderer.enabled = true;
-                    checkLineRenderer.SetPosition(0, transform.position);
-                    checkLineRenderer.SetPosition(1, new Vector3(transform.position.x, planeY, transform.position.z));
+                    waypointTowerIsOver = gameObjectBelow.GetComponent<Waypoint>();
+                    if (waypointTowerIsOver.isPlacable == true)
+                    {
+                        newTowerPosition = new Vector3(gameObjectBelow.transform.position.x, planeY, gameObjectBelow.transform.position.z);
+                        checkLineRenderer.enabled = true;
+                        checkLineRenderer.SetPosition(0, new Vector3(gameObjectBelow.transform.position.x, planeY, gameObjectBelow.transform.position.z));
+                        checkLineRenderer.SetPosition(1, new Vector3(gameObjectBelow.transform.position.x, planeY + 5f, gameObjectBelow.transform.position.z));
+                    }
+
                 }
-                else
-                {
-                    checkLineRenderer.enabled = false;
-                }
+
             }
         }
+    }
 
-        if (Input.GetMouseButtonUp(0))
+    private void PlaceTowerInNewPosition()
+    {
+        if (Input.GetMouseButtonUp(0) && drag != null)
         {
             drag.transform.position = newTowerPosition;
+            towerFiring.SetTargeting(true);
+            Debug.Log("targeting on");
             drag = null;
         }
-
-        if (drag == null)
-        {
-            checkLineRenderer.enabled = false;
-        }
     }
+
+    
+
+    
 }

@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class TowerSpawnControllerTest : MonoBehaviour
 {
-    [SerializeField] private Tower towerPrefab;
+    [SerializeField] private TowerFiring towerPrefab;
     [SerializeField] private int towerLimit = 3;
 
     //add empty queue of towers
-    Queue<Tower> towerQueue = new Queue<Tower>();
+    Queue<TowerFiring> towerQueue = new Queue<TowerFiring>();
 
     public void AddTower(Waypoint newWaypoint)
     {
         
         if (towerQueue.Count < towerLimit)
         {
-            Tower newTower = Instantiate(towerPrefab, newWaypoint.transform.position, Quaternion.identity, FindObjectOfType<Towers>().transform);
+            TowerFiring newTower = Instantiate(towerPrefab, newWaypoint.transform.position, Quaternion.identity, FindObjectOfType<Towers>().transform);
             newTower.waypointTowerIsOn = newWaypoint;
             towerQueue.Enqueue(newTower);
             newWaypoint.isPlacable = false;
@@ -29,7 +29,7 @@ public class TowerSpawnControllerTest : MonoBehaviour
 
     private void MoveExistingTower(Waypoint newWaypoint)
     {
-        Tower oldestTower = towerQueue.Dequeue();
+        TowerFiring oldestTower = towerQueue.Dequeue();
         oldestTower.waypointTowerIsOn.isPlacable = true;
         oldestTower.transform.position = newWaypoint.transform.position;
         oldestTower.waypointTowerIsOn = newWaypoint;
