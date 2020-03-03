@@ -26,11 +26,11 @@ public class Waypoint : MonoBehaviour
     }
 
 
-    private void OnMouseOver()
+    /*private void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(0) && isPlacable == true)
         {
             FindObjectOfType<TowerSpawnController>().AddTower(this);
         }
-    }
+    }*/
 }

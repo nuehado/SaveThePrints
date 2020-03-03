@@ -44,6 +44,7 @@ public class EditorSnap : MonoBehaviour
         if (waypoint.isBlocked == true)
         {
             blockerObject.gameObject.SetActive(true);
+            waypoint.isPlacable = false;
         }
         else
         {

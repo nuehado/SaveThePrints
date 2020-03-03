@@ -11,104 +11,126 @@ public class TowerMover : MonoBehaviour
     private Ray ray;
     private GameObject gameObjectBelow = null;
     private Vector3 newTowerPosition;
+    private Vector3 oldTowerPosition;
     private Vector3 initialTowerPosition;
 
     private LineRenderer checkLineRenderer;
     private Waypoint waypointTowerIsOver;
+    private Waypoint previousPlacementWaypoint = null;
+    private Waypoint validPlacementWaypoint;
     private TowerFiring towerFiring;
 
     private void Start()
     {
         plane = new Plane(Vector3.up, Vector3.up * planeY); // ground plane
         initialTowerPosition = (gameObject.transform.position);
-        newTowerPosition = initialTowerPosition;
+        oldTowerPosition = initialTowerPosition;
         checkLineRenderer = GetComponent<LineRenderer>();
         towerFiring = GetComponent<TowerFiring>();
     }
 
     private void Update()
     {
-        DragTower();
-        CheckForPlacementAllowed();
-        PlaceTowerInNewPosition();
+        if (Input.GetMouseButtonDown(0))
+        {
+            SelectTower();
+        }
 
+        if (Input.GetMouseButton(0) && drag != null)
+        {
+            DragTower();
+        }
+
+        if (Input.GetMouseButtonUp(0) && drag != null)
+        {
+            PlaceTowerInNewPosition();
+        }
+            
         if (drag == null)
         {
             checkLineRenderer.enabled = false;
         }
     }
 
+    private void SelectTower()
+    {
+        RaycastHit hit;
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 500.0f))
+        {
+            if (gameObject == hit.transform.gameObject)
+            {
+                drag = hit.transform.gameObject;
+                towerFiring.SetTargeting(false); 
+            }
+        }
+    }
+
     private void DragTower()
     {
-        if (Input.GetMouseButton(0))
+        RaycastHit hit;
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 500.0f))
         {
-            
-            RaycastHit hit;
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 1000.0f))
+            if (gameObject == hit.transform.gameObject)
             {
-                if (gameObject == hit.transform.gameObject)
-                {
-                    drag = hit.transform.gameObject;
-                    towerFiring.SetTargeting(false);
-                    Debug.Log("targeting off");
-                }
-
+                towerFiring.SetTargeting(false);
             }
+
             float distance; // the distance from the ray origin to the ray intersection of the plane
 
-            if (drag != null)
+            if (plane.Raycast(ray, out distance))
             {
-                if (plane.Raycast(ray, out distance))
-                {
-                    updatePosition = ray.GetPoint(distance);
-                    drag.transform.position = new Vector3(updatePosition.x, planeY + 20f, updatePosition.z); // distance along the ray
-                }
+                updatePosition = ray.GetPoint(distance);
+                drag.transform.position = new Vector3(updatePosition.x, planeY + 15f, updatePosition.z); // distance along the ray
             }
 
+            CheckForPlacementAllowed();
 
         }
     }
 
     private void CheckForPlacementAllowed()
     {
-        if (drag != null)
+        RaycastHit hit;
+        Ray placementCheckRay = new Ray(transform.position, -transform.up);
+        if (Physics.Raycast(placementCheckRay, out hit, 100.0f))
         {
-            RaycastHit hit;
-            Ray placementCheckRay = new Ray(transform.position, -transform.up);
-            if (Physics.Raycast(placementCheckRay, out hit, 100.0f))
+            if (hit.transform.gameObject.TryGetComponent(typeof(Waypoint), out Component waypointOver))
             {
-                if (hit.transform.gameObject.GetComponent("Waypoint") != null)
+                waypointTowerIsOver = waypointOver.GetComponent<Waypoint>();
+
+                if (previousPlacementWaypoint != null)
                 {
-
-                    gameObjectBelow = hit.transform.gameObject;
-                    waypointTowerIsOver = gameObjectBelow.GetComponent<Waypoint>();
-                    if (waypointTowerIsOver.isPlacable == true)
-                    {
-                        newTowerPosition = new Vector3(gameObjectBelow.transform.position.x, planeY, gameObjectBelow.transform.position.z);
-                        checkLineRenderer.enabled = true;
-                        checkLineRenderer.SetPosition(0, new Vector3(gameObjectBelow.transform.position.x, planeY, gameObjectBelow.transform.position.z));
-                        checkLineRenderer.SetPosition(1, new Vector3(gameObjectBelow.transform.position.x, planeY + 5f, gameObjectBelow.transform.position.z));
-                    }
-
+                    previousPlacementWaypoint.isPlacable = true;
                 }
 
+                if (waypointTowerIsOver.isPlacable == true)
+                {
+                    validPlacementWaypoint = waypointTowerIsOver;
+                    checkLineRenderer.enabled = true;
+                    checkLineRenderer.SetPosition(0, new Vector3(validPlacementWaypoint.transform.position.x, planeY, validPlacementWaypoint.transform.position.z));
+                    checkLineRenderer.SetPosition(1, new Vector3(validPlacementWaypoint.transform.position.x, planeY + 5f, validPlacementWaypoint.transform.position.z));
+                }
             }
         }
     }
 
     private void PlaceTowerInNewPosition()
     {
-        if (Input.GetMouseButtonUp(0) && drag != null)
+        if (validPlacementWaypoint == null)
         {
-            drag.transform.position = newTowerPosition;
-            towerFiring.SetTargeting(true);
-            Debug.Log("targeting on");
-            drag = null;
+            drag.transform.position = oldTowerPosition;
         }
+        else
+        {
+            newTowerPosition = new Vector3(validPlacementWaypoint.transform.position.x, planeY, validPlacementWaypoint.transform.position.z);
+            drag.transform.position = newTowerPosition;
+            validPlacementWaypoint.isPlacable = false;
+            towerFiring.SetTargeting(true);
+            drag = null;
+            previousPlacementWaypoint = validPlacementWaypoint;
+        }
+        
     }
-
-    
-
-    
 }
