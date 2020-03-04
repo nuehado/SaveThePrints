@@ -10,7 +10,10 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] ParticleSystem goalParticles;
     [SerializeField] Canvas printingMenu;
     [SerializeField] Canvas LoseMenu;
+    [SerializeField] PrintLoader printLoader;
     private PauseGame pauseGame;
+    private EnemyMovement[] enemies;
+
 
     private void Start()
     {
@@ -20,11 +23,18 @@ public class PlayerHealth : MonoBehaviour
     {
         if (playerHealth <= 0)
         {
+            enemies = GameObject.FindObjectsOfType<EnemyMovement>();
+            foreach (EnemyMovement enemy in enemies)
+            {
+                Destroy(enemy.gameObject);
+                Debug.Log(enemy + "destroyed");
+            }
             printingMenu.gameObject.SetActive(false);
             LoseMenu.gameObject.SetActive(true);
-            pauseGame.PausePlayButton();
-            Destroy(gameObject);
+            printLoader.ChangeLevel(0);
             
+            Destroy(gameObject);
+            pauseGame.PausePlayButton();
         }
     }
 
