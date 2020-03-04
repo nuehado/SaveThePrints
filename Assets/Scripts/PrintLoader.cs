@@ -16,10 +16,13 @@ public class PrintLoader : MonoBehaviour
     private float timeNow;
     private float deltaTime;
 
+    [SerializeField] GameObject level1;
+    TowerMover[] towers;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        towers = FindObjectsOfType<TowerMover>();
     }
 
     // Update is called once per frame
@@ -55,11 +58,22 @@ public class PrintLoader : MonoBehaviour
                 Debug.Log("Main Menu selected");
                 moveViewPos = menuViewPos;
                 isCameraToMove = true;
+                foreach (TowerMover tower in towers)
+                {
+                    tower.ResetTowerToStart();
+                }
+
                 timeLast = Time.realtimeSinceStartup;
                 break;
 
             case 1: //level 1
                 Debug.Log("Level 1 selected");
+                
+                if (Time.timeScale == 0)
+                {
+                    Time.timeScale = 1;
+                }
+                level1.SetActive(true);
                 moveViewPos = levelViewPos;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;

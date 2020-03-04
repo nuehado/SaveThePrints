@@ -132,4 +132,10 @@ public class TowerMover : MonoBehaviour
         }
         
     }
+
+    public void ResetTowerToStart()
+    {
+        gameObject.transform.position = initialTowerPosition;
+        towerFiring.SetTargeting(false);
+    }
 }

@@ -12,29 +12,26 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] Canvas LoseMenu;
     [SerializeField] PrintLoader printLoader;
     private PauseGame pauseGame;
-    private EnemyMovement[] enemies;
+    private EnemySpawner enemySpawner;
+    [SerializeField] private GameObject currentLevel;
 
 
     private void Start()
     {
         pauseGame = GameObject.FindObjectOfType<PauseGame>();
+        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
     private void Update()
     {
         if (playerHealth <= 0)
         {
-            enemies = GameObject.FindObjectsOfType<EnemyMovement>();
-            foreach (EnemyMovement enemy in enemies)
-            {
-                Destroy(enemy.gameObject);
-                Debug.Log(enemy + "destroyed");
-            }
             printingMenu.gameObject.SetActive(false);
             LoseMenu.gameObject.SetActive(true);
             printLoader.ChangeLevel(0);
-            
-            Destroy(gameObject);
-            pauseGame.PausePlayButton();
+            enemySpawner.ClearEnemies();
+            //pauseGame.PausePlayButton();
+            currentLevel.SetActive(false);
+            playerHealth = 3;
         }
     }
 

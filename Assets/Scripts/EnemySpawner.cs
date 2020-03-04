@@ -52,4 +52,17 @@ public class EnemySpawner : MonoBehaviour
         zAssemblyAnimation.speed = 1f / secondsBetweenSpawns;
         zAssemblyAnimation.SetTrigger("Stop");
     }
+
+    public void ClearEnemies()
+    {
+        EnemyMovement[] enemies = FindObjectsOfType<EnemyMovement>();
+        foreach (EnemyMovement enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
+        enemyCount = 0;
+        StopAllCoroutines();
+        extruderTimeline.Stop();
+        zAssemblyAnimation.SetTrigger("Stop");
+    }
 }

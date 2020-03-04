@@ -36,23 +36,17 @@ public class DrawPath : MonoBehaviour
     }
     private void OnEnable()
     {
-        Debug.Log("level enabled");
-        if (isFirstLevelLoad)
-        {
-            Pathfinder pathfinder = GetComponent<Pathfinder>(); //was FindObjectOfType<Pathfinder>();
-            path = pathfinder.GetPath();
-            pathLineRenderer = GetComponent<LineRenderer>();
-            path = pathfinder.GetPath();
-            distanceBetweenPoints = 10f; //Vector3.Distance(path[i].transform.position, path[i + 1].transform.position);
-            pathLineRenderer.positionCount = 2;
-            iWaypoint = path.Count - 1;
-            iNextWaypoint = path.Count - 2;
-            iNextRenderPoint = 1;
-            pathLineRenderer.SetPosition(0, path[iWaypoint].transform.position);
-            isLevelLoaded = true;
-            isFirstLevelLoad = false;
-        }
-        
+        Debug.Log("try load level");
+        Pathfinder pathfinder = GetComponent<Pathfinder>(); //was FindObjectOfType<Pathfinder>();
+        path = pathfinder.GetPath();
+        pathLineRenderer = GetComponent<LineRenderer>();
+        distanceBetweenPoints = 10f; //Vector3.Distance(path[i].transform.position, path[i + 1].transform.position);
+        pathLineRenderer.positionCount = 2;
+        iWaypoint = path.Count - 1;
+        iNextWaypoint = path.Count - 2;
+        iNextRenderPoint = 1;
+        pathLineRenderer.SetPosition(0, path[iWaypoint].transform.position);
+        isLevelLoaded = true;
     }
 
     void FixedUpdate()
