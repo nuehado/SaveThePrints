@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SceneManager
   - Dial
+  - Tower
   layers:
   - Default
   - TransparentFX

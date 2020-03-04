@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class SceneSwitcher : MonoBehaviour
 {
     private Vector3 levelViewPos = new Vector3(-22f, 8.5f, 331f);
-    private bool isCameraToMove = true; //todo change back to false when not needed for testing
-    [SerializeField] private float cameraMoveSpeed = 200f; // todo change back to 20 once printing Animations have been refactored
+    private bool isCameraToMove = false; //todo change back to false when not needed for testing
+    [SerializeField] private float cameraMoveSpeed = 20f; // todo change back to 20 once printing Animations have been refactored
 
     private void Awake()
     {

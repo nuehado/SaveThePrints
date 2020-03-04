@@ -8,13 +8,23 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private int playerHealth = 3;
     [SerializeField] Text healthtext;
     [SerializeField] ParticleSystem goalParticles;
+    [SerializeField] Canvas printingMenu;
+    [SerializeField] Canvas LoseMenu;
+    private PauseGame pauseGame;
 
-
+    private void Start()
+    {
+        pauseGame = GameObject.FindObjectOfType<PauseGame>();
+    }
     private void Update()
     {
         if (playerHealth <= 0)
         {
+            printingMenu.gameObject.SetActive(false);
+            LoseMenu.gameObject.SetActive(true);
+            pauseGame.PausePlayButton();
             Destroy(gameObject);
+            
         }
     }
 

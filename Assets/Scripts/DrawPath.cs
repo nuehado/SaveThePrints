@@ -24,9 +24,15 @@ public class DrawPath : MonoBehaviour
     private bool isLevelLoaded = false;
     private bool isFirstLevelLoad = true;
 
+    private GameObject[] towers;
+
+
+    [SerializeField] private GameObject loadScreen;
+    [SerializeField] private GameObject LevelScreen;
     private void Start()
     {
         enemySpawner = FindObjectOfType<EnemySpawner>();
+        towers = GameObject.FindGameObjectsWithTag("Tower");
     }
     private void OnEnable()
     {
@@ -83,6 +89,12 @@ public class DrawPath : MonoBehaviour
         {
             enemySpawner.startSpawningExternal();
             StopPrinterPathTranslations();
+            foreach (GameObject tower in towers)
+            {
+                tower.GetComponent<TowerMover>().enabled = true;
+            }
+            loadScreen.SetActive(false);
+            LevelScreen.SetActive(true);
         }
 
     }

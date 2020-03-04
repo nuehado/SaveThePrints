@@ -9,7 +9,6 @@ public class TowerMover : MonoBehaviour
     private float planeY = -0.75f;
     private Plane plane;
     private Ray ray;
-    private GameObject gameObjectBelow = null;
     private Vector3 newTowerPosition;
     private Vector3 oldTowerPosition;
     private Vector3 initialTowerPosition;

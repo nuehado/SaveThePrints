@@ -21,11 +21,12 @@ public class TowerFiring : MonoBehaviour
 
     public Waypoint waypointTowerIsOn;
     private bool isFiringOn = false;
-
+    private PauseGame pauseGame;
 
     private void Start()
     {
-        var audioSources = GetComponents<AudioSource>();
+        pauseGame = GameObject.FindObjectOfType<PauseGame>();
+        AudioSource[] audioSources = GetComponents<AudioSource>();
         rotatingSFX = audioSources[0];
         shootingSFX = audioSources[1];
     }
@@ -45,6 +46,12 @@ public class TowerFiring : MonoBehaviour
         else
         {
             Fire(false);
+        }
+
+        if (pauseGame.isPaused == true)
+        {
+            rotatingSFX.Stop();
+            shootingSFX.Stop();
         }
 
         //PlayRotationSFX();
