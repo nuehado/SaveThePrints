@@ -3625,6 +3625,7 @@ MonoBehaviour:
   printingMenu: {fileID: 133903711}
   LoseMenu: {fileID: 1193055433}
   printLoader: {fileID: 845195744}
+  currentLevel: {fileID: 451714220}
 --- !u!65 &350399421
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5032,6 +5033,7 @@ MonoBehaviour:
   printingMenu: {fileID: 0}
   LoseMenu: {fileID: 0}
   printLoader: {fileID: 0}
+  currentLevel: {fileID: 0}
 --- !u!65 &581725745
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6329,7 +6331,7 @@ PrefabInstance:
     - target: {fileID: 4907671382706953310, guid: 269fd5384bd5ac54f9395bbfac8fcd38,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5135810601924169595, guid: 269fd5384bd5ac54f9395bbfac8fcd38,
         type: 3}
@@ -6374,7 +6376,7 @@ PrefabInstance:
     - target: {fileID: 5135810602316782211, guid: 269fd5384bd5ac54f9395bbfac8fcd38,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5135810602316782211, guid: 269fd5384bd5ac54f9395bbfac8fcd38,
         type: 3}
@@ -6390,11 +6392,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1818781981}
+      objectReference: {fileID: 845195744}
     - target: {fileID: 5135810602316782211, guid: 269fd5384bd5ac54f9395bbfac8fcd38,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadLevel
+      value: ChangeLevel
       objectReference: {fileID: 0}
     - target: {fileID: 5135810602316782211, guid: 269fd5384bd5ac54f9395bbfac8fcd38,
         type: 3}
@@ -6404,7 +6406,7 @@ PrefabInstance:
     - target: {fileID: 5135810602316782211, guid: 269fd5384bd5ac54f9395bbfac8fcd38,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5184107633803999018, guid: 269fd5384bd5ac54f9395bbfac8fcd38,
         type: 3}
@@ -6554,7 +6556,7 @@ PrefabInstance:
     - target: {fileID: 5184107634679402032, guid: 269fd5384bd5ac54f9395bbfac8fcd38,
         type: 3}
       propertyPath: text
-      value: Main
+      value: Resend G-Code
       objectReference: {fileID: 0}
     - target: {fileID: 5184107634679402032, guid: 269fd5384bd5ac54f9395bbfac8fcd38,
         type: 3}
@@ -6868,6 +6870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCameraToMove: 0
   cameraMoveSpeed: 200
+  level1: {fileID: 451714220}
 --- !u!1001 &853607069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8454,6 +8457,7 @@ MonoBehaviour:
   printingMenu: {fileID: 0}
   LoseMenu: {fileID: 0}
   printLoader: {fileID: 0}
+  currentLevel: {fileID: 0}
 --- !u!65 &912142220
 BoxCollider:
   m_ObjectHideFlags: 0
