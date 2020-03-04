@@ -12,11 +12,13 @@ public class PrintLoader : MonoBehaviour
     [SerializeField] private float cameraMoveSpeed = 200f; // todo change back to 20 once printing Animations have been refactored
 
     private int levelSelected = 0;
+    private int lastLoadedLevel = 0;
     private float timeLast;
     private float timeNow;
     private float deltaTime;
 
     [SerializeField] GameObject level1;
+    [SerializeField] GameObject level2;
     TowerMover[] towers;
 
     // Start is called before the first frame update
@@ -52,6 +54,7 @@ public class PrintLoader : MonoBehaviour
     public void ChangeLevel(int levelInt)
     {
         levelSelected = levelInt;
+        
         switch (levelSelected)
         {
             case 0: //main menu
@@ -61,6 +64,7 @@ public class PrintLoader : MonoBehaviour
                 foreach (TowerMover tower in towers)
                 {
                     tower.ResetTowerToStart();
+                    tower.enabled = false;
                 }
 
                 timeLast = Time.realtimeSinceStartup;
@@ -74,6 +78,7 @@ public class PrintLoader : MonoBehaviour
                     Time.timeScale = 1;
                 }
                 level1.SetActive(true);
+                lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
@@ -81,7 +86,15 @@ public class PrintLoader : MonoBehaviour
 
             case 2: //level 2
                 Debug.Log("level 2 selected");
+                if (Time.timeScale == 0)
+                {
+                    Time.timeScale = 1;
+                }
+                level2.SetActive(true);
+                lastLoadedLevel = levelSelected;
+                moveViewPos = levelViewPos;
                 isCameraToMove = true;
+                timeLast = Time.realtimeSinceStartup;
                 break;
 
             case 3: //level 3
@@ -92,5 +105,10 @@ public class PrintLoader : MonoBehaviour
                 Debug.Log("no level selected switching to main menu");
                 break;
         }
+    }
+    public void ReloadLevel()
+    {
+        Debug.Log("lastlevel" + lastLoadedLevel);
+        ChangeLevel(lastLoadedLevel);
     }
 }

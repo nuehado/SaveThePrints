@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] PrintLoader printLoader;
     private PauseGame pauseGame;
     private EnemySpawner enemySpawner;
+    private TowerMover[] towers;
     [SerializeField] private GameObject currentLevel;
 
 
@@ -20,6 +21,7 @@ public class PlayerHealth : MonoBehaviour
     {
         pauseGame = GameObject.FindObjectOfType<PauseGame>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
+        towers = FindObjectsOfType<TowerMover>();
     }
     private void Update()
     {
