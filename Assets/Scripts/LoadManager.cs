@@ -83,6 +83,7 @@ public class LoadManager : MonoBehaviour
                 }
 
                 timeLast = Time.realtimeSinceStartup;
+                // for win scenario we turn on level1, ChangeLevel(1). and switch menus
                 break;
 
             case 1: //level 1
@@ -120,6 +121,8 @@ public class LoadManager : MonoBehaviour
                 Debug.Log("no level selected switching to main menu");
                 break;
         }
+
+        Debug.Log("lastlevelloaded" + lastLoadedLevel);
     }
     public void ReplayLevel()
     {
@@ -147,7 +150,7 @@ public class LoadManager : MonoBehaviour
     private void ResetLevelState()
     {
         enemySpawner.enemyCount = 0;
-        currentLevel = GameObject.FindGameObjectWithTag("Level");
+        currentLevel = GameObject.FindGameObjectWithTag("Level"); // has to happen before level object is disabled
         PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
         playerHealth.playerHealth = playerHealth.maxPlayerHealth;
         if (currentLevel != null)
