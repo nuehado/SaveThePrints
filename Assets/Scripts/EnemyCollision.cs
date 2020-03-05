@@ -10,15 +10,21 @@ public class EnemyCollision : MonoBehaviour
     [SerializeField] ParticleSystem[] hitParticles;
     [SerializeField] ParticleSystem deathExplosion;
     [SerializeField] AudioClip deathSound;
+    private EnemySpawner enemySpawner;
 
     private float hitStoppedTimer = 0f;
     [SerializeField] private float hittingStoppedTime = 0.1f;
 
+    private void Start()
+    {
+        enemySpawner = FindObjectOfType<EnemySpawner>();
+    }
     void Update()
     {
         if (hitPoints <= 0)
         {
             KillEnemy();
+            enemySpawner.UpdateEnemyHealth(-1);
         }
 
         CheckForStoppedHitting();

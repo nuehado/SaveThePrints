@@ -7,12 +7,28 @@ public class EnemySpawner : MonoBehaviour
 {
     [Range(0.1f,120f)] public float secondsBetweenSpawns = 1f;
     private int enemyCount = 0;
+    private int enemyHealth;
     [SerializeField] private int maxEnemies = 3;
     [SerializeField] private GameObject enemy;
     [SerializeField] private PlayableDirector extruderTimeline;
     [SerializeField] private Animator zAssemblyAnimation;
+    private LoadManager loadManager;
 
+    private void Start()
+    {
+        loadManager = FindObjectOfType<LoadManager>();
+        enemyHealth = maxEnemies;
+    }
 
+    public void UpdateEnemyHealth(int enemyAddORSub)
+    {
+        enemyHealth += enemyAddORSub;
+        if (enemyHealth <= 0)
+        {
+            Debug.Log("You Win this level!");
+            loadManager.WinLevel();
+        }
+    }
 
     public void startSpawningExternal()
     {

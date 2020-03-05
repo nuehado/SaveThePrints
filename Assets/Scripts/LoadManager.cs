@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrintLoader : MonoBehaviour
+public class LoadManager : MonoBehaviour
 {
     // todo get main menu camera position for returning to MM
     private Vector3 levelViewPos = new Vector3(-22f, 8.5f, 331f);
@@ -21,10 +21,18 @@ public class PrintLoader : MonoBehaviour
     [SerializeField] GameObject level2;
     TowerMover[] towers;
 
+    [SerializeField] Canvas printingMenu;
+    [SerializeField] Canvas loseMenu;
+    [SerializeField] Canvas winMenu;
+    private EnemySpawner enemySpawner;
+    private GameObject currentLevel = null;
+
+
     // Start is called before the first frame update
     void Start()
     {
         towers = FindObjectsOfType<TowerMover>();
+        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     // Update is called once per frame
@@ -57,6 +65,12 @@ public class PrintLoader : MonoBehaviour
         
         switch (levelSelected)
         {
+            case -1: //main menu
+                Debug.Log("Win Menu selected");
+
+                timeLast = Time.realtimeSinceStartup;
+                break;
+
             case 0: //main menu
                 Debug.Log("Main Menu selected");
                 moveViewPos = menuViewPos;
@@ -110,5 +124,33 @@ public class PrintLoader : MonoBehaviour
     {
         Debug.Log("lastlevel" + lastLoadedLevel);
         ChangeLevel(lastLoadedLevel);
+    }
+    
+    private void EndLevel()
+    {
+        printingMenu.gameObject.SetActive(false);
+        enemySpawner.ClearEnemies();
+        //pauseGame.PausePlayButton();
+        currentLevel = GameObject.FindGameObjectWithTag("Level");
+        PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
+        playerHealth.playerHealth = playerHealth.maxPlayerHealth;
+    }
+    
+    public void LoseLevel()
+    {
+        loseMenu.gameObject.SetActive(true);
+        ChangeLevel(0);
+        EndLevel();
+        if (currentLevel != null)
+        {
+            currentLevel.SetActive(false);
+        }
+    }
+
+    public void WinLevel()
+    {
+        winMenu.gameObject.SetActive(true);
+        ChangeLevel(-1);
+        EndLevel();
     }
 }

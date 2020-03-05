@@ -8,6 +8,7 @@ TagManager:
   - Dial
   - Tower
   - Enemy
+  - Level
   layers:
   - Default
   - TransparentFX
