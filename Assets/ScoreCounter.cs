@@ -6,7 +6,7 @@ using TMPro;
 public class ScoreCounter : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI firedText;
-    private float firedFilamentCM = 0f;
+    public float firedFilamentCM = 0f;
     private float timer = 0f;
     private string nunmberZeros = "000";
 
@@ -25,9 +25,9 @@ public class ScoreCounter : MonoBehaviour
     public void UpdateScore()
     {
         timer += Time.deltaTime;
-        if (timer >= 1f)
+        if (timer >= 0.5f)
         {
-            firedFilamentCM += 0.2f;
+            firedFilamentCM += 1f;
             //firedFilamentCM = firedFilamentCM * Time.deltaTime;
             string newScore = firedFilamentCM.ToString();
             int scoreDigits = newScore.Length;

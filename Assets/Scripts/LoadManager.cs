@@ -26,6 +26,7 @@ public class LoadManager : MonoBehaviour
     [SerializeField] Canvas winMenu;
     private EnemySpawner enemySpawner;
     private GameObject currentLevel = null;
+    [SerializeField] ScoreCounter scoreCounter;
 
     [SerializeField] GameObject[] trophies;
     
@@ -36,6 +37,7 @@ public class LoadManager : MonoBehaviour
     {
         towers = FindObjectsOfType<TowerMover>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
+        
     }
 
     // Update is called once per frame
@@ -153,6 +155,7 @@ public class LoadManager : MonoBehaviour
     private void ResetLevelState()
     {
         enemySpawner.enemyCount = 0;
+        scoreCounter.firedFilamentCM = 0f;
         currentLevel = GameObject.FindGameObjectWithTag("Level"); // has to happen before level object is disabled
         PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
         playerHealth.playerHealth = playerHealth.maxPlayerHealth;
