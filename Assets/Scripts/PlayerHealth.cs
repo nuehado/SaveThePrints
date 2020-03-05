@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int playerHealth = 3;
     public int maxPlayerHealth = 3;
-    [SerializeField] Text healthtext;
+    [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] ParticleSystem goalParticles;
     [SerializeField] LoadManager loadManager;
 
@@ -18,11 +18,16 @@ public class PlayerHealth : MonoBehaviour
             loadManager.LoseLevel();
         }
     }
+    private void OnEnable()
+    {
+        healthText.text = "Target Integrity   " + playerHealth.ToString();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         playerHealth = playerHealth - 1;
         EnemySelfDestruct(other.gameObject);
+        healthText.text = "Target Integrity   " + playerHealth.ToString();
     }
 
     private void EnemySelfDestruct(GameObject enemy)

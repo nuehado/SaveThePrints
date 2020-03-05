@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class TowerFiring : MonoBehaviour
 {
     [SerializeField] Transform objectToPan;
@@ -22,6 +23,8 @@ public class TowerFiring : MonoBehaviour
     public Waypoint waypointTowerIsOn;
     private bool isFiringOn = false;
     private PauseGame pauseGame;
+
+    [SerializeField] ScoreCounter scoreCounter;
 
     private void Start()
     {
@@ -114,6 +117,7 @@ public class TowerFiring : MonoBehaviour
         if (enemyDistance <= AttackRange)
         {
             isInRange = true;
+            scoreCounter.UpdateScore();
         }
         else
         {
@@ -130,7 +134,7 @@ public class TowerFiring : MonoBehaviour
         emissionModule.enabled = isInRage;
 
         PlayFireSFX(isInRage);
-
+        
     }
 
     private void PlayRotationSFX()

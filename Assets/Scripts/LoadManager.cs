@@ -27,6 +27,9 @@ public class LoadManager : MonoBehaviour
     private EnemySpawner enemySpawner;
     private GameObject currentLevel = null;
 
+    [SerializeField] GameObject[] trophies;
+    
+
 
     // Start is called before the first frame update
     void Start()
@@ -144,7 +147,7 @@ public class LoadManager : MonoBehaviour
         printingMenu.gameObject.SetActive(false);
         winMenu.gameObject.SetActive(true);
         ChangeLevel(-1);
-        
+        trophies[lastLoadedLevel - 1].SetActive(true);
     }
 
     private void ResetLevelState()
