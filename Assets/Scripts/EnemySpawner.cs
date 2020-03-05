@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 public class EnemySpawner : MonoBehaviour
 {
     [Range(0.1f,120f)] public float secondsBetweenSpawns = 1f;
-    private int enemyCount = 0;
+    public int enemyCount = 0;
     private int enemyHealth;
     [SerializeField] private int maxEnemies = 3;
     [SerializeField] private GameObject enemy;

@@ -67,7 +67,7 @@ public class LoadManager : MonoBehaviour
         {
             case -1: //main menu
                 Debug.Log("Win Menu selected");
-
+                
                 timeLast = Time.realtimeSinceStartup;
                 break;
 
@@ -75,6 +75,7 @@ public class LoadManager : MonoBehaviour
                 Debug.Log("Main Menu selected");
                 moveViewPos = menuViewPos;
                 isCameraToMove = true;
+                ResetLevelState();
                 foreach (TowerMover tower in towers)
                 {
                     tower.ResetTowerToStart();
@@ -120,37 +121,38 @@ public class LoadManager : MonoBehaviour
                 break;
         }
     }
-    public void ReloadLevel()
+    public void ReplayLevel()
     {
         Debug.Log("lastlevel" + lastLoadedLevel);
         ChangeLevel(lastLoadedLevel);
     }
-    
-    private void EndLevel()
-    {
-        printingMenu.gameObject.SetActive(false);
-        enemySpawner.ClearEnemies();
-        //pauseGame.PausePlayButton();
-        currentLevel = GameObject.FindGameObjectWithTag("Level");
-        PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
-        playerHealth.playerHealth = playerHealth.maxPlayerHealth;
-    }
-    
+
     public void LoseLevel()
     {
+        printingMenu.gameObject.SetActive(false);
         loseMenu.gameObject.SetActive(true);
         ChangeLevel(0);
-        EndLevel();
-        if (currentLevel != null)
-        {
-            currentLevel.SetActive(false);
-        }
+        enemySpawner.ClearEnemies();
+        
     }
 
     public void WinLevel()
     {
+        printingMenu.gameObject.SetActive(false);
         winMenu.gameObject.SetActive(true);
         ChangeLevel(-1);
-        EndLevel();
+        
+    }
+
+    private void ResetLevelState()
+    {
+        enemySpawner.enemyCount = 0;
+        currentLevel = GameObject.FindGameObjectWithTag("Level");
+        PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
+        playerHealth.playerHealth = playerHealth.maxPlayerHealth;
+        if (currentLevel != null)
+        {
+            currentLevel.SetActive(false);
+        }
     }
 }
