@@ -67,7 +67,6 @@ public class DialRotateHandler : MonoBehaviour
 
     public void CheckIfDialTransformRotateNeeded(int rotateSteps)
     {
-        Debug.Log("rotate steps " + rotateSteps);
         if (isRotatingDialManually)
         {
             RotateDialTransform(rotateSteps);

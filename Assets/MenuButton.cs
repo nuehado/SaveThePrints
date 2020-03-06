@@ -13,9 +13,11 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
     [SerializeField] private bool isBottomButtonInMenu = false;
     private SelectedButtonScrollController selectedButtonScrollController;
     private DialRotateHandler dialRotateHandler;
+    private SelectButton selectButton;
 
     private void Awake()
     {
+        selectButton = FindObjectOfType<SelectButton>();
         if (isTopButtonInMenu == true)
         {
             SetSelectedText();
@@ -33,6 +35,7 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
         if (isTopButtonInMenu == true)
         {
             SetSelectedText();
+            SetSelectButton();
         }
         else
         {
@@ -77,11 +80,19 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
     public void OnDeselect(BaseEventData baseEventData)
     {
         SetText();
+        //selectButton.currentSelectedButton = null;
     }
 
     public void OnSelect(BaseEventData eventData)
     {
         SetSelectedText();
         selectedButtonScrollController.SetMenuPosition(GetComponent<Button>());
+        SetSelectButton();
+    }
+
+    private void SetSelectButton()
+    {
+        selectButton.currentSelectedButton = this.GetComponent<Button>();
+        Debug.Log("setting select button selected button");
     }
 }
