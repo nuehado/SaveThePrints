@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyCollision : MonoBehaviour
 {
-    [SerializeField] int hitPoints = 1;
+    [SerializeField] int enemyHitPoints = 1;
     private bool isBeingHit = false;
 
     [SerializeField] ParticleSystem[] hitParticles;
@@ -21,10 +21,10 @@ public class EnemyCollision : MonoBehaviour
     }
     void Update()
     {
-        if (hitPoints <= 0)
+        if (enemyHitPoints <= 0)
         {
             KillEnemy();
-            enemySpawner.UpdateEnemyHealth(-1);
+            
         }
 
         CheckForStoppedHitting();
@@ -40,11 +40,12 @@ public class EnemyCollision : MonoBehaviour
         }  
     }
 
-    private void KillEnemy()
+    public void KillEnemy()
     {
         var explodeVFX = Instantiate(deathExplosion, transform.position, Quaternion.identity);
         Destroy(explodeVFX.gameObject, 1f);
         AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position);
+        enemySpawner.UpdateEnemyHealth(-1);
         Destroy(gameObject);
     }
 
@@ -84,6 +85,6 @@ public class EnemyCollision : MonoBehaviour
 
     private void ProcessHit()
     {
-        hitPoints = hitPoints - 1;
+        enemyHitPoints = enemyHitPoints - 1;
     }
 }

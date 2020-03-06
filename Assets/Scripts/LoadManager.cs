@@ -24,6 +24,7 @@ public class LoadManager : MonoBehaviour
     [SerializeField] Canvas printingMenu;
     [SerializeField] Canvas loseMenu;
     [SerializeField] Canvas winMenu;
+    [SerializeField] Canvas quitMenu;
     private EnemySpawner enemySpawner;
     private GameObject currentLevel = null;
     [SerializeField] ScoreCounter scoreCounter;
@@ -70,7 +71,16 @@ public class LoadManager : MonoBehaviour
         
         switch (levelSelected)
         {
-            case -1: //main menu
+            case -2: //quit menu
+                Debug.Log("Quit Menu selected");
+                moveViewPos = menuViewPos;
+                isCameraToMove = true;
+
+                timeLast = Time.realtimeSinceStartup;
+                // for win scenario we turn on level1, ChangeLevel(1). and switch menus
+                break;
+
+            case -1: //win menu
                 Debug.Log("Win Menu selected");
                 
                 timeLast = Time.realtimeSinceStartup;
@@ -140,9 +150,10 @@ public class LoadManager : MonoBehaviour
         printingMenu.gameObject.SetActive(false);
         loseMenu.gameObject.SetActive(true);
         ChangeLevel(0);
-        enemySpawner.ClearEnemies();
+        //enemySpawner.ClearEnemies();
         
     }
+    
 
     public void WinLevel()
     {
@@ -151,9 +162,17 @@ public class LoadManager : MonoBehaviour
         ChangeLevel(-1);
         trophies[lastLoadedLevel - 1].SetActive(true);
     }
+    public void QuitLevel()
+    {
+        printingMenu.gameObject.SetActive(false);
+        quitMenu.gameObject.SetActive(true);
+        ChangeLevel(-2);
+
+    }
 
     private void ResetLevelState()
     {
+        enemySpawner.ClearEnemies();
         enemySpawner.enemyCount = 0;
         scoreCounter.firedFilamentCM = 0f;
         currentLevel = GameObject.FindGameObjectWithTag("Level"); // has to happen before level object is disabled

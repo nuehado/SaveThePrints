@@ -34,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
     {
         var goalVFX = Instantiate(goalParticles, enemy.transform.position, Quaternion.identity);
         Destroy(goalVFX.gameObject, 0.5f);
-        Destroy(enemy);
+        enemy.GetComponent<EnemyCollision>().KillEnemy();
+        //Destroy(enemy);
     }
 }

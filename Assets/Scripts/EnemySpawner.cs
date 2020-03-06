@@ -20,16 +20,6 @@ public class EnemySpawner : MonoBehaviour
         enemyHealth = maxEnemies;
     }
 
-    public void UpdateEnemyHealth(int enemyAddORSub)
-    {
-        enemyHealth += enemyAddORSub;
-        if (enemyHealth <= 0)
-        {
-            Debug.Log("You Win this level!");
-            loadManager.WinLevel();
-        }
-    }
-
     public void startSpawningExternal()
     {
         StartCoroutine(SpawnEnemy());
@@ -80,5 +70,15 @@ public class EnemySpawner : MonoBehaviour
         StopAllCoroutines();
         extruderTimeline.Stop();
         zAssemblyAnimation.SetTrigger("Stop");
+    }
+
+    public void UpdateEnemyHealth(int enemyAddORSub)
+    {
+        enemyHealth += enemyAddORSub;
+        if (enemyHealth <= 0)
+        {
+            Debug.Log("You Win this level!");
+            loadManager.WinLevel();
+        }
     }
 }
