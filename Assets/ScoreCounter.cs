@@ -10,18 +10,6 @@ public class ScoreCounter : MonoBehaviour
     private float timer = 0f;
     private string nunmberZeros = "000";
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void UpdateScore()
     {
         timer += Time.deltaTime;
@@ -29,27 +17,27 @@ public class ScoreCounter : MonoBehaviour
         {
             firedFilamentCM += 1f;
             //firedFilamentCM = firedFilamentCM * Time.deltaTime;
-            string newScore = firedFilamentCM.ToString();
-            int scoreDigits = newScore.Length;
-            if (scoreDigits == 0)
-            {
-                nunmberZeros = "000";
-            }
-            else if (scoreDigits == 1)
-            {
-                nunmberZeros = "00";
-            }
-            else if ( scoreDigits == 2)
-            {
-                nunmberZeros = "0";
-            }
-            else
-            {
-                nunmberZeros = "";
-            }
-            firedText.text = "Defenses Fired " + nunmberZeros + firedFilamentCM.ToString() + "cm";
+            
             timer = 0;
         }
-        
+        string newScore = firedFilamentCM.ToString();
+        int scoreDigits = newScore.Length;
+        if (scoreDigits == 0)
+        {
+            nunmberZeros = "000";
+        }
+        else if (scoreDigits == 1)
+        {
+            nunmberZeros = "00";
+        }
+        else if (scoreDigits == 2)
+        {
+            nunmberZeros = "0";
+        }
+        else
+        {
+            nunmberZeros = "";
+        }
+        firedText.text = "Defenses Fired " + nunmberZeros + firedFilamentCM.ToString() + "cm";
     }
 }

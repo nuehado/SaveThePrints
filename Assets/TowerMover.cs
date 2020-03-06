@@ -127,19 +127,19 @@ public class TowerMover : MonoBehaviour
             drag.transform.position = newTowerPosition;
             validPlacementWaypoint.isPlacable = false;
             towerFiring.SetTargeting(true);
-            drag = null;
             previousPlacementWaypoint = validPlacementWaypoint;
         }
-        
+        drag = null;
     }
 
     public void ResetTowerToStart()
     {
         gameObject.transform.position = initialTowerPosition;
-        TowerMover towerMover = towerFiring.GetComponent<TowerMover>();
-        if (towerMover.previousPlacementWaypoint != null)
+        validPlacementWaypoint = null;
+        oldTowerPosition = initialTowerPosition;
+        if (previousPlacementWaypoint != null)
         {
-            towerMover.previousPlacementWaypoint.isPlacable = true; //todo check for no tower placed
+            previousPlacementWaypoint.isPlacable = true; //todo check for no tower placed
         }
         towerFiring.SetTargeting(false);
     }

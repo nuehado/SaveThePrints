@@ -23,7 +23,7 @@ public class EnemyCollision : MonoBehaviour
     {
         if (enemyHitPoints <= 0)
         {
-            KillEnemy();
+            KillEnemy(true);
             
         }
 
@@ -40,7 +40,7 @@ public class EnemyCollision : MonoBehaviour
         }  
     }
 
-    public void KillEnemy()
+    public void KillEnemy(bool isKilled)
     {
         var explodeVFX = Instantiate(deathExplosion, transform.position, Quaternion.identity);
         Destroy(explodeVFX.gameObject, 1f);

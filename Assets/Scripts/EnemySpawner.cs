@@ -7,12 +7,13 @@ public class EnemySpawner : MonoBehaviour
 {
     [Range(0.1f,120f)] public float secondsBetweenSpawns = 1f;
     public int enemyCount = 0;
-    private int enemyHealth;
-    [SerializeField] private int maxEnemies = 3;
+    public int enemyHealth;
+    public int maxEnemies = 3;
     [SerializeField] private GameObject enemy;
     [SerializeField] private PlayableDirector extruderTimeline;
     [SerializeField] private Animator zAssemblyAnimation;
     private LoadManager loadManager;
+    PlayerHealth playerHealth;
 
     private void Start()
     {
@@ -67,6 +68,7 @@ public class EnemySpawner : MonoBehaviour
             Destroy(enemy.gameObject);
         }
         enemyCount = 0;
+        enemyHealth = maxEnemies;
         StopAllCoroutines();
         extruderTimeline.Stop();
         zAssemblyAnimation.SetTrigger("Stop");
@@ -74,8 +76,9 @@ public class EnemySpawner : MonoBehaviour
 
     public void UpdateEnemyHealth(int enemyAddORSub)
     {
-        enemyHealth += enemyAddORSub;
-        if (enemyHealth <= 0)
+        enemyHealth += enemyAddORSub; // todo this is called whenever enemyHealth = 0, we want to check if player health is also > 0 inside loadManager. If it is then we win
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        if (enemyHealth <= 0 && playerHealth.playerHealth > 0)
         {
             Debug.Log("You Win this level!");
             loadManager.WinLevel();

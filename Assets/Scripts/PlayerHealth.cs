@@ -11,13 +11,6 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] ParticleSystem goalParticles;
     [SerializeField] LoadManager loadManager;
 
-    private void Update()
-    {
-        if (playerHealth <= 0)
-        {
-            loadManager.LoseLevel();
-        }
-    }
     private void OnEnable()
     {
         healthText.text = "Target Integrity   " + playerHealth.ToString();
@@ -25,16 +18,23 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        playerHealth = playerHealth - 1;
-        EnemySelfDestruct(other.gameObject);
-        healthText.text = "Target Integrity   " + playerHealth.ToString();
+        if (other.GetComponent<EnemyCollision>() != null)
+        {
+            playerHealth = playerHealth - 1;
+            EnemySelfDestruct(other.gameObject);
+            healthText.text = "Target Integrity   " + playerHealth.ToString();
+            if (playerHealth <= 0)
+            {
+                loadManager.LoseLevel();
+            }
+        }
     }
 
     private void EnemySelfDestruct(GameObject enemy)
     {
         var goalVFX = Instantiate(goalParticles, enemy.transform.position, Quaternion.identity);
         Destroy(goalVFX.gameObject, 0.5f);
-        enemy.GetComponent<EnemyCollision>().KillEnemy();
+        enemy.GetComponent<EnemyCollision>().KillEnemy(false);
         //Destroy(enemy);
     }
 }

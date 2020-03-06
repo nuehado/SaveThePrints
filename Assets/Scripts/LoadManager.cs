@@ -71,18 +71,33 @@ public class LoadManager : MonoBehaviour
         
         switch (levelSelected)
         {
+            case -3: //lose menu
+                Debug.Log("Lose Menu selected");
+                ResetLevelState();
+                printingMenu.gameObject.SetActive(false);
+                loseMenu.gameObject.SetActive(true);
+                
+                moveViewPos = menuViewPos;
+                isCameraToMove = true;
+
+
+                timeLast = Time.realtimeSinceStartup;
+                break;
+
             case -2: //quit menu
                 Debug.Log("Quit Menu selected");
                 moveViewPos = menuViewPos;
                 isCameraToMove = true;
 
                 timeLast = Time.realtimeSinceStartup;
-                // for win scenario we turn on level1, ChangeLevel(1). and switch menus
                 break;
 
             case -1: //win menu
                 Debug.Log("Win Menu selected");
-                
+                printingMenu.gameObject.SetActive(false);
+                quitMenu.gameObject.SetActive(false);
+                winMenu.gameObject.SetActive(true);
+                trophies[lastLoadedLevel - 1].SetActive(true);
                 timeLast = Time.realtimeSinceStartup;
                 break;
 
@@ -91,10 +106,10 @@ public class LoadManager : MonoBehaviour
                 moveViewPos = menuViewPos;
                 isCameraToMove = true;
                 ResetLevelState();
-                foreach (TowerMover tower in towers)
+                foreach (TowerMover towerMover in towers)
                 {
-                    tower.ResetTowerToStart();
-                    tower.enabled = false;
+                    towerMover.ResetTowerToStart();
+                    towerMover.enabled = false;
                 }
 
                 timeLast = Time.realtimeSinceStartup;
@@ -147,20 +162,13 @@ public class LoadManager : MonoBehaviour
 
     public void LoseLevel()
     {
-        printingMenu.gameObject.SetActive(false);
-        loseMenu.gameObject.SetActive(true);
-        ChangeLevel(0);
-        //enemySpawner.ClearEnemies();
-        
+        ChangeLevel(-3);
     }
     
 
     public void WinLevel()
     {
-        printingMenu.gameObject.SetActive(false);
-        winMenu.gameObject.SetActive(true);
         ChangeLevel(-1);
-        trophies[lastLoadedLevel - 1].SetActive(true);
     }
     public void QuitLevel()
     {
@@ -170,17 +178,24 @@ public class LoadManager : MonoBehaviour
 
     }
 
-    private void ResetLevelState()
+    public void ResetLevelState()
     {
         enemySpawner.ClearEnemies();
         enemySpawner.enemyCount = 0;
-        scoreCounter.firedFilamentCM = 0f;
+        enemySpawner.enemyHealth = enemySpawner.maxEnemies;
+        scoreCounter.firedFilamentCM = 0;
+        scoreCounter.UpdateScore();
         currentLevel = GameObject.FindGameObjectWithTag("Level"); // has to happen before level object is disabled
         PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
         playerHealth.playerHealth = playerHealth.maxPlayerHealth;
         if (currentLevel != null)
         {
             currentLevel.SetActive(false);
+        }
+        foreach (TowerMover towerMover in towers)
+        {
+            towerMover.ResetTowerToStart();
+            towerMover.enabled = false;
         }
     }
 }
