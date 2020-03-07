@@ -23340,6 +23340,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5847068260520768858, guid: a3822cec0039b50498d5761dbff8f988,
+        type: 3}
+      propertyPath: m_text
+      value: ' Cancel?'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3822cec0039b50498d5761dbff8f988, type: 3}
 --- !u!1001 &2076311881821461283
