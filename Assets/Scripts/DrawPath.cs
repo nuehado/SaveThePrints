@@ -65,7 +65,7 @@ public class DrawPath : MonoBehaviour
         lineDrawCounter += 0.1f / lineDrawSpeed;
         float lerpedDistance = Mathf.Lerp(0f, distanceBetweenPoints, lineDrawCounter);
         Vector3 lengthTowardsNextWaypoint = lerpedDistance * Vector3.Normalize(path[iNextWaypoint].transform.position - path[iWaypoint].transform.position) + path[iWaypoint].transform.position;
-        pathLineRenderer.SetPosition(iNextRenderPoint, lengthTowardsNextWaypoint + new Vector3(0f, 0.1f, 0f));
+        pathLineRenderer.SetPosition(iNextRenderPoint, lengthTowardsNextWaypoint + new Vector3(0f, -0.3f, 0f));
         StartPrinterPathTranslations(lengthTowardsNextWaypoint);
 
         if (lineDrawCounter >= 1f)
@@ -76,7 +76,7 @@ public class DrawPath : MonoBehaviour
             lineDrawCounter = 0f;
             pathLineRenderer.positionCount++;
             iNextRenderPoint++;
-            pathLineRenderer.SetPosition(iNextRenderPoint, path[iWaypoint].transform.position + new Vector3(0f, 0.1f, 0f));
+            pathLineRenderer.SetPosition(iNextRenderPoint, path[iWaypoint].transform.position + new Vector3(0f, -0.3f, 0f));
         }
 
         if (pathLineRenderer.positionCount >= path.Count + 1)
