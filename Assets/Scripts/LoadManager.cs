@@ -41,21 +41,36 @@ public class LoadManager : MonoBehaviour
         
     }
 
+    public void SetViewPos(bool isMenuView)
+    {
+        if ( isMenuView == true)
+        {
+            moveViewPos = menuViewPos;
+        }
+
+        else
+        {
+            moveViewPos = levelViewPos;
+        }
+
+        isCameraToMove = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (isCameraToMove == true)
         {
-            PositionCamera();
+            PositionCamera(moveViewPos);
         }
     }
 
-    private void PositionCamera()
+    private void PositionCamera(Vector3 moveViewPos)
     {
         timeNow = Time.realtimeSinceStartup;
         deltaTime = timeLast - timeNow;
 
-        Camera.main.transform.localPosition = Vector3.MoveTowards(Camera.main.transform.localPosition, moveViewPos, cameraMoveSpeed * -deltaTime);
+        Camera.main.transform.localPosition = Vector3.MoveTowards(Camera.main.transform.localPosition, moveViewPos, cameraMoveSpeed * Time.deltaTime); //todo either switch back to manually calculated time or remove all manual calculation script lines
 
         float cameraMoveDistanceLeft = Vector3.Distance(Camera.main.transform.localPosition, moveViewPos);
         if (cameraMoveDistanceLeft < 0.001)
