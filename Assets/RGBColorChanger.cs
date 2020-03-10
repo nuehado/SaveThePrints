@@ -8,6 +8,7 @@ public class RGBColorChanger : MonoBehaviour
     [SerializeField] GameObject printMaterialReferenceObject;
     [SerializeField] GameObject defensesMaterialReferenceObject;
     [SerializeField] GameObject supportMaterialReferenceObject;
+    [SerializeField] GameObject lineRendererReferenceObject;
     private float[] printMaterialInitialColor = { 0.77f, 0f, 0f };
     private float[] defensesMaterialInitialColor = { 0f, 0f, 0.77f };
     private float[] supportMaterialInitialColor = { 0.38f, 0.38f, 0.38f };
@@ -28,6 +29,7 @@ public class RGBColorChanger : MonoBehaviour
     private void Start()
     {
         printMaterialReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(printMaterialInitialColor[0], printMaterialInitialColor[1], printMaterialInitialColor[2]);
+        lineRendererReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(printMaterialInitialColor[0], printMaterialInitialColor[1], printMaterialInitialColor[2]);
         defensesMaterialReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(defensesMaterialInitialColor[0], defensesMaterialInitialColor[1], defensesMaterialInitialColor[2]);
         supportMaterialReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(supportMaterialInitialColor[0], supportMaterialInitialColor[1], supportMaterialInitialColor[2]);
         printRGB.Add(0.9f);
@@ -54,6 +56,7 @@ public class RGBColorChanger : MonoBehaviour
                 printRGB[1] = sliderPG.value / 13f;
                 printRGB[2] = sliderPB.value / 13f;
                 printMaterialReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(printRGB[0], printRGB[1], printRGB[2]);
+                lineRendererReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(printRGB[0], printRGB[1], printRGB[2]);
                 break;
 
             case 1: //Defenses RGB
