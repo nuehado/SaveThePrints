@@ -29,7 +29,7 @@ public class LoadManager : MonoBehaviour
     private GameObject currentLevel = null;
     [SerializeField] ScoreCounter scoreCounter;
 
-    [SerializeField] GameObject[] trophies;
+    [SerializeField] PlayTrophyAnim[] trophies;
     
 
 
@@ -112,7 +112,7 @@ public class LoadManager : MonoBehaviour
                 printingMenu.gameObject.SetActive(false);
                 quitMenu.gameObject.SetActive(false);
                 winMenu.gameObject.SetActive(true);
-                trophies[lastLoadedLevel - 1].SetActive(true);
+                trophies[lastLoadedLevel - 1].GetComponent<Animator>().SetTrigger("Win");
                 timeLast = Time.realtimeSinceStartup;
                 break;
 
