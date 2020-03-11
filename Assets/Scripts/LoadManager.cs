@@ -30,7 +30,7 @@ public class LoadManager : MonoBehaviour
     [SerializeField] ScoreCounter scoreCounter;
 
     [SerializeField] PlayTrophyAnim[] trophies;
-    
+    private AudioSource loseSFX;
 
 
     // Start is called before the first frame update
@@ -38,7 +38,7 @@ public class LoadManager : MonoBehaviour
     {
         towers = FindObjectsOfType<TowerMover>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
-        
+        loseSFX = GetComponent<AudioSource>();
     }
 
     public void SetViewPos(bool isMenuView)
@@ -91,7 +91,7 @@ public class LoadManager : MonoBehaviour
                 ResetLevelState();
                 printingMenu.gameObject.SetActive(false);
                 loseMenu.gameObject.SetActive(true);
-                
+                loseSFX.Play();
                 moveViewPos = menuViewPos;
                 isCameraToMove = true;
 

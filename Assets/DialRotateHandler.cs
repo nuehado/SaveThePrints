@@ -13,12 +13,18 @@ public class DialRotateHandler : MonoBehaviour
     private float timer = 0f;
     private Vector3 mouseOffset;
     private float mouseZCoordinate;
+    private AudioSource rotateSFX;
 
     
     private int currentlySelectedButtonIndex;
     private MenuButton[] buttons;
     private bool isRotatingDialManually = false;
 
+
+    private void Start()
+    {
+        rotateSFX = GetComponent<AudioSource>();
+    }
     private void OnMouseDrag()
     {
         mouseZCoordinate = Camera.main.WorldToScreenPoint(transform.position).z;
@@ -83,6 +89,7 @@ public class DialRotateHandler : MonoBehaviour
     private void RotateDialTransform(int upOrDown)
     {
         rotateOrigin.transform.RotateAround(rotateOrigin.position, rotateOrigin.up, 18f * upOrDown);
+        rotateSFX.Play();
     }
 
     private void SelectMenuButton(int upOrDown)

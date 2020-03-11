@@ -5,20 +5,26 @@ using UnityEngine;
 public class PlayTrophyAnim : MonoBehaviour
 {
     [SerializeField] private GameObject trophy;
-    [SerializeField] Canvas winMenu;
-    [SerializeField] Canvas mainMenu;
-    [SerializeField] LoadManager loadManager;
+    [SerializeField] private Canvas winMenu;
+    [SerializeField] private Canvas mainMenu;
+    [SerializeField] private LoadManager loadManager;
+    private AudioSource winSFX;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        winSFX = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void TestFunction2()
+    {
+        winSFX.Play();
     }
 
     private void TestFunction()
