@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
     [Range(0.1f,120f)] public float secondsBetweenSpawns = 1f;
+    public float moveSpeed = 10f;
     public int enemyCount = 0;
     public int enemyHealth;
     public int maxEnemies = 3;
@@ -14,6 +16,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Animator zAssemblyAnimation;
     private LoadManager loadManager;
     PlayerHealth playerHealth;
+
+    [SerializeField] private Slider sliderPSpeed;
+    [SerializeField] private Slider sliderMSpeed;
 
     private void Start()
     {
@@ -83,5 +88,15 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log("You Win this level!");
             loadManager.WinLevel();
         }
+    }
+
+    public void ChangePrintSpeed()
+    {
+        secondsBetweenSpawns = sliderPSpeed.value;
+    }
+
+    public void ChangeMoveSpeed()
+    {
+        moveSpeed = sliderMSpeed.value;
     }
 }

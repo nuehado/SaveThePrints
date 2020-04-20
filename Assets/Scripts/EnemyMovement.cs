@@ -22,6 +22,7 @@ public class EnemyMovement : MonoBehaviour
         UpdateMovementTarget();
         transform.rotation = Quaternion.LookRotation(path[1].transform.position - transform.position);
         StartCoroutine(WaitForStartMovement(enemySpawner.secondsBetweenSpawns));
+        movementSpeed = enemySpawner.moveSpeed;
     }
 
     private void Update()

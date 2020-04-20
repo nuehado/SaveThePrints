@@ -8,12 +8,15 @@ public class PlayerHealth : MonoBehaviour
     public int playerHealth = 3;
     public int maxPlayerHealth = 3;
     [SerializeField] TextMeshProUGUI healthText;
+    [SerializeField] TextMeshProUGUI printNameText;
     [SerializeField] ParticleSystem goalParticles;
     [SerializeField] LoadManager loadManager;
+    [SerializeField] string printName;
 
     private void OnEnable()
     {
         healthText.text = "Target Integrity   " + playerHealth.ToString();
+        printNameText.text = "Target: " + printName;
     }
 
     private void OnTriggerEnter(Collider other)

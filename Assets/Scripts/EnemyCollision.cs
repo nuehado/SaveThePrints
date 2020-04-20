@@ -8,6 +8,7 @@ public class EnemyCollision : MonoBehaviour
     private bool isBeingHit = false;
 
     [SerializeField] ParticleSystem[] hitParticles;
+    [SerializeField] GameObject deathObjects;
     [SerializeField] ParticleSystem deathExplosion;
     [SerializeField] AudioClip deathSound;
     private EnemySpawner enemySpawner;
@@ -42,8 +43,10 @@ public class EnemyCollision : MonoBehaviour
 
     public void KillEnemy(bool isKilled)
     {
-        var explodeVFX = Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        var explodeVFX = Instantiate(deathExplosion, new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z), Quaternion.identity);
+        var deathExplode = Instantiate(deathObjects, transform.position, transform.rotation);
         Destroy(explodeVFX.gameObject, 1f);
+        Destroy(deathExplode.gameObject, 3f);
         AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position);
         enemySpawner.UpdateEnemyHealth(-1);
         Destroy(gameObject);
