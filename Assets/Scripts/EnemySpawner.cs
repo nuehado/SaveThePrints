@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public float moveSpeed = 10f;
     public int enemyCount = 0;
     public int enemyHealth;
-    public int maxEnemies = 3;
+    public int maxEnemies = 6;
     [SerializeField] private GameObject enemy;
     [SerializeField] private PlayableDirector extruderTimeline;
     [SerializeField] private Animator zAssemblyAnimation;

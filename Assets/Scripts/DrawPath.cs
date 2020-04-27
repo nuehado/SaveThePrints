@@ -26,6 +26,7 @@ public class DrawPath : MonoBehaviour
 
     private GameObject[] towers;
     private GameObject[] defenseSupports;
+    private GameObject slowStick;
 
 
     [SerializeField] private GameObject loadScreen;
@@ -35,6 +36,7 @@ public class DrawPath : MonoBehaviour
         enemySpawner = FindObjectOfType<EnemySpawner>();
         towers = GameObject.FindGameObjectsWithTag("Tower");
         defenseSupports = GameObject.FindGameObjectsWithTag("DefenseSupport");
+        slowStick = GameObject.FindGameObjectWithTag("SlowStick");
     }
     private void OnEnable()
     {
@@ -93,6 +95,7 @@ public class DrawPath : MonoBehaviour
             {
                 defenseSupport.GetComponent<DefenseSupportMover>().enabled = true;
             }
+            slowStick.GetComponent<SlowStickMover>().enabled = true;
             loadScreen.SetActive(false);
             LevelScreen.SetActive(true);
         }

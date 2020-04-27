@@ -10,6 +10,8 @@ TagManager:
   - Enemy
   - Level
   - DefenseSupport
+  - SlowStick
+  - SlowEffect
   layers:
   - Default
   - TransparentFX

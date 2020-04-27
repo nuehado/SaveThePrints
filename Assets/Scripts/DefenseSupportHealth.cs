@@ -5,6 +5,7 @@ using UnityEngine;
 public class DefenseSupportHealth : MonoBehaviour
 {
     [SerializeField] private int currentDefenseSupportHealth = 2;
+    [SerializeField] GameObject deathObjects;
     private int initialSupportHealth;
 
     private void Start()
@@ -20,6 +21,8 @@ public class DefenseSupportHealth : MonoBehaviour
             currentDefenseSupportHealth -= 1;
             if (currentDefenseSupportHealth <= 0)
             {
+                var deathExplode = Instantiate(deathObjects, transform.position, transform.rotation);
+                Destroy(deathExplode.gameObject, 3f);
                 gameObject.GetComponent<DefenseSupportMover>().ResetSupportToStart();
                 currentDefenseSupportHealth = initialSupportHealth;
             }

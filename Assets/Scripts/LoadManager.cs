@@ -28,6 +28,7 @@ public class LoadManager : MonoBehaviour
     DefenseSupportMover[] supports;
     [SerializeField] SlowStickMover slowStick;
 
+
     [SerializeField] Canvas printingMenu;
     [SerializeField] Canvas loseMenu;
     [SerializeField] Canvas winMenu;
@@ -39,6 +40,7 @@ public class LoadManager : MonoBehaviour
     [SerializeField] PlayTrophyAnim[] trophies;
     private AudioSource loseSFX;
 
+    private SlowEffect[] slowEffects;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +49,7 @@ public class LoadManager : MonoBehaviour
         supports = FindObjectsOfType<DefenseSupportMover>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
         loseSFX = GetComponent<AudioSource>();
+        slowEffects = FindObjectsOfType<SlowEffect>();
     }
 
     public void SetViewPos(bool isMenuView)
@@ -94,6 +97,19 @@ public class LoadManager : MonoBehaviour
         
         switch (levelSelected)
         {
+            case -4: //buy menu
+                //Debug.Log("Buy Menu forced");
+                ResetLevelState();
+                printingMenu.gameObject.SetActive(false);
+                loseMenu.gameObject.SetActive(true);
+                loseSFX.Play();
+                moveViewPos = menuViewPos;
+                isCameraToMove = true;
+
+
+                timeLast = Time.realtimeSinceStartup;
+                break;
+
             case -3: //lose menu
                 //Debug.Log("Lose Menu selected");
                 ResetLevelState();
@@ -139,6 +155,12 @@ public class LoadManager : MonoBehaviour
                     supportMover.ResetSupportToStart();
                     supportMover.enabled = false;
                 }
+                foreach(SlowEffect slowArea in slowEffects)
+                {
+                    slowArea.ResetSlowEffect();
+                }
+                slowStick.ResetStickToStart();
+                slowStick.enabled = false;
 
                 timeLast = Time.realtimeSinceStartup;
                 // for win scenario we turn on level1, ChangeLevel(1). and switch menus
@@ -157,22 +179,28 @@ public class LoadManager : MonoBehaviour
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
 
-                //set number of towers, Dsupports, etc. (towers[0].gameObject.SetActive(true);)
+                //set number of towers, defenseSupports, and slowStick. (towers[0].gameObject.SetActive(true);)
+                //towers
                 foreach (TowerMover towerMover in towers)
                 {
                     towerMover.enabled = false;
                     towerMover.ResetTowerToStart();
                 }
+                towers[0].gameObject.SetActive(true);
+                towers[1].gameObject.SetActive(true);
+                towers[2].gameObject.SetActive(true);
+                //supports
                 foreach (DefenseSupportMover supportMover in supports)
                 {
                     supportMover.enabled = false;
                     supportMover.ResetSupportToStart();
                 }
-                towers[0].gameObject.SetActive(true);
-                towers[1].gameObject.SetActive(true);
-                towers[2].gameObject.SetActive(true);
                 supports[0].gameObject.SetActive(true);
                 supports[1].gameObject.SetActive(true);
+                //slowStick
+                slowStick.enabled = false;
+                slowStick.ResetStickToStart();
+                slowStick.gameObject.SetActive(true);
                 break;
 
             case 2: //level 2
@@ -189,7 +217,9 @@ public class LoadManager : MonoBehaviour
 
                 //set number of towers, Dsupports, etc.
 
-                towers[0].gameObject.SetActive(false);
+                towers[0].gameObject.SetActive(true);
+                slowStick.gameObject.SetActive(true);
+                slowStick.GetComponentInChildren<MeshRenderer>().enabled = true;
                 break;
 
             case 3: //level 3

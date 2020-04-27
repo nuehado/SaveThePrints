@@ -5,7 +5,7 @@ using UnityEngine;
 public class SlowEffect : MonoBehaviour
 {
     [SerializeField] private int currentDefenseSupportHealth = 2;
-    private int initialSupportHealth;
+    private Vector3 initialPosition;
     private EnemySpawner enemySpawner;
     private float initialEnemyMovementSpeed;
     private float enemySpawnSpeed;
@@ -17,6 +17,7 @@ public class SlowEffect : MonoBehaviour
     private void Start()
     {
         enemySpawner = FindObjectOfType<EnemySpawner>();
+        initialPosition = transform.position;
     }
 
     private void Update()
@@ -60,5 +61,13 @@ public class SlowEffect : MonoBehaviour
         {
             enemy.GetComponent<EnemyMovement>().movementSpeed = initialEnemyMovementSpeed;
         }
+    }
+
+    public void ResetSlowEffect()
+    {
+        GetComponent<BoxCollider>().enabled = true;
+        GetComponent<MeshRenderer>().enabled = true;
+        transform.position = initialPosition;
+        isNew = true;
     }
 }

@@ -10408,6 +10408,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlowArea (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3742304299692897865, guid: 9d499c4ddf1a13a41b3291f0058725c9,
+        type: 3}
+      propertyPath: m_TagString
+      value: SlowEffect
+      objectReference: {fileID: 0}
     - target: {fileID: 5520498656310222707, guid: 9d499c4ddf1a13a41b3291f0058725c9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -38515,6 +38520,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e03750772b97619459883def2b5386ea, type: 2}
+    - target: {fileID: 8915470236103777959, guid: 5b808d2819200f34aa8a2cb2679d9cfe,
+        type: 3}
+      propertyPath: deathObjects
+      value: 
+      objectReference: {fileID: 8414947811165408257, guid: e27babacd23c9af459d6b2166eef8ad8,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b808d2819200f34aa8a2cb2679d9cfe, type: 3}
 --- !u!1001 &1401607925
@@ -48063,6 +48074,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e03750772b97619459883def2b5386ea, type: 2}
+    - target: {fileID: 8915470236103777959, guid: 5b808d2819200f34aa8a2cb2679d9cfe,
+        type: 3}
+      propertyPath: deathObjects
+      value: 
+      objectReference: {fileID: 8414947811165408257, guid: e27babacd23c9af459d6b2166eef8ad8,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b808d2819200f34aa8a2cb2679d9cfe, type: 3}
 --- !u!1001 &1758819648
@@ -57819,7 +57836,7 @@ GameObject:
   - component: {fileID: 2129643289}
   m_Layer: 0
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: SlowStick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59384,6 +59401,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SlowArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742304299692897865, guid: 9d499c4ddf1a13a41b3291f0058725c9,
+        type: 3}
+      propertyPath: m_TagString
+      value: SlowEffect
       objectReference: {fileID: 0}
     - target: {fileID: 5520498656310222707, guid: 9d499c4ddf1a13a41b3291f0058725c9,
         type: 3}
@@ -62626,6 +62648,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e03750772b97619459883def2b5386ea, type: 2}
+    - target: {fileID: 8915470236103777959, guid: 5b808d2819200f34aa8a2cb2679d9cfe,
+        type: 3}
+      propertyPath: deathObjects
+      value: 
+      objectReference: {fileID: 8414947811165408257, guid: e27babacd23c9af459d6b2166eef8ad8,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b808d2819200f34aa8a2cb2679d9cfe, type: 3}
 --- !u!65 &8973593062934088394
