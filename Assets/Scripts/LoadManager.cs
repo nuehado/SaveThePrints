@@ -18,12 +18,19 @@ public class LoadManager : MonoBehaviour
     private float deltaTime;
 
     [SerializeField] GameObject level1;
+    private int level1Score = 0;
     [SerializeField] GameObject level2;
+    private int level2Score = 0;
     [SerializeField] GameObject level3;
+    private int level3Score = 0;
     [SerializeField] GameObject level4;
+    private int level4Score = 0;
     [SerializeField] GameObject level5;
+    private int level5Score = 0;
     [SerializeField] GameObject level6;
+    private int level6Score = 0;
     [SerializeField] GameObject level7;
+    private int level7Score = 0;
     TowerMover[] towers;
     DefenseSupportMover[] supports;
     [SerializeField] SlowStickMover slowStick;
@@ -42,6 +49,8 @@ public class LoadManager : MonoBehaviour
 
     private SlowEffect[] slowEffects;
 
+    private WinPointCounter winPointCounter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +59,7 @@ public class LoadManager : MonoBehaviour
         enemySpawner = FindObjectOfType<EnemySpawner>();
         loseSFX = GetComponent<AudioSource>();
         slowEffects = FindObjectsOfType<SlowEffect>();
+        winPointCounter = FindObjectOfType<WinPointCounter>();
     }
 
     public void SetViewPos(bool isMenuView)
@@ -136,6 +146,14 @@ public class LoadManager : MonoBehaviour
                 printingMenu.gameObject.SetActive(false);
                 quitMenu.gameObject.SetActive(false);
                 winMenu.gameObject.SetActive(true);
+                currentLevel = GameObject.FindGameObjectWithTag("Level"); // has to happen before level object is disabled
+                PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
+                int currentLevelScore = playerHealth.playerHealth;
+                if ( currentLevelScore > level1Score)
+                {
+                    winPointCounter.AddWinPoints(currentLevelScore - level1Score);
+                    level1Score = currentLevelScore;
+                }
                 trophies[lastLoadedLevel - 1].GetComponent<Animator>().SetTrigger("Win");
                 timeLast = Time.realtimeSinceStartup;
                 break;
