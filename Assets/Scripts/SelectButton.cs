@@ -13,11 +13,11 @@ public class SelectButton : MonoBehaviour
         if (currentSelectedButton != null)
         {
             currentSelectedButton.onClick.Invoke();
-            Debug.Log("pressing selected button");
+            //Debug.Log("pressing selected button");
         }
         else
         {
-            Debug.Log("select button is null");
+            //Debug.Log("select button is null");
         }
     }
 }

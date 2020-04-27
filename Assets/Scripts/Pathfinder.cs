@@ -42,7 +42,7 @@ public class Pathfinder : MonoBehaviour
             bool isOverlapping = grid.ContainsKey(waypoint.GetGridPosition());
             if (isOverlapping == true)
             {
-                Debug.Log("skipping duplicate block: " + waypoint.name);
+                //Debug.Log("skipping duplicate block: " + waypoint.name);
             }
             else if (waypoint.isBlocked == true)
             {
@@ -65,7 +65,7 @@ public class Pathfinder : MonoBehaviour
         while (waypointQueue.Count > 0 && isRunning == true)
         {
             searchCenter = waypointQueue.Dequeue();
-            Debug.Log("searching from: " + searchCenter); // todo remove log
+            //Debug.Log("searching from: " + searchCenter); // todo remove log
             HaltIfEndFound(searchCenter);
             ExploreNeighbors(searchCenter);
             searchCenter.isExploreOff = true;
@@ -119,6 +119,7 @@ public class Pathfinder : MonoBehaviour
         {
             //add intermediate waypoints
             SetAsPath(previousWaypoint);
+            previousWaypoint.isOnPath = true;
             previousWaypoint = previousWaypoint.exploredFrom;
         }
         SetAsPath(startWaypoint);

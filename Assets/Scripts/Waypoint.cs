@@ -9,6 +9,7 @@ public class Waypoint : MonoBehaviour
     public bool isExploreOff = false;
     public bool isPlacable = true; // todo I think these three bools may have some redundency, refactor
     public bool isBlocked = false;
+    public bool isOnPath = false;
     public Waypoint exploredFrom;
 
     public int GetGridSize()

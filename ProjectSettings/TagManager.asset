@@ -9,6 +9,7 @@ TagManager:
   - Tower
   - Enemy
   - Level
+  - DefenseSupport
   layers:
   - Default
   - TransparentFX

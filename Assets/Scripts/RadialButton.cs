@@ -47,7 +47,7 @@ public class RadialButton : MonoBehaviour
 
     private void SelectMenuButton()
     {
-        Debug.Log("highlight index: " + highlightedButtonIndex);
+        //Debug.Log("highlight index: " + highlightedButtonIndex);
         highlightedButton = menuButtons[highlightedButtonIndex];
         highlightedButton.Select();
     }

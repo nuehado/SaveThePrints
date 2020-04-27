@@ -25,6 +25,7 @@ public class DrawPath : MonoBehaviour
     private bool isFirstLevelLoad = true;
 
     private GameObject[] towers;
+    private GameObject[] defenseSupports;
 
 
     [SerializeField] private GameObject loadScreen;
@@ -33,10 +34,11 @@ public class DrawPath : MonoBehaviour
     {
         enemySpawner = FindObjectOfType<EnemySpawner>();
         towers = GameObject.FindGameObjectsWithTag("Tower");
+        defenseSupports = GameObject.FindGameObjectsWithTag("DefenseSupport");
     }
     private void OnEnable()
     {
-        Debug.Log("try load level");
+        //Debug.Log("try load level");
         Pathfinder pathfinder = GetComponent<Pathfinder>(); //was FindObjectOfType<Pathfinder>();
         path = pathfinder.GetPath();
         pathLineRenderer = GetComponent<LineRenderer>();
@@ -86,6 +88,10 @@ public class DrawPath : MonoBehaviour
             foreach (GameObject tower in towers)
             {
                 tower.GetComponent<TowerMover>().enabled = true;
+            }
+            foreach (GameObject defenseSupport in defenseSupports)
+            {
+                defenseSupport.GetComponent<DefenseSupportMover>().enabled = true;
             }
             loadScreen.SetActive(false);
             LevelScreen.SetActive(true);

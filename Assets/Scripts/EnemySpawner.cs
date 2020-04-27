@@ -85,7 +85,7 @@ public class EnemySpawner : MonoBehaviour
         playerHealth = FindObjectOfType<PlayerHealth>();
         if (enemyHealth <= 0 && playerHealth.playerHealth > 0)
         {
-            Debug.Log("You Win this level!");
+            //Debug.Log("You Win this level!");
             loadManager.WinLevel();
         }
     }

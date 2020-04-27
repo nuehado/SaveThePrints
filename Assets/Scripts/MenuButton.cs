@@ -93,6 +93,6 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
     private void SetSelectButton()
     {
         selectButton.currentSelectedButton = this.GetComponent<Button>();
-        Debug.Log("setting select button selected button");
+        //Debug.Log("setting select button selected button");
     }
 }

@@ -141,6 +141,10 @@ public class TowerMover : MonoBehaviour
         {
             previousPlacementWaypoint.isPlacable = true; //todo check for no tower placed
         }
-        towerFiring.SetTargeting(false);
+        if (towerFiring != null)
+        {
+            towerFiring.SetTargeting(false);
+        }
+        gameObject.SetActive(false);
     }
 }

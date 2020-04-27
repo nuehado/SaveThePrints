@@ -19,7 +19,14 @@ public class LoadManager : MonoBehaviour
 
     [SerializeField] GameObject level1;
     [SerializeField] GameObject level2;
+    [SerializeField] GameObject level3;
+    [SerializeField] GameObject level4;
+    [SerializeField] GameObject level5;
+    [SerializeField] GameObject level6;
+    [SerializeField] GameObject level7;
     TowerMover[] towers;
+    DefenseSupportMover[] supports;
+    [SerializeField] SlowStickMover slowStick;
 
     [SerializeField] Canvas printingMenu;
     [SerializeField] Canvas loseMenu;
@@ -37,6 +44,7 @@ public class LoadManager : MonoBehaviour
     void Start()
     {
         towers = FindObjectsOfType<TowerMover>();
+        supports = FindObjectsOfType<DefenseSupportMover>();
         enemySpawner = FindObjectOfType<EnemySpawner>();
         loseSFX = GetComponent<AudioSource>();
     }
@@ -87,7 +95,7 @@ public class LoadManager : MonoBehaviour
         switch (levelSelected)
         {
             case -3: //lose menu
-                Debug.Log("Lose Menu selected");
+                //Debug.Log("Lose Menu selected");
                 ResetLevelState();
                 printingMenu.gameObject.SetActive(false);
                 loseMenu.gameObject.SetActive(true);
@@ -100,7 +108,7 @@ public class LoadManager : MonoBehaviour
                 break;
 
             case -2: //quit menu
-                Debug.Log("Quit Menu selected");
+                //Debug.Log("Quit Menu selected");
                 moveViewPos = menuViewPos;
                 isCameraToMove = true;
 
@@ -108,7 +116,7 @@ public class LoadManager : MonoBehaviour
                 break;
 
             case -1: //win menu
-                Debug.Log("Win Menu selected");
+                //Debug.Log("Win Menu selected");
                 printingMenu.gameObject.SetActive(false);
                 quitMenu.gameObject.SetActive(false);
                 winMenu.gameObject.SetActive(true);
@@ -117,7 +125,7 @@ public class LoadManager : MonoBehaviour
                 break;
 
             case 0: //main menu
-                Debug.Log("Main Menu selected");
+                //Debug.Log("Main Menu selected");
                 moveViewPos = menuViewPos;
                 isCameraToMove = true;
                 ResetLevelState();
@@ -126,13 +134,18 @@ public class LoadManager : MonoBehaviour
                     towerMover.ResetTowerToStart();
                     towerMover.enabled = false;
                 }
+                foreach (DefenseSupportMover supportMover in supports)
+                {
+                    supportMover.ResetSupportToStart();
+                    supportMover.enabled = false;
+                }
 
                 timeLast = Time.realtimeSinceStartup;
                 // for win scenario we turn on level1, ChangeLevel(1). and switch menus
                 break;
 
             case 1: //level 1
-                Debug.Log("Level 1 selected");
+                //Debug.Log("Level 1 selected");
                 
                 if (Time.timeScale == 0)
                 {
@@ -143,10 +156,27 @@ public class LoadManager : MonoBehaviour
                 moveViewPos = levelViewPos;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
+
+                //set number of towers, Dsupports, etc. (towers[0].gameObject.SetActive(true);)
+                foreach (TowerMover towerMover in towers)
+                {
+                    towerMover.enabled = false;
+                    towerMover.ResetTowerToStart();
+                }
+                foreach (DefenseSupportMover supportMover in supports)
+                {
+                    supportMover.enabled = false;
+                    supportMover.ResetSupportToStart();
+                }
+                towers[0].gameObject.SetActive(true);
+                towers[1].gameObject.SetActive(true);
+                towers[2].gameObject.SetActive(true);
+                supports[0].gameObject.SetActive(true);
+                supports[1].gameObject.SetActive(true);
                 break;
 
             case 2: //level 2
-                Debug.Log("level 2 selected");
+                //Debug.Log("level 2 selected");
                 if (Time.timeScale == 0)
                 {
                     Time.timeScale = 1;
@@ -156,10 +186,90 @@ public class LoadManager : MonoBehaviour
                 moveViewPos = levelViewPos;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
+
+                //set number of towers, Dsupports, etc.
+
+                towers[0].gameObject.SetActive(false);
                 break;
 
             case 3: //level 3
-                Debug.Log("Level 3 selecteed");
+                //Debug.Log("Level 3 selecteed");
+                if (Time.timeScale == 0)
+                {
+                    Time.timeScale = 1;
+                }
+                level3.SetActive(true);
+                lastLoadedLevel = levelSelected;
+                moveViewPos = levelViewPos;
+                isCameraToMove = true;
+                timeLast = Time.realtimeSinceStartup;
+
+                //set number of towers, Dsupports, etc.
+
+                break;
+
+            case 4: //level 4
+                //Debug.Log("Level 4 selecteed");
+                if (Time.timeScale == 0)
+                {
+                    Time.timeScale = 1;
+                }
+                level4.SetActive(true);
+                lastLoadedLevel = levelSelected;
+                moveViewPos = levelViewPos;
+                isCameraToMove = true;
+                timeLast = Time.realtimeSinceStartup;
+
+                //set number of towers, Dsupports, etc.
+
+                break;
+
+            case 5: //level 5
+                //Debug.Log("Level 5 selecteed");
+                if (Time.timeScale == 0)
+                {
+                    Time.timeScale = 1;
+                }
+                level5.SetActive(true);
+                lastLoadedLevel = levelSelected;
+                moveViewPos = levelViewPos;
+                isCameraToMove = true;
+                timeLast = Time.realtimeSinceStartup;
+
+                //set number of towers, Dsupports, etc.
+
+                break;
+
+            case 6: //level 6
+                //Debug.Log("Level 6 selecteed");
+                if (Time.timeScale == 0)
+                {
+                    Time.timeScale = 1;
+                }
+                level6.SetActive(true);
+                lastLoadedLevel = levelSelected;
+                moveViewPos = levelViewPos;
+                isCameraToMove = true;
+                timeLast = Time.realtimeSinceStartup;
+
+                //set number of towers, Dsupports, etc.
+
+                break;
+
+            case 7: //level 7
+                //Debug.Log("Level 7 selecteed");
+                if (Time.timeScale == 0)
+                {
+                    Time.timeScale = 1;
+                }
+                level7.SetActive(true);
+                lastLoadedLevel = levelSelected;
+                moveViewPos = levelViewPos;
+                isCameraToMove = true;
+                timeLast = Time.realtimeSinceStartup;
+
+                //set number of towers, Dsupports, etc.
+
                 break;
 
             default: // no level selected, switch to main menu
@@ -167,11 +277,11 @@ public class LoadManager : MonoBehaviour
                 break;
         }
 
-        Debug.Log("lastlevelloaded" + lastLoadedLevel);
+        //Debug.Log("lastlevelloaded" + lastLoadedLevel);
     }
     public void ReplayLevel()
     {
-        Debug.Log("lastlevel" + lastLoadedLevel);
+        //Debug.Log("lastlevel" + lastLoadedLevel);
         ChangeLevel(lastLoadedLevel);
     }
 
@@ -211,6 +321,11 @@ public class LoadManager : MonoBehaviour
         {
             towerMover.ResetTowerToStart();
             towerMover.enabled = false;
+        }
+        foreach (DefenseSupportMover supportMover in supports)
+        {
+            supportMover.ResetSupportToStart();
+            supportMover.enabled = false;
         }
     }
 }
