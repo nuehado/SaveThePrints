@@ -9,6 +9,9 @@ public class PlayTrophyAnim : MonoBehaviour
     [SerializeField] private Canvas mainMenu;
     [SerializeField] private LoadManager loadManager;
     private AudioSource winSFX;
+    [SerializeField] WinPointCounter winPointCounter;
+    private int purchaseUnlock = 3;
+    private int purchaseUnlockScaler = 3;
     
     // Start is called before the first frame update
     void Start()
@@ -16,22 +19,24 @@ public class PlayTrophyAnim : MonoBehaviour
         winSFX = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void TestFunction2()
+    private void WinAnimStart()
     {
         winSFX.Play();
     }
 
-    private void TestFunction()
+    private void WinAnimEnd()
     {
         trophy.SetActive(true);
         winMenu.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
-        loadManager.ChangeLevel(0);
+        if (winPointCounter.winPoints >= purchaseUnlock)
+        {
+            purchaseUnlock += purchaseUnlockScaler;
+            loadManager.ChangeLevel(-4);
+        }
+        else
+        {
+            loadManager.ChangeLevel(0);
+        }
     }
 }

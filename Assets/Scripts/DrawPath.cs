@@ -27,6 +27,7 @@ public class DrawPath : MonoBehaviour
     private GameObject[] towers;
     private GameObject[] defenseSupports;
     private GameObject slowStick;
+    private DefensesStore defensesStore;
 
 
     [SerializeField] private GameObject loadScreen;
@@ -37,6 +38,7 @@ public class DrawPath : MonoBehaviour
         towers = GameObject.FindGameObjectsWithTag("Tower");
         defenseSupports = GameObject.FindGameObjectsWithTag("DefenseSupport");
         slowStick = GameObject.FindGameObjectWithTag("SlowStick");
+        defensesStore = FindObjectOfType<DefensesStore>();
     }
     private void OnEnable()
     {
@@ -87,19 +89,40 @@ public class DrawPath : MonoBehaviour
         {
             enemySpawner.startSpawningExternal();
             StopPrinterPathTranslations();
-            foreach (GameObject tower in towers)
+            EnableDefenseMovers();
+            /*foreach (GameObject tower in towers)
             {
                 tower.GetComponent<TowerMover>().enabled = true;
-            }
+            }*/
             foreach (GameObject defenseSupport in defenseSupports)
             {
                 defenseSupport.GetComponent<DefenseSupportMover>().enabled = true;
             }
-            slowStick.GetComponent<SlowStickMover>().enabled = true;
+            //slowStick.GetComponent<SlowStickMover>().enabled = true; //ToDo Disabled this because it was broken with defensesStore, and probably needs to be placed somewhere else
             loadScreen.SetActive(false);
             LevelScreen.SetActive(true);
         }
 
+    }
+
+    private void EnableDefenseMovers()
+    {
+        towers = GameObject.FindGameObjectsWithTag("Tower");
+        foreach (GameObject activeDefenses in defensesStore.purchasedDefenses)
+        {
+            if (activeDefenses.tag == "Tower")
+            {
+                activeDefenses.GetComponent<TowerMover>().enabled = true;
+            }
+            if (activeDefenses.tag == "DefenseSupport")
+            {
+                activeDefenses.GetComponent<DefenseSupportMover>().enabled = true;
+            }
+            if (activeDefenses.tag == "SlowStick")
+            {
+                activeDefenses.GetComponent<SlowStickMover>().enabled = true;
+            }
+        }
     }
 
     private void StartPrinterPathTranslations(Vector3 lengthTowardsNextWaypoint)

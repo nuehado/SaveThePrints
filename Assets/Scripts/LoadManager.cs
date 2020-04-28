@@ -6,8 +6,13 @@ public class LoadManager : MonoBehaviour
 {
     // todo get main menu camera position for returning to MM
     private Vector3 levelViewPos = new Vector3(-22f, 8.5f, 331f);
+    private Vector3 levelViewRot = new Vector3(45f, 180f, 0f);
     private Vector3 menuViewPos = new Vector3(-20f, -160f, 290f);
+    private Vector3 menuViewRot = new Vector3(45f, 180f, 0f);
+    private Vector3 buyViewPos = new Vector3(45.5f, -60.3f, 230f);
+    private Vector3 buyViewRot = new Vector3(45.5f, 130f, 0f);
     private Vector3 moveViewPos;
+    private Vector3 moveViewRot;
     public bool isCameraToMove;
     [SerializeField] private float cameraMoveSpeed = 200f; // todo change back to 20 once printing Animations have been refactored
 
@@ -33,7 +38,7 @@ public class LoadManager : MonoBehaviour
     private int level7Score = 0;
     TowerMover[] towers;
     DefenseSupportMover[] supports;
-    [SerializeField] SlowStickMover slowStick;
+    [SerializeField] SlowStickMover slowSticks;
 
 
     [SerializeField] Canvas printingMenu;
@@ -50,6 +55,8 @@ public class LoadManager : MonoBehaviour
     private SlowEffect[] slowEffects;
 
     private WinPointCounter winPointCounter;
+    private DefensesStore defensesStore;
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +67,8 @@ public class LoadManager : MonoBehaviour
         loseSFX = GetComponent<AudioSource>();
         slowEffects = FindObjectsOfType<SlowEffect>();
         winPointCounter = FindObjectOfType<WinPointCounter>();
+        defensesStore = FindObjectOfType<DefensesStore>();
+        moveViewRot = menuViewRot;
     }
 
     public void SetViewPos(bool isMenuView)
@@ -92,7 +101,17 @@ public class LoadManager : MonoBehaviour
         deltaTime = timeLast - timeNow;
 
         Camera.main.transform.localPosition = Vector3.MoveTowards(Camera.main.transform.localPosition, moveViewPos, cameraMoveSpeed * Time.deltaTime); //todo either switch back to manually calculated time or remove all manual calculation script lines
-
+        if (moveViewRot != null)
+        {
+            /*
+             * Vector3 targetDirection = moveViewPos - Camera.main.transform.position;
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, cameraMoveSpeed * Time.deltaTime, 0.0f);
+            Camera.main.transform.rotation = Quaternion.LookRotation(newDirection);
+            */
+            Quaternion newRotation = Quaternion.Euler(moveViewRot);
+            Camera.main.transform.localRotation = Quaternion.RotateTowards(Camera.main.transform.localRotation, newRotation, cameraMoveSpeed* 0.4f * Time.deltaTime);
+        }
+        
         float cameraMoveDistanceLeft = Vector3.Distance(Camera.main.transform.localPosition, moveViewPos);
         if (cameraMoveDistanceLeft < 0.001)
         {
@@ -110,10 +129,9 @@ public class LoadManager : MonoBehaviour
             case -4: //buy menu
                 //Debug.Log("Buy Menu forced");
                 ResetLevelState();
-                printingMenu.gameObject.SetActive(false);
-                loseMenu.gameObject.SetActive(true);
-                loseSFX.Play();
-                moveViewPos = menuViewPos;
+                defensesStore.enabled = true;
+                moveViewPos = buyViewPos;
+                moveViewRot = buyViewRot;
                 isCameraToMove = true;
 
 
@@ -127,6 +145,7 @@ public class LoadManager : MonoBehaviour
                 loseMenu.gameObject.SetActive(true);
                 loseSFX.Play();
                 moveViewPos = menuViewPos;
+                moveViewRot = menuViewRot;
                 isCameraToMove = true;
 
 
@@ -136,6 +155,7 @@ public class LoadManager : MonoBehaviour
             case -2: //quit menu
                 //Debug.Log("Quit Menu selected");
                 moveViewPos = menuViewPos;
+                moveViewRot = menuViewRot;
                 isCameraToMove = true;
 
                 timeLast = Time.realtimeSinceStartup;
@@ -154,13 +174,14 @@ public class LoadManager : MonoBehaviour
                     winPointCounter.AddWinPoints(currentLevelScore - level1Score);
                     level1Score = currentLevelScore;
                 }
-                trophies[lastLoadedLevel - 1].GetComponent<Animator>().SetTrigger("Win");
+                trophies[lastLoadedLevel - 1].GetComponent<Animator>().SetTrigger("Win"); // this is needed to automatically get back to main menu or buy menu
                 timeLast = Time.realtimeSinceStartup;
                 break;
 
             case 0: //main menu
                 //Debug.Log("Main Menu selected");
                 moveViewPos = menuViewPos;
+                moveViewRot = menuViewRot;
                 isCameraToMove = true;
                 ResetLevelState();
                 foreach (TowerMover towerMover in towers)
@@ -177,16 +198,16 @@ public class LoadManager : MonoBehaviour
                 {
                     slowArea.ResetSlowEffect();
                 }
-                slowStick.ResetStickToStart();
-                slowStick.enabled = false;
+                slowSticks.ResetStickToStart();
+                slowSticks.enabled = false;
 
                 timeLast = Time.realtimeSinceStartup;
                 // for win scenario we turn on level1, ChangeLevel(1). and switch menus
                 break;
 
             case 1: //level 1
-                //Debug.Log("Level 1 selected");
-                
+                    //Debug.Log("Level 1 selected");
+
                 if (Time.timeScale == 0)
                 {
                     Time.timeScale = 1;
@@ -194,31 +215,13 @@ public class LoadManager : MonoBehaviour
                 level1.SetActive(true);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
+                menuViewRot = levelViewRot;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
 
                 //set number of towers, defenseSupports, and slowStick. (towers[0].gameObject.SetActive(true);)
                 //towers
-                foreach (TowerMover towerMover in towers)
-                {
-                    towerMover.enabled = false;
-                    towerMover.ResetTowerToStart();
-                }
-                towers[0].gameObject.SetActive(true);
-                towers[1].gameObject.SetActive(true);
-                towers[2].gameObject.SetActive(true);
-                //supports
-                foreach (DefenseSupportMover supportMover in supports)
-                {
-                    supportMover.enabled = false;
-                    supportMover.ResetSupportToStart();
-                }
-                supports[0].gameObject.SetActive(true);
-                supports[1].gameObject.SetActive(true);
-                //slowStick
-                slowStick.enabled = false;
-                slowStick.ResetStickToStart();
-                slowStick.gameObject.SetActive(true);
+                ActivateUnlockedDefenses();
                 break;
 
             case 2: //level 2
@@ -230,14 +233,15 @@ public class LoadManager : MonoBehaviour
                 level2.SetActive(true);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
+                menuViewRot = levelViewRot;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
 
                 //set number of towers, Dsupports, etc.
 
                 towers[0].gameObject.SetActive(true);
-                slowStick.gameObject.SetActive(true);
-                slowStick.GetComponentInChildren<MeshRenderer>().enabled = true;
+                slowSticks.gameObject.SetActive(true);
+                slowSticks.GetComponentInChildren<MeshRenderer>().enabled = true;
                 break;
 
             case 3: //level 3
@@ -249,6 +253,7 @@ public class LoadManager : MonoBehaviour
                 level3.SetActive(true);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
+                menuViewRot = levelViewRot;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
 
@@ -265,6 +270,7 @@ public class LoadManager : MonoBehaviour
                 level4.SetActive(true);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
+                menuViewRot = levelViewRot;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
 
@@ -281,6 +287,7 @@ public class LoadManager : MonoBehaviour
                 level5.SetActive(true);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
+                menuViewRot = levelViewRot;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
 
@@ -297,6 +304,7 @@ public class LoadManager : MonoBehaviour
                 level6.SetActive(true);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
+                menuViewRot = levelViewRot;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
 
@@ -313,6 +321,7 @@ public class LoadManager : MonoBehaviour
                 level7.SetActive(true);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
+                menuViewRot = levelViewRot;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
 
@@ -327,6 +336,60 @@ public class LoadManager : MonoBehaviour
 
         //Debug.Log("lastlevelloaded" + lastLoadedLevel);
     }
+
+    private void ActivateUnlockedDefenses()
+    {
+        foreach (GameObject allDefenseObject in defensesStore.allDefenses)
+        {
+            allDefenseObject.SetActive(false);
+        }
+
+        foreach(GameObject defenseObject in defensesStore.purchasedDefenses)
+        {
+            if (defenseObject.tag == "Tower")
+            {
+                var towerMover = defenseObject.GetComponent<TowerMover>();
+                towerMover.enabled = false;
+                towerMover.ResetTowerToStart();
+                
+            }
+            if (defenseObject.tag == "DefenseSupport")
+            {
+                var defenseSupportMover = defenseObject.GetComponent<DefenseSupportMover>();
+                defenseSupportMover.enabled = false;
+                defenseSupportMover.ResetSupportToStart();
+            }
+            if (defenseObject.tag == "SlowStick")
+            {
+                var slowStickMover = GetComponent<SlowStickMover>();
+                slowStickMover.enabled = false;
+                slowStickMover.ResetStickToStart();
+            }
+            defenseObject.SetActive(true);
+        }
+        /*
+        foreach (TowerMover towerMover in towers)
+        {
+            towerMover.enabled = false;
+            towerMover.ResetTowerToStart();
+        }
+        towers[0].gameObject.SetActive(true);
+        towers[1].gameObject.SetActive(true);
+        towers[2].gameObject.SetActive(true);
+        //supports
+        foreach (DefenseSupportMover supportMover in supports)
+        {
+            supportMover.enabled = false;
+            supportMover.ResetSupportToStart();
+        }
+        supports[0].gameObject.SetActive(true);
+        supports[1].gameObject.SetActive(true);
+        //slowStick
+        slowStickMover.enabled = false;
+        slowStickMover.ResetStickToStart();
+        slowStickMover.gameObject.SetActive(true);*/
+    }
+
     public void ReplayLevel()
     {
         //Debug.Log("lastlevel" + lastLoadedLevel);
@@ -359,10 +422,10 @@ public class LoadManager : MonoBehaviour
         scoreCounter.firedFilamentCM = 0;
         scoreCounter.UpdateScore();
         currentLevel = GameObject.FindGameObjectWithTag("Level"); // has to happen before level object is disabled
-        PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
-        playerHealth.playerHealth = playerHealth.maxPlayerHealth;
         if (currentLevel != null)
         {
+            PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
+            playerHealth.playerHealth = playerHealth.maxPlayerHealth;
             currentLevel.SetActive(false);
         }
         foreach (TowerMover towerMover in towers)
@@ -375,5 +438,7 @@ public class LoadManager : MonoBehaviour
             supportMover.ResetSupportToStart();
             supportMover.enabled = false;
         }
+        slowSticks.ResetStickToStart();
+        slowSticks.enabled = false;
     }
 }
