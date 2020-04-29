@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadManager : MonoBehaviour
 {
@@ -23,19 +25,30 @@ public class LoadManager : MonoBehaviour
     private float deltaTime;
 
     [SerializeField] GameObject level1;
+    [SerializeField] GameObject level1Button;
     private int level1Score = 0;
     [SerializeField] GameObject level2;
+    [SerializeField] GameObject level2Button;
     private int level2Score = 0;
     [SerializeField] GameObject level3;
+    [SerializeField] GameObject level3Button;
     private int level3Score = 0;
     [SerializeField] GameObject level4;
+    [SerializeField] GameObject level4Button;
     private int level4Score = 0;
     [SerializeField] GameObject level5;
+    [SerializeField] GameObject level5Button;
     private int level5Score = 0;
     [SerializeField] GameObject level6;
+    [SerializeField] GameObject level6Button;
     private int level6Score = 0;
     [SerializeField] GameObject level7;
+    [SerializeField] GameObject level7Button;
     private int level7Score = 0;
+
+    [SerializeField] private List<GameObject> levels = new List<GameObject>();
+    [SerializeField] private List<GameObject> levelButtons = new List<GameObject>();
+
     TowerMover[] towers;
     DefenseSupportMover[] supports;
     [SerializeField] SlowStickMover slowSticks;
@@ -180,6 +193,7 @@ public class LoadManager : MonoBehaviour
 
             case 0: //main menu
                 //Debug.Log("Main Menu selected");
+                
                 moveViewPos = menuViewPos;
                 moveViewRot = menuViewRot;
                 isCameraToMove = true;
@@ -212,7 +226,7 @@ public class LoadManager : MonoBehaviour
                 {
                     Time.timeScale = 1;
                 }
-                level1.SetActive(true);
+                levels[levelSelected - 1].SetActive(true);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
                 menuViewRot = levelViewRot;
@@ -230,7 +244,7 @@ public class LoadManager : MonoBehaviour
                 {
                     Time.timeScale = 1;
                 }
-                level2.SetActive(true);
+                levels[levelSelected - 1].SetActive(true);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
                 menuViewRot = levelViewRot;
@@ -239,25 +253,22 @@ public class LoadManager : MonoBehaviour
 
                 //set number of towers, Dsupports, etc.
 
-                towers[0].gameObject.SetActive(true);
-                slowSticks.gameObject.SetActive(true);
-                slowSticks.GetComponentInChildren<MeshRenderer>().enabled = true;
+                ActivateUnlockedDefenses(); 
+                //slowSticks.GetComponentInChildren<MeshRenderer>().enabled = true;
                 break;
 
             case 3: //level 3
                 //Debug.Log("Level 3 selecteed");
-                if (Time.timeScale == 0)
-                {
-                    Time.timeScale = 1;
-                }
-                level3.SetActive(true);
+                levels[levelSelected - 1].SetActive(true);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
                 menuViewRot = levelViewRot;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
 
-                //set number of towers, Dsupports, etc.
+                //set number of towers, defenseSupports, and slowStick. (towers[0].gameObject.SetActive(true);)
+                //towers
+                ActivateUnlockedDefenses();
 
                 break;
 
@@ -361,38 +372,16 @@ public class LoadManager : MonoBehaviour
             }
             if (defenseObject.tag == "SlowStick")
             {
-                var slowStickMover = GetComponent<SlowStickMover>();
+                var slowStickMover = defenseObject.GetComponent<SlowStickMover>();
                 slowStickMover.enabled = false;
                 slowStickMover.ResetStickToStart();
             }
             defenseObject.SetActive(true);
         }
-        /*
-        foreach (TowerMover towerMover in towers)
-        {
-            towerMover.enabled = false;
-            towerMover.ResetTowerToStart();
-        }
-        towers[0].gameObject.SetActive(true);
-        towers[1].gameObject.SetActive(true);
-        towers[2].gameObject.SetActive(true);
-        //supports
-        foreach (DefenseSupportMover supportMover in supports)
-        {
-            supportMover.enabled = false;
-            supportMover.ResetSupportToStart();
-        }
-        supports[0].gameObject.SetActive(true);
-        supports[1].gameObject.SetActive(true);
-        //slowStick
-        slowStickMover.enabled = false;
-        slowStickMover.ResetStickToStart();
-        slowStickMover.gameObject.SetActive(true);*/
     }
 
     public void ReplayLevel()
     {
-        //Debug.Log("lastlevel" + lastLoadedLevel);
         ChangeLevel(lastLoadedLevel);
     }
 
@@ -400,12 +389,18 @@ public class LoadManager : MonoBehaviour
     {
         ChangeLevel(-3);
     }
-    
 
     public void WinLevel()
     {
+        UnlockNextLevel();
         ChangeLevel(-1);
     }
+
+    public void UnlockNextLevel()
+    {
+        levelButtons[lastLoadedLevel].GetComponent<Button>().interactable = true; // note: levelSelected is equal to the array index of the next level to unlock
+    }
+
     public void QuitLevel()
     {
         printingMenu.gameObject.SetActive(false);

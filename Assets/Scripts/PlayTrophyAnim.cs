@@ -9,7 +9,7 @@ public class PlayTrophyAnim : MonoBehaviour
     [SerializeField] private Canvas mainMenu;
     [SerializeField] private LoadManager loadManager;
     private AudioSource winSFX;
-    [SerializeField] WinPointCounter winPointCounter;
+    private WinPointCounter winPointCounter;
     private int purchaseUnlock = 3;
     private int purchaseUnlockScaler = 3;
     
@@ -17,6 +17,7 @@ public class PlayTrophyAnim : MonoBehaviour
     void Start()
     {
         winSFX = GetComponent<AudioSource>();
+        winPointCounter = FindObjectOfType<WinPointCounter>();
     }
 
     private void WinAnimStart()

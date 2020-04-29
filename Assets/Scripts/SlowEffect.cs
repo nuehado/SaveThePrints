@@ -30,7 +30,7 @@ public class SlowEffect : MonoBehaviour
         if (effectTimer >= effectDuration)
         {
             GetComponent<BoxCollider>().enabled = false;
-            GetComponent<MeshRenderer>().enabled = false;
+            //GetComponent<MeshRenderer>().enabled = false;
             effectTimer = 0f;
         }
     }
@@ -66,7 +66,7 @@ public class SlowEffect : MonoBehaviour
     public void ResetSlowEffect()
     {
         GetComponent<BoxCollider>().enabled = true;
-        GetComponent<MeshRenderer>().enabled = true;
+        //GetComponent<MeshRenderer>().enabled = true;
         transform.position = initialPosition;
         isNew = true;
     }

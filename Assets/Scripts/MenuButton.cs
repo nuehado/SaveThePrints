@@ -11,6 +11,7 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
     [SerializeField] private string text = "Button Text";
     [SerializeField] private bool isTopButtonInMenu = false;
     [SerializeField] private bool isBottomButtonInMenu = false;
+    private string lockedText = "Locked Print";
     private SelectedButtonScrollController selectedButtonScrollController;
     private DialRotateHandler dialRotateHandler;
     private SelectButton selectButton;
@@ -21,6 +22,10 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
         if (isTopButtonInMenu == true)
         {
             SetSelectedText();
+        }
+        else if (GetComponent<Button>().interactable == false)
+        {
+            SetLockedText();
         }
         else
         {
@@ -36,6 +41,10 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
         {
             SetSelectedText();
             SetSelectButton();
+        }
+        else if (GetComponent<Button>().interactable == false)
+        {
+            SetLockedText();
         }
         else
         {
@@ -63,6 +72,14 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
     {
         GetComponentInChildren<TextMeshProUGUI>().text = ">" + text;
     }
+    private void SetSelectedLockedText()
+    {
+        GetComponentInChildren<TextMeshProUGUI>().text = "X-" + lockedText;
+    }
+    private void SetLockedText()
+    {
+        GetComponentInChildren<TextMeshProUGUI>().text = "  " + lockedText;
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -79,13 +96,28 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
 
     public void OnDeselect(BaseEventData baseEventData)
     {
-        SetText();
+        if (GetComponent<Button>().interactable == true)
+        {
+            SetText();
+        }
+        else
+        {
+            SetLockedText();
+        }
+        
         //selectButton.currentSelectedButton = null;
     }
 
     public void OnSelect(BaseEventData eventData)
     {
-        SetSelectedText();
+        if (GetComponent<Button>().interactable == true)
+        {
+            SetSelectedText();
+        }
+        else
+        {
+            SetSelectedLockedText();
+        }
         selectedButtonScrollController.SetMenuPosition(GetComponent<Button>());
         SetSelectButton();
     }
