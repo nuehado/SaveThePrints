@@ -10,8 +10,6 @@ public class PlayTrophyAnim : MonoBehaviour
     [SerializeField] private LoadManager loadManager;
     private AudioSource winSFX;
     private WinPointCounter winPointCounter;
-    private int purchaseUnlock = 3;
-    private int purchaseUnlockScaler = 3;
     
     // Start is called before the first frame update
     void Start()
@@ -30,9 +28,9 @@ public class PlayTrophyAnim : MonoBehaviour
         trophy.SetActive(true);
         winMenu.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
-        if (winPointCounter.winPoints >= purchaseUnlock)
+        if (winPointCounter.winPoints >= winPointCounter.purchaseUnlockCost)
         {
-            purchaseUnlock += purchaseUnlockScaler;
+            winPointCounter.purchaseUnlockCost += winPointCounter.purchaseUnlockScaler;
             loadManager.ChangeLevel(-4);
         }
         else

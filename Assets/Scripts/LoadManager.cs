@@ -48,6 +48,7 @@ public class LoadManager : MonoBehaviour
 
     [SerializeField] private List<GameObject> levels = new List<GameObject>();
     [SerializeField] private List<GameObject> levelButtons = new List<GameObject>();
+    [SerializeField] private List<int> levelScores = new List<int>();
 
     TowerMover[] towers;
     DefenseSupportMover[] supports;
@@ -69,6 +70,7 @@ public class LoadManager : MonoBehaviour
 
     private WinPointCounter winPointCounter;
     private DefensesStore defensesStore;
+    
 
 
     // Start is called before the first frame update
@@ -82,6 +84,11 @@ public class LoadManager : MonoBehaviour
         winPointCounter = FindObjectOfType<WinPointCounter>();
         defensesStore = FindObjectOfType<DefensesStore>();
         moveViewRot = menuViewRot;
+
+        foreach (GameObject level in levels)
+        {
+            levelScores.Add(0);
+        }
     }
 
     public void SetViewPos(bool isMenuView)
@@ -182,10 +189,10 @@ public class LoadManager : MonoBehaviour
                 currentLevel = GameObject.FindGameObjectWithTag("Level"); // has to happen before level object is disabled
                 PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
                 int currentLevelScore = playerHealth.playerHealth;
-                if ( currentLevelScore > level1Score)
+                if ( currentLevelScore > levelScores[lastLoadedLevel - 1])
                 {
-                    winPointCounter.AddWinPoints(currentLevelScore - level1Score);
-                    level1Score = currentLevelScore;
+                    winPointCounter.AddWinPoints(currentLevelScore - levelScores[lastLoadedLevel - 1]);
+                    levelScores[lastLoadedLevel - 1] = currentLevelScore;
                 }
                 trophies[lastLoadedLevel - 1].GetComponent<Animator>().SetTrigger("Win"); // this is needed to automatically get back to main menu or buy menu
                 timeLast = Time.realtimeSinceStartup;
@@ -286,7 +293,7 @@ public class LoadManager : MonoBehaviour
                 timeLast = Time.realtimeSinceStartup;
 
                 //set number of towers, Dsupports, etc.
-
+                ActivateUnlockedDefenses();
                 break;
 
             case 5: //level 5
@@ -303,7 +310,7 @@ public class LoadManager : MonoBehaviour
                 timeLast = Time.realtimeSinceStartup;
 
                 //set number of towers, Dsupports, etc.
-
+                ActivateUnlockedDefenses();
                 break;
 
             case 6: //level 6
@@ -318,7 +325,7 @@ public class LoadManager : MonoBehaviour
                 menuViewRot = levelViewRot;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
-
+                ActivateUnlockedDefenses();
                 //set number of towers, Dsupports, etc.
 
                 break;
@@ -335,7 +342,7 @@ public class LoadManager : MonoBehaviour
                 menuViewRot = levelViewRot;
                 isCameraToMove = true;
                 timeLast = Time.realtimeSinceStartup;
-
+                ActivateUnlockedDefenses();
                 //set number of towers, Dsupports, etc.
 
                 break;

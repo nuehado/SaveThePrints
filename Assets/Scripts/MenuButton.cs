@@ -74,11 +74,11 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler,
     }
     private void SetSelectedLockedText()
     {
-        GetComponentInChildren<TextMeshProUGUI>().text = "X-" + lockedText;
+        GetComponentInChildren<TextMeshProUGUI>().text = "-" + lockedText;
     }
     private void SetLockedText()
     {
-        GetComponentInChildren<TextMeshProUGUI>().text = "  " + lockedText;
+        GetComponentInChildren<TextMeshProUGUI>().text = " " + lockedText;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

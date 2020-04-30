@@ -9,7 +9,6 @@ public class DefensesStore : MonoBehaviour
     public List<GameObject> purchasedDefenses = new List<GameObject>();
 
     private Ray ray;
-    private TowerFiring towerFiring;
     private GameObject selectedObject;
     private GameObject previousObject;
 
@@ -26,6 +25,11 @@ public class DefensesStore : MonoBehaviour
         {
             defenseObject.SetActive(true);
             defenseObject.GetComponent<DefenseBuyer>().enabled = true;
+        }
+        foreach (GameObject purchasedObject in purchasedDefenses)
+        {
+            purchasedObject.GetComponent<Outline>().enabled = true;
+            purchasedObject.GetComponent<Outline>().OutlineColor = Color.green;
         }
     }
 
@@ -49,7 +53,7 @@ public class DefensesStore : MonoBehaviour
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 500.0f))
         {
-            if (hit.transform.gameObject.tag == "Tower" || hit.transform.gameObject.tag == "DefenseSupport" || hit.transform.gameObject.tag == "SlowStick")
+            if (purchasableDefenses.Contains(hit.transform.gameObject))//hit.transform.gameObject.tag == "Tower" || hit.transform.gameObject.tag == "DefenseSupport" || hit.transform.gameObject.tag == "SlowStick" && purchasableDefenses.Contains(hit.transform.gameObject))
             {
                 selectedObject = hit.transform.gameObject;
                 selectedObject.GetComponent<Outline>().enabled = true;
@@ -77,8 +81,13 @@ public class DefensesStore : MonoBehaviour
         {
             purchasableDefenses.Remove(purchaseAttempt);
             purchasedDefenses.Add(purchaseAttempt);
-            selectedObject.GetComponent<Outline>().enabled = false;
+            foreach (GameObject defenseObject in allDefenses)
+            {
+                defenseObject.GetComponent<Outline>().enabled = false;
+            }
+            //selectedObject.GetComponent<Outline>().enabled = false;
             selectedObject = null;
+            previousObject = null;
             loadManager.ChangeLevel(0);
             gameObject.GetComponent<DefensesStore>().enabled = false;
         }
