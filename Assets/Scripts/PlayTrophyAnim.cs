@@ -28,7 +28,7 @@ public class PlayTrophyAnim : MonoBehaviour
         trophy.SetActive(true);
         winMenu.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
-        if (winPointCounter.winPoints >= winPointCounter.purchaseUnlockCost)
+        if (winPointCounter.winPoints >= winPointCounter.purchaseUnlockCost && winPointCounter.winPoints <= winPointCounter.purchaseUnlockMax)
         {
             winPointCounter.purchaseUnlockCost += winPointCounter.purchaseUnlockScaler;
             loadManager.ChangeLevel(-4);

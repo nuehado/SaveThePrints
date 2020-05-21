@@ -12,6 +12,7 @@ public class SlowEffect : MonoBehaviour
     private float enemySlowTimer = 0f;
     private float effectTimer = 0f;
     [SerializeField] private float effectDuration = 3f;
+    [SerializeField] private GameObject glueShmear;
     public bool isNew = true;
 
     private void Start()
@@ -30,6 +31,7 @@ public class SlowEffect : MonoBehaviour
         if (effectTimer >= effectDuration)
         {
             GetComponent<BoxCollider>().enabled = false;
+            glueShmear.SetActive(false);
             //GetComponent<MeshRenderer>().enabled = false;
             effectTimer = 0f;
         }
@@ -67,7 +69,9 @@ public class SlowEffect : MonoBehaviour
     {
         GetComponent<BoxCollider>().enabled = true;
         //GetComponent<MeshRenderer>().enabled = true;
+        glueShmear.SetActive(true);
         transform.position = initialPosition;
         isNew = true;
+        effectTimer = 0f;
     }
 }

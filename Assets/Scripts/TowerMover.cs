@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TowerMover : MonoBehaviour
 {
+    [SerializeField] Transform pivotTransform;
     private GameObject drag;
     private Vector3 updatePosition;
     private float planeY = -0.75f;
@@ -12,6 +13,8 @@ public class TowerMover : MonoBehaviour
     private Vector3 newTowerPosition;
     private Vector3 oldTowerPosition;
     private Vector3 initialTowerPosition;
+
+    private Quaternion initialTowerRotation;
 
     private LineRenderer checkLineRenderer;
     private Waypoint waypointTowerIsOver;
@@ -22,8 +25,9 @@ public class TowerMover : MonoBehaviour
     private void Start()
     {
         plane = new Plane(Vector3.up, Vector3.up * planeY); // ground plane
-        initialTowerPosition = (gameObject.transform.position);
+        initialTowerPosition = gameObject.transform.position;
         oldTowerPosition = initialTowerPosition;
+        initialTowerRotation = pivotTransform.rotation;
         checkLineRenderer = GetComponent<LineRenderer>();
         towerFiring = GetComponent<TowerFiring>();
     }
@@ -135,6 +139,7 @@ public class TowerMover : MonoBehaviour
     public void ResetTowerToStart()
     {
         gameObject.transform.position = initialTowerPosition;
+        pivotTransform.rotation = initialTowerRotation;
         validPlacementWaypoint = null;
         oldTowerPosition = initialTowerPosition;
         if (previousPlacementWaypoint != null)

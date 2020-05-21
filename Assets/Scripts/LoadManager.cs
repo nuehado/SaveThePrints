@@ -70,7 +70,8 @@ public class LoadManager : MonoBehaviour
 
     private WinPointCounter winPointCounter;
     private DefensesStore defensesStore;
-    
+
+    [SerializeField] List<GameObject> winChipDisplays = new List<GameObject>();
 
 
     // Start is called before the first frame update
@@ -189,7 +190,11 @@ public class LoadManager : MonoBehaviour
                 currentLevel = GameObject.FindGameObjectWithTag("Level"); // has to happen before level object is disabled
                 PlayerHealth playerHealth = currentLevel.GetComponentInChildren<PlayerHealth>();
                 int currentLevelScore = playerHealth.playerHealth;
-                if ( currentLevelScore > levelScores[lastLoadedLevel - 1])
+                for (int i = 0; i < currentLevelScore; i++)
+                {
+                    winChipDisplays[i].SetActive(true);
+                }
+                if (currentLevelScore > levelScores[lastLoadedLevel - 1])
                 {
                     winPointCounter.AddWinPoints(currentLevelScore - levelScores[lastLoadedLevel - 1]);
                     levelScores[lastLoadedLevel - 1] = currentLevelScore;
@@ -200,7 +205,11 @@ public class LoadManager : MonoBehaviour
 
             case 0: //main menu
                 //Debug.Log("Main Menu selected");
-                
+                foreach (GameObject winChipDisplay in winChipDisplays)
+                {
+                    winChipDisplay.SetActive(false);
+                }
+                winPointCounter.UpdateWinTrackers();
                 moveViewPos = menuViewPos;
                 moveViewRot = menuViewRot;
                 isCameraToMove = true;

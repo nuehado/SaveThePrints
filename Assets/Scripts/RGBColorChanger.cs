@@ -7,6 +7,7 @@ public class RGBColorChanger : MonoBehaviour
 {
     [SerializeField] GameObject printMaterialReferenceObject;
     [SerializeField] GameObject defensesMaterialReferenceObject;
+    [SerializeField] MeshRenderer defensesSpoolReferenceObject;
     [SerializeField] GameObject supportMaterialReferenceObject;
     [SerializeField] GameObject lineRendererReferenceObject;
     private float[] printMaterialInitialColor = { 0.77f, 0f, 0f };
@@ -31,6 +32,7 @@ public class RGBColorChanger : MonoBehaviour
         printMaterialReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(printMaterialInitialColor[0], printMaterialInitialColor[1], printMaterialInitialColor[2]);
         lineRendererReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(printMaterialInitialColor[0], printMaterialInitialColor[1], printMaterialInitialColor[2]);
         defensesMaterialReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(defensesMaterialInitialColor[0], defensesMaterialInitialColor[1], defensesMaterialInitialColor[2]);
+        defensesSpoolReferenceObject.sharedMaterial.color = new Color(defensesMaterialInitialColor[0], defensesMaterialInitialColor[1], defensesMaterialInitialColor[2]);
         supportMaterialReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(supportMaterialInitialColor[0], supportMaterialInitialColor[1], supportMaterialInitialColor[2]);
         printRGB.Add(0.9f);
         printRGB.Add(0f);
@@ -64,6 +66,7 @@ public class RGBColorChanger : MonoBehaviour
                 defensesRGB[1] = sliderDG.value / 13f;
                 defensesRGB[2] = sliderDB.value / 13f;
                 defensesMaterialReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(defensesRGB[0], defensesRGB[1], defensesRGB[2]);
+                defensesSpoolReferenceObject.sharedMaterial.color = new Color(defensesRGB[0], defensesRGB[1], defensesRGB[2]);
                 break;
 
             case 2: //Support RGB
