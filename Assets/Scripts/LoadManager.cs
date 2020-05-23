@@ -199,7 +199,8 @@ public class LoadManager : MonoBehaviour
                     winPointCounter.AddWinPoints(currentLevelScore - levelScores[lastLoadedLevel - 1]);
                     levelScores[lastLoadedLevel - 1] = currentLevelScore;
                 }
-                trophies[lastLoadedLevel - 1].GetComponent<Animator>().SetTrigger("Win"); // this is needed to automatically get back to main menu or buy menu
+                //trophies[lastLoadedLevel - 1].GetComponent<Animator>().SetTrigger("Win"); // this is needed to automatically get back to main menu or buy menu
+                trophies[lastLoadedLevel - 1].GetComponent<PlayTrophyAnim>().WinAnimStart();
                 timeLast = Time.realtimeSinceStartup;
                 break;
 

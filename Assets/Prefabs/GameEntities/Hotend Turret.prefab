@@ -231,7 +231,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 5
+  m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -265,7 +265,7 @@ ParticleSystem:
   lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
-  cullingMode: 0
+  cullingMode: 1
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
@@ -5649,6 +5649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c03bbac10eec643840005d42a503d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pivotTransform: {fileID: 0}
 --- !u!1 &6660409745371855425
 GameObject:
   m_ObjectHideFlags: 0
