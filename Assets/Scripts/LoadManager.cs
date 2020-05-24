@@ -11,8 +11,8 @@ public class LoadManager : MonoBehaviour
     private Vector3 levelViewRot = new Vector3(45f, 180f, 0f);
     private Vector3 menuViewPos = new Vector3(-20f, -160f, 290f);
     private Vector3 menuViewRot = new Vector3(45f, 180f, 0f);
-    private Vector3 buyViewPos = new Vector3(45.5f, -60.3f, 230f);
-    private Vector3 buyViewRot = new Vector3(45.5f, 130f, 0f);
+    private Vector3 buyViewPos = new Vector3(44.4f, -39.2f, 205.9f);
+    private Vector3 buyViewRot = new Vector3(40.957f, 115.931f, 0f);
     private Vector3 moveViewPos;
     private Vector3 moveViewRot;
     public bool isCameraToMove;
@@ -244,6 +244,7 @@ public class LoadManager : MonoBehaviour
                     Time.timeScale = 1;
                 }
                 levels[levelSelected - 1].SetActive(true);
+                enemySpawner.ChangeEnemySpawnAmount(1);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
                 menuViewRot = levelViewRot;
@@ -262,6 +263,7 @@ public class LoadManager : MonoBehaviour
                     Time.timeScale = 1;
                 }
                 levels[levelSelected - 1].SetActive(true);
+                enemySpawner.ChangeEnemySpawnAmount(1);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
                 menuViewRot = levelViewRot;
@@ -415,7 +417,15 @@ public class LoadManager : MonoBehaviour
 
     public void UnlockNextLevel()
     {
-        levelButtons[lastLoadedLevel].GetComponent<Button>().interactable = true; // note: levelSelected is equal to the array index of the next level to unlock
+        if(lastLoadedLevel < levelButtons.Count)
+        {
+            levelButtons[lastLoadedLevel].GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            Debug.Log("all levels unlocked");
+        }
+        
     }
 
     public void QuitLevel()

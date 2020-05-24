@@ -99,4 +99,10 @@ public class EnemySpawner : MonoBehaviour
     {
         moveSpeed = sliderMSpeed.value;
     }
+
+    public void ChangeEnemySpawnAmount(int enemyCount)
+    {
+        maxEnemies = enemyCount;
+        enemyHealth = enemyCount;
+    }
 }

@@ -71,7 +71,7 @@ public class PlayTrophyAnim : MonoBehaviour
         mainMenu.gameObject.SetActive(true);
         this.transform.position = originalTrophyPosition;
         this.transform.rotation = originalTrophyRotation;
-        if (winPointCounter.winPoints >= winPointCounter.purchaseUnlockCost && winPointCounter.winPoints <= winPointCounter.purchaseUnlockMax)
+        if (winPointCounter.winPoints >= winPointCounter.purchaseUnlockCost && winPointCounter.winPoints < winPointCounter.purchaseUnlockMax)
         {
             winPointCounter.purchaseUnlockCost += winPointCounter.purchaseUnlockScaler;
             loadManager.ChangeLevel(-4);
