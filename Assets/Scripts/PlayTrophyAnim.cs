@@ -42,7 +42,6 @@ public class PlayTrophyAnim : MonoBehaviour
             }
             if (distanceLeftToTravel <= 1f)
             {
-                Debug.Log("Trophy moved");
                 isAnimPlaying = false;
                 return;
             }
@@ -64,7 +63,6 @@ public class PlayTrophyAnim : MonoBehaviour
 
     private void WinAnimEnd()
     {
-        Debug.Log("end called");
         isRotationStarted = false;
         //trophy.SetActive(true);
         winMenu.gameObject.SetActive(false);

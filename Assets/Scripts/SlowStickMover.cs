@@ -21,6 +21,7 @@ public class SlowStickMover : MonoBehaviour
     private int stickUsedCount = 0;
 
     [SerializeField] private SlowEffect[] slowAreas;
+    [SerializeField] private AudioSource selectedSFX;
 
     private void Start()
     {
@@ -62,7 +63,8 @@ public class SlowStickMover : MonoBehaviour
             if (gameObject == hit.transform.gameObject && isStickDepleted == false)
             {
                 drag = hit.transform.gameObject;
-            }
+                selectedSFX.Play();
+}
         }
     }
 
@@ -137,7 +139,7 @@ public class SlowStickMover : MonoBehaviour
                 else
                 {
                     isStickDepleted = true;
-                    //GetComponentInChildren<MeshRenderer>().enabled = false;
+                    GetComponentInChildren<MeshRenderer>().enabled = false;
                 }
             } 
         }
@@ -147,7 +149,11 @@ public class SlowStickMover : MonoBehaviour
 
     public void ResetStickToStart()
     {
+        checkLineRenderer.enabled = false;
+        GetComponent<Outline>().enabled = false;
+        drag = null;
         gameObject.transform.position = initialStickPosition;
+        GetComponentInChildren<MeshRenderer>().enabled = true;
         validPlacementWaypoint = null;
         oldStickPosition = initialStickPosition;
         isStickDepleted = false;

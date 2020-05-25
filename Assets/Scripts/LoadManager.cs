@@ -72,7 +72,7 @@ public class LoadManager : MonoBehaviour
     private DefensesStore defensesStore;
 
     [SerializeField] List<GameObject> winChipDisplays = new List<GameObject>();
-
+    private DefenseHoverOutliner defenseHover;
 
     // Start is called before the first frame update
     void Start()
@@ -84,6 +84,7 @@ public class LoadManager : MonoBehaviour
         slowEffects = FindObjectsOfType<SlowEffect>();
         winPointCounter = FindObjectOfType<WinPointCounter>();
         defensesStore = FindObjectOfType<DefensesStore>();
+        defenseHover = FindObjectOfType<DefenseHoverOutliner>();
         moveViewRot = menuViewRot;
 
         foreach (GameObject level in levels)
@@ -244,7 +245,7 @@ public class LoadManager : MonoBehaviour
                     Time.timeScale = 1;
                 }
                 levels[levelSelected - 1].SetActive(true);
-                enemySpawner.ChangeEnemySpawnAmount(1);
+                enemySpawner.ChangeEnemySpawnAmount(5);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
                 menuViewRot = levelViewRot;
@@ -263,7 +264,7 @@ public class LoadManager : MonoBehaviour
                     Time.timeScale = 1;
                 }
                 levels[levelSelected - 1].SetActive(true);
-                enemySpawner.ChangeEnemySpawnAmount(1);
+                enemySpawner.ChangeEnemySpawnAmount(3);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
                 menuViewRot = levelViewRot;
@@ -279,6 +280,7 @@ public class LoadManager : MonoBehaviour
             case 3: //level 3
                 //Debug.Log("Level 3 selecteed");
                 levels[levelSelected - 1].SetActive(true);
+                enemySpawner.ChangeEnemySpawnAmount(5);
                 lastLoadedLevel = levelSelected;
                 moveViewPos = levelViewPos;
                 menuViewRot = levelViewRot;
@@ -443,6 +445,7 @@ public class LoadManager : MonoBehaviour
         enemySpawner.enemyHealth = enemySpawner.maxEnemies;
         scoreCounter.firedFilamentCM = 0;
         scoreCounter.UpdateScore();
+        defenseHover.enabled = false;
         currentLevel = GameObject.FindGameObjectWithTag("Level"); // has to happen before level object is disabled
         if (currentLevel != null)
         {
@@ -457,10 +460,12 @@ public class LoadManager : MonoBehaviour
         }
         foreach (DefenseSupportMover supportMover in supports)
         {
+            supportMover.GetComponent<Outline>().OutlineColor = Color.white;
             supportMover.ResetSupportToStart();
             supportMover.enabled = false;
         }
         slowSticks.ResetStickToStart();
         slowSticks.enabled = false;
+        
     }
 }

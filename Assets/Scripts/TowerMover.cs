@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ public class TowerMover : MonoBehaviour
     private Waypoint previousPlacementWaypoint = null;
     private Waypoint validPlacementWaypoint;
     private TowerFiring towerFiring;
+    [SerializeField] private AudioSource placeTowerSFX;
+    [SerializeField] private AudioSource selectedSFX;
 
     private void Start()
     {
@@ -34,6 +37,7 @@ public class TowerMover : MonoBehaviour
 
     private void Update()
     {
+        
         if (Input.GetMouseButtonDown(0))
         {
             SelectTower();
@@ -64,7 +68,8 @@ public class TowerMover : MonoBehaviour
             if (gameObject == hit.transform.gameObject)
             {
                 drag = hit.transform.gameObject;
-                towerFiring.SetTargeting(false); 
+                towerFiring.SetTargeting(false);
+                selectedSFX.Play();
             }
         }
     }
@@ -132,12 +137,16 @@ public class TowerMover : MonoBehaviour
             validPlacementWaypoint.isPlacable = false;
             towerFiring.SetTargeting(true);
             previousPlacementWaypoint = validPlacementWaypoint;
+            placeTowerSFX.Play();
         }
         drag = null;
     }
 
     public void ResetTowerToStart()
     {
+        checkLineRenderer.enabled = false;
+        GetComponent<Outline>().enabled = false;
+        drag = null;
         gameObject.transform.position = initialTowerPosition;
         pivotTransform.rotation = initialTowerRotation;
         validPlacementWaypoint = null;

@@ -17,7 +17,9 @@ public class DefenseSupportMover : MonoBehaviour
     private Waypoint waypointSupportIsOver;
     private Waypoint previousPlacementWaypoint = null;
     private Waypoint validPlacementWaypoint;
-    private bool isSupportPlaced = false;
+    public bool isSupportPlaced = false;
+    [SerializeField] private AudioSource selectedSFX;
+    [SerializeField] private AudioSource placeTowerSFX;
 
     private void Start()
     {
@@ -59,6 +61,7 @@ public class DefenseSupportMover : MonoBehaviour
             if (gameObject == hit.transform.gameObject && isSupportPlaced == false)
             {
                 drag = hit.transform.gameObject;
+                selectedSFX.Play();
             }
         }
     }
@@ -122,12 +125,16 @@ public class DefenseSupportMover : MonoBehaviour
             validPlacementWaypoint.isOnPath = false;
             isSupportPlaced = true;
             previousPlacementWaypoint = validPlacementWaypoint;
+            placeTowerSFX.Play();
         }
         drag = null;
     }
 
     public void ResetSupportToStart()
     {
+        checkLineRenderer.enabled = false;
+        drag = null;
+        GetComponent<Outline>().enabled = false;
         gameObject.transform.position = initialSupportPosition;
         validPlacementWaypoint = null;
         oldSupportPosition = initialSupportPosition;

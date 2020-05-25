@@ -28,7 +28,7 @@ public class DrawPath : MonoBehaviour
     private GameObject[] defenseSupports;
     private GameObject slowStick;
     private DefensesStore defensesStore;
-
+    private DefenseHoverOutliner defenseHoverer;
 
     [SerializeField] private GameObject loadScreen;
     [SerializeField] private GameObject LevelScreen;
@@ -39,6 +39,7 @@ public class DrawPath : MonoBehaviour
         defenseSupports = GameObject.FindGameObjectsWithTag("DefenseSupport");
         slowStick = GameObject.FindGameObjectWithTag("SlowStick");
         defensesStore = FindObjectOfType<DefensesStore>();
+        defenseHoverer = FindObjectOfType<DefenseHoverOutliner>();
     }
     private void OnEnable()
     {
@@ -123,6 +124,7 @@ public class DrawPath : MonoBehaviour
                 activeDefenses.GetComponent<SlowStickMover>().enabled = true;
             }
         }
+        defenseHoverer.GetComponent<DefenseHoverOutliner>().enabled = true;
     }
 
     private void StartPrinterPathTranslations(Vector3 lengthTowardsNextWaypoint)

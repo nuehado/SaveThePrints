@@ -14,7 +14,7 @@ public class EnemyCollision : MonoBehaviour
     private EnemySpawner enemySpawner;
 
     private float hitStoppedTimer = 0f;
-    [SerializeField] private float hittingStoppedTime = 0.1f;
+    [SerializeField] private float hittingStoppedTime = 0.95f;
 
     private void Start()
     {
@@ -47,7 +47,7 @@ public class EnemyCollision : MonoBehaviour
         var deathExplode = Instantiate(deathObjects, transform.position, transform.rotation);
         Destroy(explodeVFX.gameObject, 1f);
         Destroy(deathExplode.gameObject, 3f);
-        AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position, 0.2f);
         enemySpawner.UpdateEnemyHealth(-1);
         Destroy(gameObject);
     }

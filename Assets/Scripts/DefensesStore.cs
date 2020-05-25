@@ -10,13 +10,15 @@ public class DefensesStore : MonoBehaviour
     [SerializeField] private List<GameObject> purchasableGlueSticks = new List<GameObject>();
     public List<GameObject> purchasedDefenses = new List<GameObject>();
     [SerializeField] private List<GameObject> purchaseDrawer = new List<GameObject>();
+    [SerializeField] private AudioSource drawerSFX;
+    [SerializeField] private AudioSource unlockSFX;
 
     private Ray ray;
     private GameObject selectedObject;
     private GameObject previousObject;
 
     private LoadManager loadManager;
-
+    private bool isBuyingActive = false;
     private void Start()
     {
         loadManager = FindObjectOfType<LoadManager>();
@@ -30,6 +32,7 @@ public class DefensesStore : MonoBehaviour
             defenseObject.GetComponent<DefenseBuyer>().enabled = true;
         }
         */
+        isBuyingActive = true;
         foreach (GameObject purchasedObject in purchasedDefenses)
         {
             purchasedObject.SetActive(true);
@@ -43,9 +46,12 @@ public class DefensesStore : MonoBehaviour
     void Update()
     {
         //HoverOverPurchasable();
-        HoverOverPurchaseDrawer();
+        if (isBuyingActive == true)
+        {
+            HoverOverPurchaseDrawer();
+        }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isBuyingActive == true)
         {
             if (selectedObject != null)
             {
@@ -140,51 +146,35 @@ public class DefensesStore : MonoBehaviour
         {
             if (purchasableTowers.Count > 0)
             {
+                isBuyingActive = false;
+                purchaseAttempt.GetComponent<Outline>().enabled = false;
                 purchasedDefenses.Add(purchasableTowers[0]);
                 purchasableTowers.Remove(purchasableTowers[0]);
-                foreach (GameObject defenseObject in allDefenses)
-                {
-                    defenseObject.GetComponent<Outline>().enabled = false;
-                }
-                purchaseAttempt.GetComponent<Outline>().enabled = false;
-                selectedObject = null;
-                previousObject = null;
-                loadManager.ChangeLevel(0);// todo add animations and such before doing this
-                gameObject.GetComponent<DefensesStore>().enabled = false;
+                purchaseAttempt.GetComponent<Animator>().SetTrigger("Open");
+                //CloseStore();
             }
         }
         else if (purchaseAttempt.name.Contains("Support"))
         {
             if (purchasableSupports.Count > 0)
             {
+                isBuyingActive = false;
+                purchaseAttempt.GetComponent<Outline>().enabled = false;
                 purchasedDefenses.Add(purchasableSupports[0]);
                 purchasableSupports.Remove(purchasableSupports[0]);
-                foreach (GameObject defenseObject in allDefenses)
-                {
-                    defenseObject.GetComponent<Outline>().enabled = false;
-                }
-                purchaseAttempt.GetComponent<Outline>().enabled = false;
-                selectedObject = null;
-                previousObject = null;
-                loadManager.ChangeLevel(0);// todo add animations and such before doing this
-                gameObject.GetComponent<DefensesStore>().enabled = false;
+                purchaseAttempt.GetComponent<Animator>().SetTrigger("Open");
             }
         }
         else if (purchaseAttempt.name.Contains("Glue"))
         {
             if (purchasableGlueSticks.Count > 0)
             {
+                isBuyingActive = false;
+                purchaseAttempt.GetComponent<Outline>().enabled = false;
                 purchasedDefenses.Add(purchasableGlueSticks[0]);
                 purchasableGlueSticks.Remove(purchasableGlueSticks[0]);
-                foreach (GameObject defenseObject in allDefenses)
-                {
-                    defenseObject.GetComponent<Outline>().enabled = false;
-                }
-                purchaseAttempt.GetComponent<Outline>().enabled = false;
-                selectedObject = null;
-                previousObject = null;
-                loadManager.ChangeLevel(0);// todo add animations and such before doing this
-                gameObject.GetComponent<DefensesStore>().enabled = false;
+                purchaseAttempt.GetComponent<Animator>().SetTrigger("Open");
+                
             }
             /*if (purchasableTowers.Contains(purchaseAttempt))
             {
@@ -201,6 +191,24 @@ public class DefensesStore : MonoBehaviour
                 gameObject.GetComponent<DefensesStore>().enabled = false;
             }*/
         }
+    }
+
+    public void CloseStore()
+    {
+        selectedObject = null;
+        previousObject = null;
+        loadManager.ChangeLevel(0);// todo add animations and such before doing this
+        gameObject.GetComponent<DefensesStore>().enabled = false;
+    }
+    
+    public void PlayDrawerSFX()
+    {
+        drawerSFX.Play();
+    }
+
+    public void PlayUnlockSFX()
+    {
+        unlockSFX.Play();
     }
 }
 

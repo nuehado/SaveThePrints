@@ -5,13 +5,12 @@ using UnityEngine;
 public class DefenseBuyer : MonoBehaviour
 {
 
-    private Outline outline;
-    private Ray ray;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        outline = GetComponent<Outline>();
+        
     }
 
     // Update is called once per frame
