@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class SlowEffect : MonoBehaviour
 {
-    [SerializeField] private int currentDefenseSupportHealth = 2;
     private Vector3 initialPosition;
     private EnemySpawner enemySpawner;
     private float initialEnemyMovementSpeed;
     private float enemySpawnSpeed;
-    private float enemySlowTimer = 0f;
     private float effectTimer = 0f;
     [SerializeField] private float effectDuration = 3f;
     [SerializeField] private GameObject glueShmear;
     public bool isNew = true;
+    private SpriteRenderer spriteRenderer;
+    private float alphaLevel = Mathf.Clamp(1f, 0f, 1f);
 
     private void Start()
     {
         enemySpawner = FindObjectOfType<EnemySpawner>();
         initialPosition = transform.position;
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
@@ -26,11 +27,15 @@ public class SlowEffect : MonoBehaviour
         if (isNew == false)
         {
             effectTimer += Time.deltaTime;
+            alphaLevel = 1f - effectTimer/ effectDuration;
+            //alphaLevel = alphaLevel - perSecondShmearFade;
+            spriteRenderer.color = new Color(1f, 1f, 1f, alphaLevel);
         }
 
         if (effectTimer >= effectDuration)
         {
             GetComponent<BoxCollider>().enabled = false;
+            alphaLevel = 1f;
             glueShmear.SetActive(false);
             //GetComponent<MeshRenderer>().enabled = false;
             effectTimer = 0f;

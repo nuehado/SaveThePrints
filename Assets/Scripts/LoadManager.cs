@@ -20,10 +20,10 @@ public class LoadManager : MonoBehaviour
 
     private int levelSelected = 0;
     private int lastLoadedLevel = 0;
-    private float timeLast;
-    private float timeNow;
-    private float deltaTime;
-
+    //private float timeLast;
+    //private float timeNow;
+    //private float deltaTime;
+    /*
     [SerializeField] GameObject level1;
     [SerializeField] GameObject level1Button;
     private int level1Score = 0;
@@ -45,6 +45,7 @@ public class LoadManager : MonoBehaviour
     [SerializeField] GameObject level7;
     [SerializeField] GameObject level7Button;
     private int level7Score = 0;
+    */
 
     [SerializeField] private List<GameObject> levels = new List<GameObject>();
     [SerializeField] private List<GameObject> levelButtons = new List<GameObject>();
@@ -72,6 +73,7 @@ public class LoadManager : MonoBehaviour
     private DefensesStore defensesStore;
 
     [SerializeField] List<GameObject> winChipDisplays = new List<GameObject>();
+    [SerializeField] private Animator winChipsAnim;
     private DefenseHoverOutliner defenseHover;
 
     // Start is called before the first frame update
@@ -119,8 +121,8 @@ public class LoadManager : MonoBehaviour
 
     private void PositionCamera(Vector3 moveViewPos)
     {
-        timeNow = Time.realtimeSinceStartup;
-        deltaTime = timeLast - timeNow;
+        //timeNow = Time.realtimeSinceStartup;
+        //deltaTime = timeLast - timeNow;
 
         Camera.main.transform.localPosition = Vector3.MoveTowards(Camera.main.transform.localPosition, moveViewPos, cameraMoveSpeed * Time.deltaTime); //todo either switch back to manually calculated time or remove all manual calculation script lines
         if (moveViewRot != null)
@@ -139,7 +141,7 @@ public class LoadManager : MonoBehaviour
         {
             isCameraToMove = false;
         }
-        timeLast = timeNow;
+        //timeLast = timeNow;
     }
 
     public void ChangeLevel(int levelInt)
@@ -157,7 +159,7 @@ public class LoadManager : MonoBehaviour
                 isCameraToMove = true;
 
 
-                timeLast = Time.realtimeSinceStartup;
+                //timeLast = Time.realtimeSinceStartup;
                 break;
 
             case -3: //lose menu
@@ -171,7 +173,7 @@ public class LoadManager : MonoBehaviour
                 isCameraToMove = true;
 
 
-                timeLast = Time.realtimeSinceStartup;
+                //timeLast = Time.realtimeSinceStartup;
                 break;
 
             case -2: //quit menu
@@ -180,7 +182,7 @@ public class LoadManager : MonoBehaviour
                 moveViewRot = menuViewRot;
                 isCameraToMove = true;
 
-                timeLast = Time.realtimeSinceStartup;
+                //timeLast = Time.realtimeSinceStartup;
                 break;
 
             case -1: //win menu
@@ -195,6 +197,7 @@ public class LoadManager : MonoBehaviour
                 {
                     winChipDisplays[i].SetActive(true);
                 }
+                winChipsAnim.SetTrigger("MoveChips");
                 if (currentLevelScore > levelScores[lastLoadedLevel - 1])
                 {
                     winPointCounter.AddWinPoints(currentLevelScore - levelScores[lastLoadedLevel - 1]);
@@ -202,7 +205,7 @@ public class LoadManager : MonoBehaviour
                 }
                 //trophies[lastLoadedLevel - 1].GetComponent<Animator>().SetTrigger("Win"); // this is needed to automatically get back to main menu or buy menu
                 trophies[lastLoadedLevel - 1].GetComponent<PlayTrophyAnim>().WinAnimStart();
-                timeLast = Time.realtimeSinceStartup;
+                //timeLast = Time.realtimeSinceStartup;
                 break;
 
             case 0: //main menu
@@ -233,132 +236,186 @@ public class LoadManager : MonoBehaviour
                 slowSticks.ResetStickToStart();
                 slowSticks.enabled = false;
 
-                timeLast = Time.realtimeSinceStartup;
+                //timeLast = Time.realtimeSinceStartup;
                 // for win scenario we turn on level1, ChangeLevel(1). and switch menus
                 break;
 
             case 1: //level 1
-                    //Debug.Log("Level 1 selected");
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
 
-                if (Time.timeScale == 0)
-                {
-                    Time.timeScale = 1;
-                }
-                levels[levelSelected - 1].SetActive(true);
-                enemySpawner.ChangeEnemySpawnAmount(5);
-                lastLoadedLevel = levelSelected;
-                moveViewPos = levelViewPos;
-                menuViewRot = levelViewRot;
-                isCameraToMove = true;
-                timeLast = Time.realtimeSinceStartup;
-
-                //set number of towers, defenseSupports, and slowStick. (towers[0].gameObject.SetActive(true);)
-                //towers
-                ActivateUnlockedDefenses();
                 break;
 
             case 2: //level 2
-                //Debug.Log("level 2 selected");
-                if (Time.timeScale == 0)
-                {
-                    Time.timeScale = 1;
-                }
-                levels[levelSelected - 1].SetActive(true);
-                enemySpawner.ChangeEnemySpawnAmount(3);
-                lastLoadedLevel = levelSelected;
-                moveViewPos = levelViewPos;
-                menuViewRot = levelViewRot;
-                isCameraToMove = true;
-                timeLast = Time.realtimeSinceStartup;
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
 
-                //set number of towers, Dsupports, etc.
-
-                ActivateUnlockedDefenses(); 
-                //slowSticks.GetComponentInChildren<MeshRenderer>().enabled = true;
                 break;
 
             case 3: //level 3
-                //Debug.Log("Level 3 selecteed");
-                levels[levelSelected - 1].SetActive(true);
-                enemySpawner.ChangeEnemySpawnAmount(5);
-                lastLoadedLevel = levelSelected;
-                moveViewPos = levelViewPos;
-                menuViewRot = levelViewRot;
-                isCameraToMove = true;
-                timeLast = Time.realtimeSinceStartup;
-
-                //set number of towers, defenseSupports, and slowStick. (towers[0].gameObject.SetActive(true);)
-                //towers
-                ActivateUnlockedDefenses();
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
 
                 break;
 
             case 4: //level 4
-                //Debug.Log("Level 4 selecteed");
-                if (Time.timeScale == 0)
-                {
-                    Time.timeScale = 1;
-                }
-                level4.SetActive(true);
-                lastLoadedLevel = levelSelected;
-                moveViewPos = levelViewPos;
-                menuViewRot = levelViewRot;
-                isCameraToMove = true;
-                timeLast = Time.realtimeSinceStartup;
-
-                //set number of towers, Dsupports, etc.
-                ActivateUnlockedDefenses();
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
                 break;
 
             case 5: //level 5
-                //Debug.Log("Level 5 selecteed");
-                if (Time.timeScale == 0)
-                {
-                    Time.timeScale = 1;
-                }
-                level5.SetActive(true);
-                lastLoadedLevel = levelSelected;
-                moveViewPos = levelViewPos;
-                menuViewRot = levelViewRot;
-                isCameraToMove = true;
-                timeLast = Time.realtimeSinceStartup;
-
-                //set number of towers, Dsupports, etc.
-                ActivateUnlockedDefenses();
+                enemySpawner.ChangeEnemySpawnAmount(3);
+                SetUpGenericLevel();
                 break;
 
             case 6: //level 6
-                //Debug.Log("Level 6 selecteed");
-                if (Time.timeScale == 0)
-                {
-                    Time.timeScale = 1;
-                }
-                level6.SetActive(true);
-                lastLoadedLevel = levelSelected;
-                moveViewPos = levelViewPos;
-                menuViewRot = levelViewRot;
-                isCameraToMove = true;
-                timeLast = Time.realtimeSinceStartup;
-                ActivateUnlockedDefenses();
-                //set number of towers, Dsupports, etc.
-
+                enemySpawner.ChangeEnemySpawnAmount(4);
+                SetUpGenericLevel();
                 break;
 
             case 7: //level 7
-                //Debug.Log("Level 7 selecteed");
-                if (Time.timeScale == 0)
-                {
-                    Time.timeScale = 1;
-                }
-                level7.SetActive(true);
-                lastLoadedLevel = levelSelected;
-                moveViewPos = levelViewPos;
-                menuViewRot = levelViewRot;
-                isCameraToMove = true;
-                timeLast = Time.realtimeSinceStartup;
-                ActivateUnlockedDefenses();
-                //set number of towers, Dsupports, etc.
+                enemySpawner.ChangeEnemySpawnAmount(4);
+                SetUpGenericLevel();
+                break;
 
+            case 8: //level 8
+                enemySpawner.ChangeEnemySpawnAmount(4);
+                SetUpGenericLevel();
+                break;
+
+            case 9: //level 9
+                enemySpawner.ChangeEnemySpawnAmount(7);
+                SetUpGenericLevel();
+                break;
+
+            case 10: //level 10
+                enemySpawner.ChangeEnemySpawnAmount(9);
+                SetUpGenericLevel();
+                break;
+
+            case 11: //level 11
+                enemySpawner.ChangeEnemySpawnAmount(9);
+                SetUpGenericLevel();
+                break;
+
+            case 12: //level 12
+                enemySpawner.ChangeEnemySpawnAmount(9);
+                SetUpGenericLevel();
+                break;
+
+            case 13: //level 13
+                enemySpawner.ChangeEnemySpawnAmount(11);
+                SetUpGenericLevel();
+                break;
+
+            case 14: //level 14
+                enemySpawner.ChangeEnemySpawnAmount(9);
+                SetUpGenericLevel();
+                break;
+
+            case 15: //level 15
+                enemySpawner.ChangeEnemySpawnAmount(10);
+                SetUpGenericLevel();
+                break;
+
+            case 16: //level 16
+                enemySpawner.ChangeEnemySpawnAmount(11);
+                SetUpGenericLevel();
+                break;
+
+            case 17: //level 17
+                enemySpawner.ChangeEnemySpawnAmount(11);
+                SetUpGenericLevel();
+                break;
+
+            case 18: //level 18
+                enemySpawner.ChangeEnemySpawnAmount(11);
+                SetUpGenericLevel();
+                break;
+
+            case 19: //level 19
+                enemySpawner.ChangeEnemySpawnAmount(12);
+                SetUpGenericLevel();
+                break;
+
+            case 20: //level 20
+                enemySpawner.ChangeEnemySpawnAmount(12);
+                SetUpGenericLevel();
+                break;
+
+            case 21: //level 21
+                enemySpawner.ChangeEnemySpawnAmount(13);
+                SetUpGenericLevel();
+                break;
+
+            case 22: //level 22
+                enemySpawner.ChangeEnemySpawnAmount(13);
+                SetUpGenericLevel();
+                break;
+
+            case 23: //level 23
+                enemySpawner.ChangeEnemySpawnAmount(14);
+                SetUpGenericLevel();
+                break;
+
+            case 24: //level 24
+                enemySpawner.ChangeEnemySpawnAmount(14);
+                SetUpGenericLevel();
+                break;
+
+            case 25: //level 25
+                enemySpawner.ChangeEnemySpawnAmount(15);
+                SetUpGenericLevel();
+                break;
+
+            case 26: //level 26
+                enemySpawner.ChangeEnemySpawnAmount(15);
+                SetUpGenericLevel();
+                break;
+
+            case 27: //level 27
+                enemySpawner.ChangeEnemySpawnAmount(16);
+                SetUpGenericLevel();
+                break;
+
+            case 28: //level 28
+                enemySpawner.ChangeEnemySpawnAmount(16);
+                SetUpGenericLevel();
+                break;
+
+            case 29: //level 29
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
+                break;
+
+            case 30: //level 30
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
+                break;
+
+            case 31: //level 31
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
+                break;
+
+            case 32: //level 32
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
+                break;
+
+            case 33: //level 33
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
+                break;
+
+            case 34: //level 34
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
+                break;
+
+            case 35: //level 35
+                enemySpawner.ChangeEnemySpawnAmount(1);
+                SetUpGenericLevel();
                 break;
 
             default: // no level selected, switch to main menu
@@ -367,6 +424,16 @@ public class LoadManager : MonoBehaviour
         }
 
         //Debug.Log("lastlevelloaded" + lastLoadedLevel);
+    }
+
+    private void SetUpGenericLevel()
+    {
+        levels[levelSelected - 1].SetActive(true);
+        lastLoadedLevel = levelSelected;
+        moveViewPos = levelViewPos;
+        menuViewRot = levelViewRot;
+        isCameraToMove = true;
+        ActivateUnlockedDefenses();
     }
 
     private void ActivateUnlockedDefenses()

@@ -7,9 +7,9 @@ public class WinPointCounter : MonoBehaviour
 {
     public int winPoints = 0;
 
-    public int purchaseUnlockCost = 3;
-    public int purchaseUnlockMax = 15;
-    public int purchaseUnlockScaler = 3;
+    public int purchaseUnlockCost = 12;
+    public int purchaseUnlockMax = 72;
+    public int purchaseUnlockScaler = 12;
 
     [SerializeField] List<GameObject> winChips = new List<GameObject>();
     [SerializeField] TextMeshProUGUI winChipCounter;

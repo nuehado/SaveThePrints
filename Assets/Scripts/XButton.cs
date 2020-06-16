@@ -12,6 +12,7 @@ public class XButton : MonoBehaviour
     [SerializeField] Canvas mainMenu;
     [SerializeField] LoadManager loadManager;
     [SerializeField] Canvas[] allNonPrintMenus;
+    [SerializeField] GameObject[] printColorObjects;
     private Canvas previousMenu;
     public void Xbutton()
     {
@@ -50,6 +51,10 @@ public class XButton : MonoBehaviour
             foreach (Canvas canvas in allNonPrintMenus)
             {
                 canvas.gameObject.SetActive(false);
+            }
+            foreach (GameObject colorObject in printColorObjects)
+            {
+                colorObject.SetActive(false);
             }
             mainMenu.gameObject.SetActive(true);
         }
