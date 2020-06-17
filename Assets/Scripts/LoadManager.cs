@@ -47,9 +47,10 @@ public class LoadManager : MonoBehaviour
     private int level7Score = 0;
     */
 
-    [SerializeField] private List<GameObject> levels = new List<GameObject>();
-    [SerializeField] private List<GameObject> levelButtons = new List<GameObject>();
-    [SerializeField] private List<int> levelScores = new List<int>();
+    public List<GameObject> levels = new List<GameObject>();
+    public List<GameObject> levelButtons = new List<GameObject>();
+    public List<int> levelScores = new List<int>();
+    public int highestLevelUnlock = 0;
 
     TowerMover[] towers;
     DefenseSupportMover[] supports;
@@ -489,6 +490,10 @@ public class LoadManager : MonoBehaviour
         if(lastLoadedLevel < levelButtons.Count)
         {
             levelButtons[lastLoadedLevel].GetComponent<Button>().interactable = true;
+            if(lastLoadedLevel > highestLevelUnlock)
+            {
+                highestLevelUnlock = lastLoadedLevel;
+            }
         }
         else
         {

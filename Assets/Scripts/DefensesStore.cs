@@ -5,9 +5,9 @@ using UnityEngine;
 public class DefensesStore : MonoBehaviour
 {
     public List<GameObject> allDefenses = new List<GameObject>();
-    [SerializeField] private List<GameObject> purchasableTowers = new List<GameObject>();
-    [SerializeField] private List<GameObject> purchasableSupports = new List<GameObject>();
-    [SerializeField] private List<GameObject> purchasableGlueSticks = new List<GameObject>();
+    public List<GameObject> purchasableTowers = new List<GameObject>();
+    public List<GameObject> purchasableSupports = new List<GameObject>();
+    public List<GameObject> purchasableGlueSticks = new List<GameObject>();
     public List<GameObject> purchasedDefenses = new List<GameObject>();
     [SerializeField] private List<GameObject> purchaseDrawer = new List<GameObject>();
     [SerializeField] private AudioSource drawerSFX;
