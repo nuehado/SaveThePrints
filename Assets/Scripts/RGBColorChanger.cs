@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RGBColorChanger : MonoBehaviour
 {
     [SerializeField] GameObject printMaterialReferenceObject;
+    public Color lastPrintColor;
     [SerializeField] GameObject defensesMaterialReferenceObject;
     [SerializeField] MeshRenderer defensesSpoolReferenceObject;
     [SerializeField] GameObject supportMaterialReferenceObject;
@@ -45,6 +46,8 @@ public class RGBColorChanger : MonoBehaviour
         supportRGB.Add(0.2f);
         supportRGB.Add(0.2f);
         supportRGB.Add(0.2f);
+
+        lastPrintColor = new Color(printMaterialInitialColor[0], printMaterialInitialColor[1], printMaterialInitialColor[2]);
     }
 
 
@@ -57,6 +60,7 @@ public class RGBColorChanger : MonoBehaviour
                 printRGB[0] = sliderPR.value / 13f;
                 printRGB[1] = sliderPG.value / 13f;
                 printRGB[2] = sliderPB.value / 13f;
+                lastPrintColor = new Color(printRGB[0], printRGB[1], printRGB[2]);
                 printMaterialReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(printRGB[0], printRGB[1], printRGB[2]);
                 lineRendererReferenceObject.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(printRGB[0], printRGB[1], printRGB[2]);
                 break;
