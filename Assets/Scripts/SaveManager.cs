@@ -26,6 +26,7 @@ public class SaveManager : MonoBehaviour
         WinPointData winPointData = SaveSystem.LoadWinPoints();
         winPointCounter.winPoints = winPointData.winPoints;
         winPointCounter.purchaseUnlockCost = winPointData.purchaseUnlockCost;
+        winPointCounter.UpdateWinTrackers();
     }
     
     public void SaveDefenseStore()

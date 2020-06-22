@@ -8,7 +8,7 @@ using System;
 
 public class MenuButton : MonoBehaviour, IPointerEnterHandler, IDeselectHandler, ISelectHandler, IMoveHandler
 {
-    [SerializeField] private string text = "Button Text";
+    public string text = "Button Text";
     [SerializeField] private bool isTopButtonInMenu = false;
     [SerializeField] private bool isBottomButtonInMenu = false;
     private string lockedText = "Locked Print";
