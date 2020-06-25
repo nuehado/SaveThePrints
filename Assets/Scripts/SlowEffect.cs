@@ -61,7 +61,7 @@ public class SlowEffect : MonoBehaviour
     {
         //private float slowStartTime = //needs a way to track time per benchy
         initialEnemyMovementSpeed = enemySpawner.moveSpeed;
-        enemySpawnSpeed = enemySpawner.secondsBetweenSpawns;
+        enemySpawnSpeed = enemySpawner.secondsBetweenSpawns * 1.2f; // remove multiplier to stop overlap
         enemy.GetComponent<EnemyMovement>().movementSpeed = initialEnemyMovementSpeed * 0.5f;
         yield return new WaitForSeconds(enemySpawnSpeed);
         if (enemy != null)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    private bool isMenuOpen = false;
+    public bool isMenuOpen = false;
     [SerializeField] private GameObject mainMenuCanvas;
     private LoadManager loadManager;
     [SerializeField] public List<GameObject> winChipSprites = new List<GameObject>();
@@ -60,7 +60,6 @@ public class MainMenu : MonoBehaviour
         {
             if( i < loadManager.levelScores.Count )
             {
-                Debug.Log("should do the thing");
                 mainMenuButtons[i].printPoints = loadManager.levelScores[i];
                 if(mainMenuButtons[i].printPoints > 0)
                 {
@@ -70,5 +69,11 @@ public class MainMenu : MonoBehaviour
                 mainMenuButtons[i].text = inGameMenuButtons[i].text;
             }
         }
+    }
+
+    public void CloseMenu()
+    {
+        isMenuOpen = false;
+        mainMenuCanvas.SetActive(false);
     }
 }

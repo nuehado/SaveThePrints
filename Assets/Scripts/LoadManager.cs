@@ -285,17 +285,17 @@ public class LoadManager : MonoBehaviour
                 break;
 
             case 9: //level 9
-                enemySpawner.ChangeEnemySpawnAmount(7);
+                enemySpawner.ChangeEnemySpawnAmount(6);
                 SetUpGenericLevel();
                 break;
 
             case 10: //level 10
-                enemySpawner.ChangeEnemySpawnAmount(9);
+                enemySpawner.ChangeEnemySpawnAmount(8);
                 SetUpGenericLevel();
                 break;
 
             case 11: //level 11
-                enemySpawner.ChangeEnemySpawnAmount(9);
+                enemySpawner.ChangeEnemySpawnAmount(8);
                 SetUpGenericLevel();
                 break;
 
@@ -305,7 +305,7 @@ public class LoadManager : MonoBehaviour
                 break;
 
             case 13: //level 13
-                enemySpawner.ChangeEnemySpawnAmount(11);
+                enemySpawner.ChangeEnemySpawnAmount(8);
                 SetUpGenericLevel();
                 break;
 
@@ -345,12 +345,12 @@ public class LoadManager : MonoBehaviour
                 break;
 
             case 21: //level 21
-                enemySpawner.ChangeEnemySpawnAmount(13);
+                enemySpawner.ChangeEnemySpawnAmount(10);
                 SetUpGenericLevel();
                 break;
 
             case 22: //level 22
-                enemySpawner.ChangeEnemySpawnAmount(13);
+                enemySpawner.ChangeEnemySpawnAmount(11);
                 SetUpGenericLevel();
                 break;
 
@@ -381,41 +381,6 @@ public class LoadManager : MonoBehaviour
 
             case 28: //level 28
                 enemySpawner.ChangeEnemySpawnAmount(16);
-                SetUpGenericLevel();
-                break;
-
-            case 29: //level 29
-                enemySpawner.ChangeEnemySpawnAmount(1);
-                SetUpGenericLevel();
-                break;
-
-            case 30: //level 30
-                enemySpawner.ChangeEnemySpawnAmount(1);
-                SetUpGenericLevel();
-                break;
-
-            case 31: //level 31
-                enemySpawner.ChangeEnemySpawnAmount(1);
-                SetUpGenericLevel();
-                break;
-
-            case 32: //level 32
-                enemySpawner.ChangeEnemySpawnAmount(1);
-                SetUpGenericLevel();
-                break;
-
-            case 33: //level 33
-                enemySpawner.ChangeEnemySpawnAmount(1);
-                SetUpGenericLevel();
-                break;
-
-            case 34: //level 34
-                enemySpawner.ChangeEnemySpawnAmount(1);
-                SetUpGenericLevel();
-                break;
-
-            case 35: //level 35
-                enemySpawner.ChangeEnemySpawnAmount(1);
                 SetUpGenericLevel();
                 break;
 
@@ -497,9 +462,14 @@ public class LoadManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("all levels unlocked");
+            OpenSecretLevel();
         }
         
+    }
+
+    private void OpenSecretLevel()
+    {
+        Debug.Log("all levels unlocked");
     }
 
     public void QuitLevel()

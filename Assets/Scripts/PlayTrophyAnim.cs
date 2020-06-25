@@ -64,6 +64,7 @@ public class PlayTrophyAnim : MonoBehaviour
     private void WinAnimEnd()
     {
         isRotationStarted = false;
+        isAnimPlaying = false;
         //trophy.SetActive(true);
         winMenu.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
