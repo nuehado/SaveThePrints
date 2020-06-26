@@ -44,9 +44,13 @@ public class EnemyCollision : MonoBehaviour
     public void KillEnemy(bool isKilled)
     {
         var explodeVFX = Instantiate(deathExplosion, new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z), Quaternion.identity);
-        var deathExplode = Instantiate(deathObjects, transform.position, transform.rotation);
+        //var deathExplode = Instantiate(deathObjects, transform.position, transform.rotation);
+        var deathExplode = FragmentPool.Instance.Get();
+        deathExplode.transform.position = transform.position;
+        deathExplode.transform.rotation = transform.rotation;
+        deathExplode.SetActive(true);
         Destroy(explodeVFX.gameObject, 1f);
-        Destroy(deathExplode.gameObject, 3f);
+        //Destroy(deathExplode.gameObject, 1.5f);
         AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position, 0.2f);
         enemySpawner.UpdateEnemyHealth(-1);
         Destroy(gameObject);
@@ -89,5 +93,10 @@ public class EnemyCollision : MonoBehaviour
     private void ProcessHit()
     {
         enemyHitPoints = enemyHitPoints - 1;
+    }
+
+    public void ManualDamage(int damage)
+    {
+        enemyHitPoints -= damage;
     }
 }

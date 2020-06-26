@@ -12,6 +12,7 @@ TagManager:
   - DefenseSupport
   - SlowStick
   - SlowEffect
+  - music
   layers:
   - Default
   - TransparentFX

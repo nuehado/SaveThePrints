@@ -26,17 +26,7 @@ public class MainMenu : MonoBehaviour
         }
         GetPerLevelPPStatus();
     }
-    private void Start()
-    {
-        
-    }
 
-    private void OnEnable()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))

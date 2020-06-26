@@ -141,7 +141,7 @@ public class DefenseSupportMover : MonoBehaviour
         isSupportPlaced = false;
         if (previousPlacementWaypoint != null)
         {
-            previousPlacementWaypoint.isOnPath = true; //todo check for no support placed
+            previousPlacementWaypoint.isOnPath = true; 
         }
         gameObject.SetActive(false);
     }

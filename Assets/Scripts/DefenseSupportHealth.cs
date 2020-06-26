@@ -4,27 +4,37 @@ using UnityEngine;
 
 public class DefenseSupportHealth : MonoBehaviour
 {
-    [SerializeField] private int currentDefenseSupportHealth = 2;
+    private int currentDefenseSupportHealth = 4;
     [SerializeField] GameObject deathObjects;
-    private int initialSupportHealth;
+    [SerializeField] private int initialSupportHealth = 4;
+    private GameObject previousObject = null;
 
     private void Start()
     {
-        initialSupportHealth = currentDefenseSupportHealth;
+        currentDefenseSupportHealth = initialSupportHealth;
+    }
+
+    private void OnEnable()
+    {
+        currentDefenseSupportHealth = initialSupportHealth;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<EnemyCollision>() != null)
         {
-            EnemySelfDestruct(other.gameObject);
-            currentDefenseSupportHealth -= 1;
-            if (currentDefenseSupportHealth <= 0)
+            if( other.gameObject != previousObject)
             {
-                var deathExplode = Instantiate(deathObjects, transform.position, transform.rotation);
-                Destroy(deathExplode.gameObject, 3f);
-                gameObject.GetComponent<DefenseSupportMover>().ResetSupportToStart();
-                currentDefenseSupportHealth = initialSupportHealth;
+                previousObject = other.gameObject;
+                EnemySelfDestruct(other.gameObject);
+                currentDefenseSupportHealth -= 1;
+                if (currentDefenseSupportHealth <= 0)
+                {
+                    var deathExplode = Instantiate(deathObjects, transform.position, transform.rotation);
+                    Destroy(deathExplode.gameObject, 3f);
+                    gameObject.GetComponent<DefenseSupportMover>().ResetSupportToStart();
+                    currentDefenseSupportHealth = initialSupportHealth;
+                }
             }
         }
     }

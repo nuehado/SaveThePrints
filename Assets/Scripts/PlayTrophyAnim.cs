@@ -20,7 +20,6 @@ public class PlayTrophyAnim : MonoBehaviour
     private Vector3 originalTrophyPosition;
     private Quaternion originalTrophyRotation;
     
-    // Start is called before the first frame update
     void Start()
     {
         winSFX = GetComponent<AudioSource>();
@@ -65,7 +64,6 @@ public class PlayTrophyAnim : MonoBehaviour
     {
         isRotationStarted = false;
         isAnimPlaying = false;
-        //trophy.SetActive(true);
         winMenu.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
         this.transform.position = originalTrophyPosition;

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class LoadManager : MonoBehaviour
 {
-    // todo get main menu camera position for returning to MM
     private Vector3 levelViewPos = new Vector3(-22f, 8.5f, 331f);
     private Vector3 levelViewRot = new Vector3(45f, 180f, 0f);
     private Vector3 menuViewPos = new Vector3(-20f, -160f, 290f);
@@ -20,32 +19,6 @@ public class LoadManager : MonoBehaviour
 
     private int levelSelected = 0;
     private int lastLoadedLevel = 0;
-    //private float timeLast;
-    //private float timeNow;
-    //private float deltaTime;
-    /*
-    [SerializeField] GameObject level1;
-    [SerializeField] GameObject level1Button;
-    private int level1Score = 0;
-    [SerializeField] GameObject level2;
-    [SerializeField] GameObject level2Button;
-    private int level2Score = 0;
-    [SerializeField] GameObject level3;
-    [SerializeField] GameObject level3Button;
-    private int level3Score = 0;
-    [SerializeField] GameObject level4;
-    [SerializeField] GameObject level4Button;
-    private int level4Score = 0;
-    [SerializeField] GameObject level5;
-    [SerializeField] GameObject level5Button;
-    private int level5Score = 0;
-    [SerializeField] GameObject level6;
-    [SerializeField] GameObject level6Button;
-    private int level6Score = 0;
-    [SerializeField] GameObject level7;
-    [SerializeField] GameObject level7Button;
-    private int level7Score = 0;
-    */
 
     public List<GameObject> levels = new List<GameObject>();
     public List<GameObject> levelButtons = new List<GameObject>();
@@ -77,7 +50,9 @@ public class LoadManager : MonoBehaviour
     [SerializeField] private Animator winChipsAnim;
     private DefenseHoverOutliner defenseHover;
 
-    // Start is called before the first frame update
+    [SerializeField] private BoomButton boomButton;
+    [SerializeField] private GameObject winCredits;
+
     void Start()
     {
         towers = FindObjectsOfType<TowerMover>();
@@ -111,7 +86,6 @@ public class LoadManager : MonoBehaviour
         isCameraToMove = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isCameraToMove == true)
@@ -122,17 +96,10 @@ public class LoadManager : MonoBehaviour
 
     private void PositionCamera(Vector3 moveViewPos)
     {
-        //timeNow = Time.realtimeSinceStartup;
-        //deltaTime = timeLast - timeNow;
 
-        Camera.main.transform.localPosition = Vector3.MoveTowards(Camera.main.transform.localPosition, moveViewPos, cameraMoveSpeed * Time.deltaTime); //todo either switch back to manually calculated time or remove all manual calculation script lines
+        Camera.main.transform.localPosition = Vector3.MoveTowards(Camera.main.transform.localPosition, moveViewPos, cameraMoveSpeed * Time.deltaTime);
         if (moveViewRot != null)
         {
-            /*
-             * Vector3 targetDirection = moveViewPos - Camera.main.transform.position;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, cameraMoveSpeed * Time.deltaTime, 0.0f);
-            Camera.main.transform.rotation = Quaternion.LookRotation(newDirection);
-            */
             Quaternion newRotation = Quaternion.Euler(moveViewRot);
             Camera.main.transform.localRotation = Quaternion.RotateTowards(Camera.main.transform.localRotation, newRotation, cameraMoveSpeed* 0.4f * Time.deltaTime);
         }
@@ -142,7 +109,6 @@ public class LoadManager : MonoBehaviour
         {
             isCameraToMove = false;
         }
-        //timeLast = timeNow;
     }
 
     public void ChangeLevel(int levelInt)
@@ -159,8 +125,6 @@ public class LoadManager : MonoBehaviour
                 moveViewRot = buyViewRot;
                 isCameraToMove = true;
 
-
-                //timeLast = Time.realtimeSinceStartup;
                 break;
 
             case -3: //lose menu
@@ -173,8 +137,6 @@ public class LoadManager : MonoBehaviour
                 moveViewRot = menuViewRot;
                 isCameraToMove = true;
 
-
-                //timeLast = Time.realtimeSinceStartup;
                 break;
 
             case -2: //quit menu
@@ -183,7 +145,6 @@ public class LoadManager : MonoBehaviour
                 moveViewRot = menuViewRot;
                 isCameraToMove = true;
 
-                //timeLast = Time.realtimeSinceStartup;
                 break;
 
             case -1: //win menu
@@ -204,9 +165,7 @@ public class LoadManager : MonoBehaviour
                     winPointCounter.AddWinPoints(currentLevelScore - levelScores[lastLoadedLevel - 1]);
                     levelScores[lastLoadedLevel - 1] = currentLevelScore;
                 }
-                //trophies[lastLoadedLevel - 1].GetComponent<Animator>().SetTrigger("Win"); // this is needed to automatically get back to main menu or buy menu
                 trophies[lastLoadedLevel - 1].GetComponent<PlayTrophyAnim>().WinAnimStart();
-                //timeLast = Time.realtimeSinceStartup;
                 break;
 
             case 0: //main menu
@@ -237,7 +196,6 @@ public class LoadManager : MonoBehaviour
                 slowSticks.ResetStickToStart();
                 slowSticks.enabled = false;
 
-                //timeLast = Time.realtimeSinceStartup;
                 // for win scenario we turn on level1, ChangeLevel(1). and switch menus
                 break;
 
@@ -355,7 +313,7 @@ public class LoadManager : MonoBehaviour
                 break;
 
             case 23: //level 23
-                enemySpawner.ChangeEnemySpawnAmount(14);
+                enemySpawner.ChangeEnemySpawnAmount(15);
                 SetUpGenericLevel();
                 break;
 
@@ -388,8 +346,6 @@ public class LoadManager : MonoBehaviour
                 Debug.Log("no level selected switching to main menu");
                 break;
         }
-
-        //Debug.Log("lastlevelloaded" + lastLoadedLevel);
     }
 
     private void SetUpGenericLevel()
@@ -469,7 +425,8 @@ public class LoadManager : MonoBehaviour
 
     private void OpenSecretLevel()
     {
-        Debug.Log("all levels unlocked");
+        boomButton.gameObject.SetActive(true);
+        winCredits.gameObject.SetActive(true);
     }
 
     public void QuitLevel()

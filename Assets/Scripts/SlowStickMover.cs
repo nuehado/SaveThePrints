@@ -128,7 +128,6 @@ public class SlowStickMover : MonoBehaviour
                 {
                     slowAreas[i].transform.position = newStickPosition;
                     slowAreas[i].isNew = false;
-                    //slowAreas[i].GetComponent<MeshRenderer>().enabled = true;
                     //todo add animation of stick application
                     validPlacementWaypoint.isOnPath = false;
                     previousPlacementWaypoint = validPlacementWaypoint;
@@ -163,7 +162,7 @@ public class SlowStickMover : MonoBehaviour
         }
         if (previousPlacementWaypoint != null)
         {
-            previousPlacementWaypoint.isOnPath = true; //todo check for no tower placed
+            previousPlacementWaypoint.isOnPath = true; 
         }
         gameObject.SetActive(false);
     }

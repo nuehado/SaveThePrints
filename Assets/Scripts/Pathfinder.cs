@@ -42,7 +42,7 @@ public class Pathfinder : MonoBehaviour
             bool isOverlapping = grid.ContainsKey(waypoint.GetGridPosition());
             if (isOverlapping == true)
             {
-                //Debug.Log("skipping duplicate block: " + waypoint.name);
+                //empty
             }
             else if (waypoint.isBlocked == true)
             {
@@ -65,7 +65,6 @@ public class Pathfinder : MonoBehaviour
         while (waypointQueue.Count > 0 && isRunning == true)
         {
             searchCenter = waypointQueue.Dequeue();
-            //Debug.Log("searching from: " + searchCenter); // todo remove log
             HaltIfEndFound(searchCenter);
             ExploreNeighbors(searchCenter);
             searchCenter.isExploreOff = true;
@@ -76,7 +75,6 @@ public class Pathfinder : MonoBehaviour
     {
         if (start == endWaypoint)
         {
-            //Debug.Log("start and end are the same. stopping..."); // todo remove log
             isRunning = false;
         }
     }
@@ -105,9 +103,8 @@ public class Pathfinder : MonoBehaviour
         if (neighbor.isExploreOff == false)
         {
             waypointQueue.Enqueue(neighbor);
-            neighbor.isExploreOff = true; // todo I added this because It removes duplicates faster, I'm not sure if it breaks the breadth first search algorithm somehow though
+            neighbor.isExploreOff = true; 
             neighbor.exploredFrom = searchCenter;
-            //Debug.Log("Queueing neighbor: " + neighbor);
         }
     }
 

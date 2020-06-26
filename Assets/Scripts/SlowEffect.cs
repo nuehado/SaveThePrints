@@ -14,6 +14,7 @@ public class SlowEffect : MonoBehaviour
     public bool isNew = true;
     private SpriteRenderer spriteRenderer;
     private float alphaLevel = Mathf.Clamp(1f, 0f, 1f);
+    [SerializeField] private int damageDelt = 40;
 
     private void Start()
     {
@@ -28,7 +29,6 @@ public class SlowEffect : MonoBehaviour
         {
             effectTimer += Time.deltaTime;
             alphaLevel = 1f - effectTimer/ effectDuration;
-            //alphaLevel = alphaLevel - perSecondShmearFade;
             spriteRenderer.color = new Color(1f, 1f, 1f, alphaLevel);
         }
 
@@ -37,7 +37,6 @@ public class SlowEffect : MonoBehaviour
             GetComponent<BoxCollider>().enabled = false;
             alphaLevel = 1f;
             glueShmear.SetActive(false);
-            //GetComponent<MeshRenderer>().enabled = false;
             effectTimer = 0f;
         }
     }
@@ -48,18 +47,12 @@ public class SlowEffect : MonoBehaviour
         {
             isNew = false;
             StartCoroutine(EnemySlow(other.gameObject));
-            /*currentDefenseSupportHealth -= 1;
-            if (currentDefenseSupportHealth <= 0)
-            {
-                gameObject.GetComponent<DefenseSupportMover>().ResetSupportToStart();
-                currentDefenseSupportHealth = initialSupportHealth;
-            }*/
+            other.GetComponent<EnemyCollision>().ManualDamage(damageDelt);
         }
     }
 
     private IEnumerator EnemySlow(GameObject enemy)
     {
-        //private float slowStartTime = //needs a way to track time per benchy
         initialEnemyMovementSpeed = enemySpawner.moveSpeed;
         enemySpawnSpeed = enemySpawner.secondsBetweenSpawns * 1.2f; // remove multiplier to stop overlap
         enemy.GetComponent<EnemyMovement>().movementSpeed = initialEnemyMovementSpeed * 0.5f;
@@ -73,7 +66,6 @@ public class SlowEffect : MonoBehaviour
     public void ResetSlowEffect()
     {
         GetComponent<BoxCollider>().enabled = true;
-        //GetComponent<MeshRenderer>().enabled = true;
         glueShmear.SetActive(true);
         transform.position = initialPosition;
         isNew = true;

@@ -43,11 +43,10 @@ public class DrawPath : MonoBehaviour
     }
     private void OnEnable()
     {
-        //Debug.Log("try load level");
-        Pathfinder pathfinder = GetComponent<Pathfinder>(); //was FindObjectOfType<Pathfinder>();
+        Pathfinder pathfinder = GetComponent<Pathfinder>(); 
         path = pathfinder.GetPath();
         pathLineRenderer = GetComponent<LineRenderer>();
-        distanceBetweenPoints = 10f; //Vector3.Distance(path[i].transform.position, path[i + 1].transform.position);
+        distanceBetweenPoints = 10f; 
         pathLineRenderer.positionCount = 2;
         iWaypoint = path.Count - 1;
         iNextWaypoint = path.Count - 2;
@@ -91,15 +90,12 @@ public class DrawPath : MonoBehaviour
             enemySpawner.startSpawningExternal();
             StopPrinterPathTranslations();
             EnableDefenseMovers();
-            /*foreach (GameObject tower in towers)
-            {
-                tower.GetComponent<TowerMover>().enabled = true;
-            }*/
+
             foreach (GameObject defenseSupport in defenseSupports)
             {
                 defenseSupport.GetComponent<DefenseSupportMover>().enabled = true;
             }
-            //slowStick.GetComponent<SlowStickMover>().enabled = true; //ToDo Disabled this because it was broken with defensesStore, and probably needs to be placed somewhere else
+            
             loadScreen.SetActive(false);
             LevelScreen.SetActive(true);
         }

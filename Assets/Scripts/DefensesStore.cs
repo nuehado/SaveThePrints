@@ -26,26 +26,15 @@ public class DefensesStore : MonoBehaviour
 
     private void OnEnable()
     {
-        /*foreach (GameObject defenseObject in allDefenses)
-        {
-            defenseObject.SetActive(true);
-            defenseObject.GetComponent<DefenseBuyer>().enabled = true;
-        }
-        */
         isBuyingActive = true;
         foreach (GameObject purchasedObject in purchasedDefenses)
         {
             purchasedObject.SetActive(true);
-            /*purchasedObject.GetComponent<Outline>().enabled = true;
-            purchasedObject.GetComponent<Outline>().OutlineColor = Color.green;
-            */
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //HoverOverPurchasable();
         if (isBuyingActive == true)
         {
             HoverOverPurchaseDrawer();
@@ -66,7 +55,7 @@ public class DefensesStore : MonoBehaviour
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 500.0f))
         {
-            if (purchasableTowers.Contains(hit.transform.gameObject))//hit.transform.gameObject.tag == "Tower" || hit.transform.gameObject.tag == "DefenseSupport" || hit.transform.gameObject.tag == "SlowStick" && purchasableDefenses.Contains(hit.transform.gameObject))
+            if (purchasableTowers.Contains(hit.transform.gameObject))
             {
                 selectedObject = hit.transform.gameObject;
                 selectedObject.GetComponent<Outline>().enabled = true;
@@ -86,7 +75,7 @@ public class DefensesStore : MonoBehaviour
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 2000.0f))
         {
-            if (purchaseDrawer.Contains(hit.transform.gameObject))//hit.transform.gameObject.tag == "Tower" || hit.transform.gameObject.tag == "DefenseSupport" || hit.transform.gameObject.tag == "SlowStick" && purchasableDefenses.Contains(hit.transform.gameObject))
+            if (purchaseDrawer.Contains(hit.transform.gameObject))
             {
                 selectedObject = hit.transform.gameObject;
                 selectedObject.GetComponent<Outline>().enabled = true;
@@ -151,7 +140,6 @@ public class DefensesStore : MonoBehaviour
                 purchasedDefenses.Add(purchasableTowers[0]);
                 purchasableTowers.Remove(purchasableTowers[0]);
                 purchaseAttempt.GetComponent<Animator>().SetTrigger("Open");
-                //CloseStore();
             }
         }
         else if (purchaseAttempt.name.Contains("Support"))
@@ -176,20 +164,6 @@ public class DefensesStore : MonoBehaviour
                 purchaseAttempt.GetComponent<Animator>().SetTrigger("Open");
                 
             }
-            /*if (purchasableTowers.Contains(purchaseAttempt))
-            {
-                purchasableTowers.Remove(purchaseAttempt);
-                purchasedDefenses.Add(purchaseAttempt);
-                foreach (GameObject defenseObject in allDefenses)
-                {
-                    defenseObject.GetComponent<Outline>().enabled = false;
-                }
-                //selectedObject.GetComponent<Outline>().enabled = false;
-                selectedObject = null;
-                previousObject = null;
-                loadManager.ChangeLevel(0);
-                gameObject.GetComponent<DefensesStore>().enabled = false;
-            }*/
         }
     }
 
@@ -197,7 +171,7 @@ public class DefensesStore : MonoBehaviour
     {
         selectedObject = null;
         previousObject = null;
-        loadManager.ChangeLevel(0);// todo add animations and such before doing this
+        loadManager.ChangeLevel(0);
         gameObject.GetComponent<DefensesStore>().enabled = false;
     }
     

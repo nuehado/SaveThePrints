@@ -11,7 +11,7 @@ public class RGBColorChanger : MonoBehaviour
     [SerializeField] MeshRenderer defensesSpoolReferenceObject;
     [SerializeField] GameObject supportMaterialReferenceObject;
     [SerializeField] GameObject lineRendererReferenceObject;
-    private float[] printMaterialInitialColor = { 0.77f, 0f, 0f };
+    private float[] printMaterialInitialColor = { 1f, 0f, 0f };
     private float[] defensesMaterialInitialColor = { 0f, 0f, 0.77f };
     private float[] supportMaterialInitialColor = { 0.38f, 0.38f, 0.38f };
 

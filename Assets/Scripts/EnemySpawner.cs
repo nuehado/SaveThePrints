@@ -81,11 +81,10 @@ public class EnemySpawner : MonoBehaviour
 
     public void UpdateEnemyHealth(int enemyAddORSub)
     {
-        enemyHealth += enemyAddORSub; // todo this is called whenever enemyHealth = 0, we want to check if player health is also > 0 inside loadManager. If it is then we win
+        enemyHealth += enemyAddORSub;
         playerHealth = FindObjectOfType<PlayerHealth>();
         if (enemyHealth <= 0 && playerHealth.playerHealth > 0)
         {
-            //Debug.Log("You Win this level!");
             loadManager.WinLevel();
         }
     }
