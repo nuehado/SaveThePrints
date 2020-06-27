@@ -223,7 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faadd90022951bc478509ac50bab01a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defenseSupportHits: 2
+  deathObjects: {fileID: 0}
+  initialSupportHealth: 4
 --- !u!114 &8915470236103777952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +237,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45166f9c5945404bbb0731bd4938889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialSupportPosition: {x: 0, y: 0, z: 0}
+  isSupportPlaced: 0
+  selectedSFX: {fileID: 0}
+  placeTowerSFX: {fileID: 0}
 --- !u!136 &8915470236103777953
 CapsuleCollider:
   m_ObjectHideFlags: 0

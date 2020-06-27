@@ -22,6 +22,7 @@ public class SlowStickMover : MonoBehaviour
 
     [SerializeField] private SlowEffect[] slowAreas;
     [SerializeField] private AudioSource selectedSFX;
+    private AudioSource placedSFX;
 
     private void Start()
     {
@@ -29,6 +30,7 @@ public class SlowStickMover : MonoBehaviour
         initialStickPosition = (gameObject.transform.position);
         oldStickPosition = initialStickPosition;
         checkLineRenderer = GetComponent<LineRenderer>();
+        placedSFX = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -129,6 +131,7 @@ public class SlowStickMover : MonoBehaviour
                     slowAreas[i].transform.position = newStickPosition;
                     slowAreas[i].isNew = false;
                     //todo add animation of stick application
+                    placedSFX.Play();
                     validPlacementWaypoint.isOnPath = false;
                     previousPlacementWaypoint = validPlacementWaypoint;
                     gameObject.transform.position = initialStickPosition;
@@ -149,7 +152,7 @@ public class SlowStickMover : MonoBehaviour
     public void ResetStickToStart()
     {
         checkLineRenderer.enabled = false;
-        GetComponent<Outline>().enabled = false;
+        GetComponent<OutlineEnabler>().enabled = false;
         drag = null;
         gameObject.transform.position = initialStickPosition;
         GetComponentInChildren<MeshRenderer>().enabled = true;

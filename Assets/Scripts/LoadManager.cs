@@ -53,6 +53,8 @@ public class LoadManager : MonoBehaviour
     [SerializeField] private BoomButton boomButton;
     [SerializeField] private GameObject winCredits;
 
+    [SerializeField] private GameObject defenseSupportBought;
+
     void Start()
     {
         towers = FindObjectsOfType<TowerMover>();
@@ -121,6 +123,14 @@ public class LoadManager : MonoBehaviour
                 //Debug.Log("Buy Menu forced");
                 ResetLevelState();
                 defensesStore.enabled = true;
+                if(defensesStore.purchasableSupports.Count < 3)
+                {
+                    defenseSupportBought.transform.localScale = new Vector3(defenseSupportBought.transform.localScale.x, defenseSupportBought.transform.localScale.y, 0.66f);
+                }
+                else if(defensesStore.purchasableSupports.Count < 2)
+                    {
+                    defenseSupportBought.transform.localScale = new Vector3(defenseSupportBought.transform.localScale.x, defenseSupportBought.transform.localScale.y, 1f);
+                }
                 moveViewPos = buyViewPos;
                 moveViewRot = buyViewRot;
                 isCameraToMove = true;
@@ -333,12 +343,12 @@ public class LoadManager : MonoBehaviour
                 break;
 
             case 27: //level 27
-                enemySpawner.ChangeEnemySpawnAmount(16);
+                enemySpawner.ChangeEnemySpawnAmount(19);
                 SetUpGenericLevel();
                 break;
 
             case 28: //level 28
-                enemySpawner.ChangeEnemySpawnAmount(16);
+                enemySpawner.ChangeEnemySpawnAmount(21);
                 SetUpGenericLevel();
                 break;
 
@@ -356,6 +366,11 @@ public class LoadManager : MonoBehaviour
         menuViewRot = levelViewRot;
         isCameraToMove = true;
         ActivateUnlockedDefenses();
+
+        if(winPointCounter.winPoints >= winPointCounter.purchaseUnlockMax)
+        {
+            boomButton.gameObject.SetActive(true);
+        }
     }
 
     private void ActivateUnlockedDefenses()
@@ -425,7 +440,6 @@ public class LoadManager : MonoBehaviour
 
     private void OpenSecretLevel()
     {
-        boomButton.gameObject.SetActive(true);
         winCredits.gameObject.SetActive(true);
     }
 
@@ -459,7 +473,7 @@ public class LoadManager : MonoBehaviour
         }
         foreach (DefenseSupportMover supportMover in supports)
         {
-            supportMover.GetComponent<Outline>().OutlineColor = Color.white;
+            //supportMover.GetComponent<OutlineEnabler>().OutlineColor = Color.white; todo change color of drawer outline
             supportMover.ResetSupportToStart();
             supportMover.enabled = false;
         }

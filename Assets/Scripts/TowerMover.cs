@@ -145,7 +145,7 @@ public class TowerMover : MonoBehaviour
     public void ResetTowerToStart()
     {
         checkLineRenderer.enabled = false;
-        GetComponent<Outline>().enabled = false;
+        GetComponent<OutlineEnabler>().enabled = false;
         drag = null;
         gameObject.transform.position = initialTowerPosition;
         pivotTransform.rotation = initialTowerRotation;

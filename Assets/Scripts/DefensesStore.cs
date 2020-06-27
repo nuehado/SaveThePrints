@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using cakeslice;
 
 public class DefensesStore : MonoBehaviour
 {
@@ -59,7 +60,7 @@ public class DefensesStore : MonoBehaviour
             {
                 selectedObject = hit.transform.gameObject;
                 selectedObject.GetComponent<Outline>().enabled = true;
-                selectedObject.GetComponent<Outline>().OutlineColor = Color.yellow;
+                selectedObject.GetComponent<Outline>().color = 2; //todo change color of drawer outline
                 if (previousObject != null)
                 {
                     UnhoverOverPurchasable();
@@ -83,33 +84,33 @@ public class DefensesStore : MonoBehaviour
                 {
                     if (purchasableTowers.Count > 0)
                     {
-                        selectedObject.GetComponent<Outline>().OutlineColor = Color.green;
+                        selectedObject.GetComponent<Outline>().color = 1; //todo change color of drawer outline
                     }
                     else
                     {
-                        selectedObject.GetComponent<Outline>().OutlineColor = Color.red;
+                        selectedObject.GetComponent<Outline>().color = 2; //todo change color of drawer outline
                     }
                 }
                 else if (selectedObject.name.Contains("Support"))
                 {
                     if (purchasableSupports.Count > 0)
                     {
-                        selectedObject.GetComponent<Outline>().OutlineColor = Color.green;
+                        selectedObject.GetComponent<Outline>().color = 1; //todo change color of drawer outline
                     }
                     else
                     {
-                        selectedObject.GetComponent<Outline>().OutlineColor = Color.red;
+                        selectedObject.GetComponent<Outline>().color = 2; //todo change color of drawer outline
                     }
                 }
                 else if (selectedObject.name.Contains("Glue"))
                 {
                     if (purchasableGlueSticks.Count > 0)
                     {
-                        selectedObject.GetComponent<Outline>().OutlineColor = Color.green;
+                        selectedObject.GetComponent<Outline>().color = 1; //todo change color of drawer outline
                     }
                     else
                     {
-                        selectedObject.GetComponent<Outline>().OutlineColor = Color.red;
+                        selectedObject.GetComponent<Outline>().color = 2; //todo change color of drawer outline
                     }
                 }
                 if (previousObject != null)

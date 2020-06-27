@@ -134,7 +134,7 @@ public class DefenseSupportMover : MonoBehaviour
     {
         checkLineRenderer.enabled = false;
         drag = null;
-        GetComponent<Outline>().enabled = false;
+        GetComponent<OutlineEnabler>().enabled = false;
         gameObject.transform.position = initialSupportPosition;
         validPlacementWaypoint = null;
         oldSupportPosition = initialSupportPosition;

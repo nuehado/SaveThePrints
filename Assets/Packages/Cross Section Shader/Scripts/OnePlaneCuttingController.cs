@@ -3,46 +3,25 @@ using System.Collections;
 //[ExecuteInEditMode]
 public class OnePlaneCuttingController : MonoBehaviour {
 
-    [SerializeField] private GameObject plane;
+    public GameObject plane;
     Material mat;
-    private Vector3 normal;
-    private Vector3 position;
-    private Renderer rend;
-
-    private Vector3 finishedSpawningHeight;
-    private float spawningTimer = 0;
-    private float enemyHeight = 7.3f;
-    private EnemySpawner enemySpawner;
-    private EnemyMovement enemyMover;
-
-
+    public Vector3 normal;
+    public Vector3 position;
+    public Renderer rend;
     // Use this for initialization
     void Start () {
-        enemySpawner = FindObjectOfType<EnemySpawner>();
-        enemyMover = FindObjectOfType<EnemyMovement>();
         rend = GetComponent<Renderer>();
         normal = plane.transform.TransformVector(new Vector3(0,0,-1));
         position = plane.transform.position;
-        finishedSpawningHeight = new Vector3(plane.transform.position.x, plane.transform.position.y + enemyHeight, plane.transform.position.z);
+        UpdateShaderProperties();
     }
-    void Update()
+    void Update ()
     {
-        if (spawningTimer <= enemySpawner.secondsBetweenSpawns * 0.833f)
-        {
-            spawningTimer += Time.deltaTime;
-            plane.transform.position = Vector3.MoveTowards(plane.transform.position, finishedSpawningHeight, enemyHeight / enemySpawner.secondsBetweenSpawns * Time.deltaTime);
-            UpdateShaderProperties();
-        }
-        else
-        {
-            plane.transform.position = finishedSpawningHeight;
-            UpdateShaderProperties();
-            enemyMover.isMoving = true;
-        }
+        UpdateShaderProperties();
     }
 
     private void UpdateShaderProperties()
-    {        
+    {
         normal = plane.transform.TransformVector(new Vector3(0, 0, -1));
         position = plane.transform.position;
         rend.material.SetVector("_PlaneNormal", normal);

@@ -105,7 +105,7 @@ public class TowerFiring : MonoBehaviour
 
             Vector3 directionToTarget = targetXZ - objectToPan.transform.position;
             angletoTarget = Vector3.Angle(directionToTarget, objectToPan.transform.forward);
-            Vector3 stepTowardsTarget = Vector3.RotateTowards(objectToPan.transform.forward, directionToTarget, rotateSpeed, 0f);
+            Vector3 stepTowardsTarget = Vector3.RotateTowards(objectToPan.transform.forward, directionToTarget, rotateSpeed * Time.deltaTime, 0f);
             objectToPan.transform.rotation = Quaternion.LookRotation(stepTowardsTarget);
         }
     }

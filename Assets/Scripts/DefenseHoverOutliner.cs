@@ -36,7 +36,7 @@ public class DefenseHoverOutliner : MonoBehaviour
                             return;
                         }
                     }
-                    selectedObject.GetComponent<Outline>().enabled = true;
+                    selectedObject.GetComponent<OutlineEnabler>().enabled = true;
                     if (previousObject != null)
                     {
                         UnhoverPrevious();
@@ -46,13 +46,13 @@ public class DefenseHoverOutliner : MonoBehaviour
             }
             else if (previousObject != null )
             {
-                previousObject.GetComponent<Outline>().enabled = false;
+                previousObject.GetComponent<OutlineEnabler>().enabled = false;
                 previousObject = null;
             }
         }
         else if (previousObject != null)
         {
-            previousObject.GetComponent<Outline>().enabled = false;
+            previousObject.GetComponent<OutlineEnabler>().enabled = false;
             previousObject = null;
         }
     }
@@ -61,7 +61,7 @@ public class DefenseHoverOutliner : MonoBehaviour
     {
         if (previousObject != selectedObject)
         {
-            previousObject.GetComponent<Outline>().enabled = false;
+            previousObject.GetComponent<OutlineEnabler>().enabled = false;
         }
     }
 }

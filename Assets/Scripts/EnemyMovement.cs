@@ -49,7 +49,7 @@ public class EnemyMovement : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, path[destinationWaypoint].transform.position, movementSpeed * Time.deltaTime);
         Vector3 directionToWaypoint = path[destinationWaypoint].transform.position - transform.position;
-        Vector3 rotationStepTowardsWaypoint = Vector3.RotateTowards(transform.forward, directionToWaypoint, rotateSpeed, 0f);
+        Vector3 rotationStepTowardsWaypoint = Vector3.RotateTowards(transform.forward, directionToWaypoint, rotateSpeed * Time.deltaTime, 0f);
         transform.rotation = Quaternion.LookRotation(rotationStepTowardsWaypoint);
     }
 
