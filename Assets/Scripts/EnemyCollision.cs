@@ -92,11 +92,11 @@ public class EnemyCollision : MonoBehaviour
 
     private void ProcessHit()
     {
-        /* todo - remove once damage has been made framerate independent
-        float damage = 120 / FPSDisplay.Instance.fps;
-        Debug.Log(Mathf.RoundToInt(damage));
-        */
-        enemyHitPoints -= 1;
+        // todo - remove once damage has been made framerate independent
+        float damage = 60 / FPSDisplay.Instance.fps;
+        //Debug.Log(Mathf.RoundToInt(damage));
+        
+        enemyHitPoints -= Mathf.RoundToInt(damage);
     }
 
     public void ManualDamage(int damage)
