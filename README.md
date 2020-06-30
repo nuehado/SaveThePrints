@@ -1,18 +1,3 @@
-<!--
-*** Thanks for checking out this README Template. If you have a suggestion that would
-*** make this better, please fork the SaveThePrints and create a pull request or simply open
-*** an issue with the tag "enhancement".
-*** Thanks again! Now go create something AMAZING! :D
-***
-***
-***
-*** To avoid retyping too much info. Do a search and replace for the following:
-*** nuehado, SaveThePrints, MyDonahue, donahue_philip@yahoo.com
--->
-
-
-
-
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -108,7 +93,6 @@ This is an example of how to list things you need to use the software and how to
 git clone https://github.com/nuehado/SaveThePrints.git
 ```
 1-b. Or download it as a zip and extract (if not desiring to upload changes to GitHub)
-```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
