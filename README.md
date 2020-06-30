@@ -97,10 +97,9 @@ To get a local copy up and running follow these simple steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
-```sh
-npm install npm@latest -g
-```
+* Unity3d 2019.3.14f1 or later
+* Git (if desiring to contribute public changes to this codebase)
+
 
 ### Installation
  
@@ -108,19 +107,12 @@ npm install npm@latest -g
 ```sh
 git clone https://github.com/nuehado/SaveThePrints.git
 ```
-2. Install NPM packages
-```sh
-npm install
+1-b. Or download it as a zip and extract (if not desiring to upload changes to GitHub)
 ```
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 
 
@@ -128,6 +120,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 See the [open issues](https://github.com/nuehado/SaveThePrints/issues) for a list of proposed features (and known issues).
+Visit the Discord (https://discord.com/invite/7ZWD2Yx) to get involved with development, request features, say hello.
 
 
 
@@ -147,14 +140,17 @@ Contributions are what make the open source community such an amazing place to b
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Code related to this project is distributed under the MIT License. See `LICENSE` for more information.
+
+NOTE: The 3D models represented in SaveThePrints are distributed under Creative Commons Licenses. 
+You must refer to their original sources if utilizing these assets elsewhere, and note the derivative of Creative Commons per model being utilized.
 
 
 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@MyDonahue](https://twitter.com/MyDonahue) - donahue_philip@yahoo.com
+Phil Donahue - [@MyDonahue](https://twitter.com/MyDonahue) - donahue_philip@yahoo.com
 
 Project Link: [https://github.com/nuehado/SaveThePrints](https://github.com/nuehado/SaveThePrints)
 
@@ -163,9 +159,8 @@ Project Link: [https://github.com/nuehado/SaveThePrints](https://github.com/nueh
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-* []()
-* []()
-* []()
+* []() Prusa3D
+* []() Creative Tools inc.
 
 
 
